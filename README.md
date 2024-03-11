@@ -14,3 +14,4 @@ You can move on x - y - z plan, so every time you fixe a cube that attack you, y
     - three js
     - wordpress? firebase?
 
+instead of use a button that switch between horizontal plan and vertical plan, just do 2 button that switch between the horizontal plan
