@@ -1,4 +1,4 @@
-import * as THREE from 'three'
+import * as THREE from 'three';
 import Experience from "../experience";
 import Debug from '../Utils/debug';
 
@@ -16,12 +16,14 @@ export default class World
 		{
 			this.debugCube = this.debug.ui.addFolder('main cube');
 			this.debugPlane = this.debug.ui.addFolder('test plane');
+			this.debugAllPlane = this.debug.ui.addFolder('all planes');
 			const axesHelper = new THREE.AxesHelper(3);
 			this.scene.add(axesHelper);
 		}
 
 		this.setCubeCreation();
 		this.setOnePlaneCreation();
+		this.setPlanes();
 	}
 
 	// create test cube
@@ -86,6 +88,7 @@ export default class World
 			wireframe : true
 		});
 		const plane = new THREE.Mesh(geometry, material);
+		plane.visible = false;
 		plane.rotateX(Math.PI / 2);
 		this.scene.add(plane);
 
@@ -93,13 +96,16 @@ export default class World
 		if (this.debug.active)
 		{
 			this.debugPlane
+				.add(plane, 'visible');
+
+			this.debugPlane
 				.addColor(planeObject, 'color')
 				.onChange(() => {
 					material.color.set(planeObject.color)
 			});
 
 			this.debugPlane
-				.add(plane.position, 'y', -0.5, 0.5, 0.1);
+				.add(plane.position, 'y', -0.4, 0.4, 0.1);
 
 			planeObject.subdivision = 1;
 
@@ -121,4 +127,80 @@ export default class World
 		}
 
 	}
+
+	setPlanes()
+	{
+		const objectToAdd = new THREE.Group();
+		const planeObject = {};
+		planeObject.color = '#6622aa';
+		const geometry = new THREE.PlaneGeometry(
+			1, 1,
+			this.planeDivision, this.planeDivision
+		);
+		const material = new THREE.MeshBasicMaterial({
+			color : planeObject.color,
+			side : THREE.DoubleSide,
+			wireframe : true
+		});
+
+		for (let positionY = -0.499; positionY <= 0.499; positionY += 0.1)
+		{
+			const plane = new THREE.Mesh(geometry, material);
+			plane.rotateX(Math.PI / 2);
+			plane.position.setY(positionY);
+			objectToAdd.add(plane);
+			
+		}
+		this.scene.add(objectToAdd);
+		
+		if (this.debug.active)
+		{
+			this.debugAllPlane
+					.addColor(planeObject, 'color')
+					.onChange(() => {
+						material.color.set(planeObject.color)
+			});
+
+			this.debugAllPlane
+				.add(objectToAdd.position, 'y', -0.4, 0.4, 0.1);
+
+			planeObject.subdivision = 1;
+
+			this.debugAllPlane
+				.add(planeObject, 'subdivision')
+				.min(1)
+				.max(50)
+				.step(1)
+				.onFinishChange(() => {
+					objectToAdd.clear();
+					const newGeometry = new THREE.PlaneGeometry(
+						1, 1,
+						planeObject.subdivision, planeObject.subdivision
+					);
+					for (let positionY = -0.4; positionY <= 0.4; positionY += 0.1)
+					{
+						const plane = new THREE.Mesh(newGeometry, material);
+						plane.rotateX(Math.PI / 2);
+						plane.position.setY(positionY);
+						objectToAdd.add(plane);
+					};
+				});
+
+			this.debugAllPlane
+				.add(material, 'wireframe');
+		}
+	}
 }
+
+// to avoid z fighting, he is the coordonate of the planes 
+// -0.499
+// -0.4 
+// -0.3
+// -0.2
+// -0.1
+// 0 
+// 0.1
+// 0.2
+// 0.3
+// 0.4 
+// 0.499
