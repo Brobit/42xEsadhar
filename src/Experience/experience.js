@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import * as WORLDCOMPONENT from './World/worldComponent.js'
 import Sizes from "./Utils/sizes";
 import Time from "./Utils/time";
 import Camera from "./camera.js"
@@ -33,6 +34,8 @@ export default class Experience
 		this.camera = new Camera();
 		this.renderer = new Renderer();
 		this.world = new World();
+		this.mainCube = new WORLDCOMPONENT.MainCube();
+		this.enemyCube = new WORLDCOMPONENT.EnnemyCube();
 
 		// resize event
 		this.sizes.on('resize', () =>

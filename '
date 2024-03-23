@@ -1,4 +1,4 @@
-import GUI from 'lil-gui';
+import GUI from "lil-gui";
 
 export default class Debug
 {
@@ -9,8 +9,9 @@ export default class Debug
 		if (this.active)
 		{
 			this.ui = new GUI({
+				width : 900,
 				name : 'debugger / tester for the project',
-				closeFolders : true
+				closeFolders : false
 			});
 		}
 	}

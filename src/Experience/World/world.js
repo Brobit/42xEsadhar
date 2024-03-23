@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import Experience from "../experience";
-import Debug from '../Utils/debug';
+//import Debug from '../Utils/debug';
 
 export default class World
 {
