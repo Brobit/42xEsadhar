@@ -191,16 +191,3 @@ export default class World
 		}
 	}
 }
-
-// to avoid z fighting, he is the coordonate of the planes 
-// -0.499
-// -0.4 
-// -0.3
-// -0.2
-// -0.1
-// 0 
-// 0.1
-// 0.2
-// 0.3
-// 0.4 
-// 0.499

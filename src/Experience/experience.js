@@ -1,11 +1,12 @@
-import * as THREE from 'three'
-import * as WORLDCOMPONENT from './World/worldComponent.js'
+import * as THREE from 'three';
+import * as WORLDCOMPONENT from './World/worldComponent.js';
 import Sizes from "./Utils/sizes";
 import Time from "./Utils/time";
 import Camera from "./camera.js"
 import Renderer from './renderer.js';
 import World from './World/world.js';
 import Debug from './Utils/debug.js';
+import PhysicalWorld from './World/physics.js';
 
 let instance = null;
 
@@ -36,6 +37,7 @@ export default class Experience
 		this.world = new World();
 		this.mainCube = new WORLDCOMPONENT.MainCube();
 		this.enemyCube = new WORLDCOMPONENT.EnnemyCube();
+		this.physicalWorld = new PhysicalWorld();
 
 		// resize event
 		this.sizes.on('resize', () =>

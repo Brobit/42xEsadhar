@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import Experience from "../experience";
+import PhysicalWorld from './physics';
 
 class MainCube
 {
@@ -8,6 +9,8 @@ class MainCube
 		this.experience = new Experience();
 		this.scene = this.experience.scene;
 		this.debug = this.experience.debug;
+		this.cubeSize = 0.02;
+		this.position = new THREE.Vector3(0, 0.011, 0);
 
 		 if (this.debug.active)
 		 {
@@ -22,13 +25,13 @@ class MainCube
 		const cube = {};
 		cube.color = '#8e8e92';
 		const geometry = new THREE.BoxGeometry(
-			0.02, 0.02, 0.02
+			this.cubeSize, this.cubeSize, this.cubeSize
 		);
 		const material = new THREE.MeshBasicMaterial({
 			color : cube.color
 		});
 		const finalCube = new THREE.Mesh(geometry, material);
-		finalCube.position.y = 0.011;
+		finalCube.position.set(0, 0.011, 0);
 		this.scene.add(finalCube);
 
 		 if (this.debug.active)
