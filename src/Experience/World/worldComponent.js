@@ -30,9 +30,9 @@ class MainCube
 		const material = new THREE.MeshBasicMaterial({
 			color : cube.color
 		});
-		const finalCube = new THREE.Mesh(geometry, material);
-		finalCube.position.set(0, 0.011, 0);
-		this.scene.add(finalCube);
+		this.finalCube = new THREE.Mesh(geometry, material);
+		this.finalCube.position.set(0, 0.012, 0);
+		this.scene.add(this.finalCube);
 
 		 if (this.debug.active)
 		 {
@@ -49,8 +49,8 @@ class MainCube
 				.max(0.1)
 				.step(0.001)
 				.onChange(() =>{
-					finalCube.geometry.dispose();
-					finalCube.geometry = new THREE.BoxGeometry(
+					this.finalCube.geometry.dispose();
+					this.finalCube.geometry = new THREE.BoxGeometry(
 						cube.size, cube.size, cube.size
 					);
 			});
@@ -61,7 +61,7 @@ class MainCube
 				.max(0.1)
 				.step(0.001)
 				.onChange(() => {
-				finalCube.position.y = cube.positionY;
+				this.finalCube.position.y = cube.positionY;
 			});
 		 }
 	}

@@ -149,7 +149,6 @@ export default class World
 			plane.rotateX(Math.PI / 2);
 			plane.position.setY(positionY);
 			objectToAdd.add(plane);
-			
 		}
 		this.scene.add(objectToAdd);
 		
