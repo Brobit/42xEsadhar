@@ -38,3 +38,7 @@ C'est une experience qui permet a l'utilisateur de d'explorer les notions de lum
 
 le joueur pourra se deplacer sur plusieurs plan , 
 
+
+update :
+faire un seul plan qui va bouger en haut ou en bas
+

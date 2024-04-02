@@ -20,74 +20,147 @@ export default class PhysicalWorld
 		this.clock = new THREE.Clock();
 		this.oldElapsedTime = 0;
 
+		this.moveDistance = 10;
+		this.localVelocity = new CANNON.Vec3();
+
 		this.setCubeBody();
 		this.setPlanesBody();
+//		this.setGroundBody();
+
+		this.setKeyListener();
+		this.tick();
 	}
-	// - 0.009
+
+
 	setCubeBody()
 	{
-		//this.mainCubePosition.setY(0.24);
-		this.cubeShape = new CANNON.Box(new CANNON.Vec3(this.cubeSize / 2, this.cubeSize / 2, this.cubeSize / 2));
-//		this.cubeShape.convexPolyhedronRepresentation.updateBoundingSphereRadius(0.2);
-//		this.cubeShape.updateBoundingSphereRadius(0.2);
-		console.log(this.cubeShape);
+//		this.cubeShape = new CANNON.Box(new CANNON.Vec3(this.cubeSize / 2, this.cubeSize / 2, this.cubeSize / 2));
+//		console.log(this.cubeShape);
 		this.cubeBody = new CANNON.Body({
-			mass : 0,
-//			position : this.mainCubePosition,
-			shape : this.cubeShape
+			mass : 1,
+			shape : new CANNON.Sphere(0.011),
+			linearDamping : 0.5,
+			angularDamping : 1,
 		});
 		this.cubeBody.position.set(0, 0.011, 0);
 		this.world.addBody(this.cubeBody);
 
-		 window.requestAnimationFrame(() => {
-		 	this.tick();
-		 });
+		/* Add: track state of current throttle timer */
+		this.throttle;
+		/* Add: When keyup happens, just reset the throttle timer */
+		document.addEventListener('keyup', () => {
+		  if (this.throttle) {
+			clearTimeout(this.throttle);
+			this.throttle = null;
+		  }
+		})
+
+
+//		this.tick();
+//		requestAnimationFrame(() => this.tick());
 	}
 
 	setPlanesBody()
 	{
-		const floorShape = new CANNON.Plane()
-		this.floorBody = new CANNON.Body()
-		this.floorBody.mass = 0
-		this.floorBody.position.y = 0.001;
-		this.floorBody.quaternion.setFromAxisAngle(new CANNON.Vec3(- 1, 0, 0), Math.PI * 0.5)
-		this.floorBody.addShape(floorShape)
-		this.world.addBody(this.floorBody)
+		const planeShape = new CANNON.Plane()
+		this.planeBody = new CANNON.Body()
+		this.planeBody.mass = 0
+		this.planeBody.position.y = 0.001;
+		this.planeBody.quaternion.setFromAxisAngle(new CANNON.Vec3(- 1, 0, 0), Math.PI * 0.5)
+		this.planeBody.addShape(planeShape)
+		this.world.addBody(this.planeBody)
+	}
+
+	setKeyListener()
+	{
+		this.throttle = null;
+
+		window.addEventListener('keydown', (event) => {
+//	 		console.log('pilou')
+//			console.log(deltaTime);
+			switch (event.keyCode) {
+				case 87: // W
+//					this.cubeBody.velocity.x += 0.2;
+						this.cubeBody.applyForce(new CANNON.Vec3(4, 0, 0), this.cubeBody.position);
+					break;
+				case 83: // S
+//					this.cubeBody.velocity.x -= 0.2;
+						this.cubeBody.applyForce(new CANNON.Vec3(-4, 0, 0), this.cubeBody.position);
+					break;
+				case 68: // D
+//					this.cubeBody.velocity.z += 0.2;
+						this.cubeBody.applyForce(new CANNON.Vec3(0, 0, 4), this.cubeBody.position);
+					break;
+				case 65: // A
+//					this.cubeBody.velocity.z -= 0.2;
+						this.cubeBody.applyForce(new CANNON.Vec3(0, 0, -4), this.cubeBody.position);
+					break;
+				default:
+					break;
+			};
+
+			// reset throttle timer
+			if (this.throttle)
+			{
+				clearTimeout(this.throttle);
+				this.throttle = null;
+			}
+
+			this.throttle = setTimeout(() => {
+				this.throttle = null;
+			}, 250);
+
+		});
+
+		window.addEventListener('keyup', () => {
+			if (this.throttle)
+			{
+				clearTimeout(this.throttle);
+				this.throttle = null;
+			}
+		});
 	}
 
 	tick()
 	{
 		// time managment
-		const elapsedTime = this.clock.getElapsedTime();
-		const deltaTime = elapsedTime - this.oldElapsedTime;
-		this.oldElapsedTime = elapsedTime;
-
-		// movement
-		window.addEventListener("keydown", (event) => {
-		  if (event.keyCode === 87) {
-				console.log('pilou')
-			this.cubeBody.position.x += 0.000005;
-//			this.cubeBody.applyForce(new CANNON.Vec3(100, 0, 0), this.cubeBody.position);
-//			this.cubeBody.applyImpulse(new CANNON.Vec3(0.0002, 0, 0), this.cubeBody.position);
-		  }
-		  else if (event.keyCode === 83) {
-//				console.log('pilou')
-			this.cubeBody.position.x -= 0.000005;
-		  }
-		  else if (event.keyCode === 68) {
-//				console.log('pilou')
-			this.cubeBody.position.z += 0.000005;
-		  }
-		  else if (event.keyCode === 65) {
-//				console.log('pilou')
-			this.cubeBody.position.z -= 0.000005;
-		  }
-		});
-
-		console.log(this.cubeBody.position)
-
-		// doing 60hz rendering
-		this.world.step(1 / 60, deltaTime, 3);
+// 		const elapsedTime = this.clock.getElapsedTime();
+// 		const deltaTime = elapsedTime - this.oldElapsedTime;
+// 		this.oldElapsedTime = elapsedTime;
+//
+// 		// movement
+//
+// 		if (!this.throttle)
+// 		{
+// 			window.addEventListener("keydown", (event) => {
+// //	 			console.log('pilou')
+// 				console.log(deltaTime);
+// 				switch (event.keyCode) {
+// 					case 87: // W
+// 						this.cubeBody.velocity.x += 0.2;
+// //						this.cubeBody.applyForce(new CANNON.Vec3(0.5, 0, 0), this.cubeBody.position);
+// 						break;
+// 					case 83: // S
+// 						this.cubeBody.velocity.x -= 0.2;
+// //						this.cubeBody.applyForce(new CANNON.Vec3(-0.5, 0, 0), this.cubeBody.position);
+// 						break;
+// 					case 68: // D
+// 						this.cubeBody.velocity.z += 0.2;
+// //						this.cubeBody.applyForce(new CANNON.Vec3(0, 0, 0.5), this.cubeBody.position);
+// 						break;
+// 					case 65: // A
+// 						this.cubeBody.velocity.z -= 0.2;
+// //						this.cubeBody.applyForce(new CANNON.Vec3(0, 0, -0.5), this.cubeBody.position);
+// 						break;
+// 					default:
+// 						break;
+// 				}
+// 			});
+// 			this.throttle = setTimeout(() => {
+// 			  this.throttle = null;
+// 			}, 1000);
+// 		}
+//
 
 		// enable physical debugger
 		if (this.debug.active)
@@ -95,11 +168,12 @@ export default class PhysicalWorld
 
 		// apply the physical world to the cube in the scene
 		this.cube.position.copy(this.cubeBody.position);
+		this.world.fixedStep();
 
 		// recall tick function to update in continue
-		window.requestAnimationFrame(() => {
-			this.tick();
-		})
+		 window.requestAnimationFrame(() => {
+		 	this.tick();
+		 })
 	}
 }
 

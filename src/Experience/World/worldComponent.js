@@ -1,6 +1,5 @@
 import * as THREE from 'three';
 import Experience from "../experience";
-import PhysicalWorld from './physics';
 
 class MainCube
 {
