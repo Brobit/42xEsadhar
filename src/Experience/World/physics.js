@@ -7,22 +7,26 @@ export default class PhysicalWorld
 {
 	constructor()
 	{
+		// get info from the scene
 		this.experience = new Experience();
+
 		this.debug = this.experience.debug;
-		this.camera = this.experience.camera.instance;
-		this.cameraOffset = this.experience.camera.cameraOffset;
-		console.log(this.camera);
-		this.world = new CANNON.World();
-		this.world.gravity.set(0, -9.82, 0);
-		this.cannonDebugger = new CannonDebugger(this.experience.scene, this.world);
+
 		this.cube = this.experience.mainCube.finalCube;
 		this.cubeSize = this.experience.mainCube.cubeSize;
 		this.mainCubePosition = this.experience.mainCube.position;
-		console.log(this.mainCubePosition);
-		this.clock = new THREE.Clock();
-		this.oldElapsedTime = 0;
-		this.camera.lookAt(this.cube.position);
 
+		this.camera = this.experience.camera.instance;
+		this.camera.lookAt(this.cube.position);
+		this.cameraOffset = this.experience.camera.cameraOffset;
+
+		// create cannon js world
+		this.world = new CANNON.World();
+		this.world.gravity.set(0, -9.82, 0);
+		// instanciate cannon debugger
+		this.cannonDebugger = new CannonDebugger(this.experience.scene, this.world);
+
+		// create material for physics
 		this.defaultMaterial = new CANNON.Material('default');
 		this.defaultContactMaterial = new CANNON.ContactMaterial(
 			this.defaultMaterial,
@@ -46,8 +50,6 @@ export default class PhysicalWorld
 
 	setCubeBody()
 	{
-//		this.cubeShape = new CANNON.Box(new CANNON.Vec3(this.cubeSize / 2, this.cubeSize / 2, this.cubeSize / 2));
-//		console.log(this.cubeShape);
 		this.cubeBody = new CANNON.Body({
 			mass : 1,
 			shape : new CANNON.Sphere(0.011),
@@ -81,21 +83,17 @@ export default class PhysicalWorld
 		// Speed of movement
 		this.speed = 0.3;
 
-		document.addEventListener('keydown', (event) => {
+		this.vz = this.vx = 0;
+
+		window.addEventListener('keydown', (event) => {
 			// Update activeKeys object
-			this.activeKeys[event.keyCode] = true;
-			console.log(event.keyCode);
+			this.activeKeys[event.key] = true;
+			console.log(this.activeKeys[event.key]);
 
+			// // Calculate velocity changes based on active keys
+			this.vx = (this.activeKeys["d"] ? this.speed : 0) - (this.activeKeys["a"] ? this.speed : 0); // D - A
+			this.vz = (this.activeKeys["s"] ? this.speed : 0) - (this.activeKeys["w"] ? this.speed : 0); // S - W
 			
-
-			// Calculate velocity changes based on active keys
-			const vx = (this.activeKeys[68] ? this.speed : 0) - (this.activeKeys[65] ? this.speed : 0); // D - A
-			const vz = (this.activeKeys[83] ? this.speed : 0) - (this.activeKeys[87] ? this.speed : 0); // S - W
-
-			// Apply velocity changes
-			this.cubeBody.velocity.x = vx;
-			this.cubeBody.velocity.z = vz;
-
 			// Reset throttle timer
 			if (this.throttle) {
 				clearTimeout(this.throttle);
@@ -109,14 +107,11 @@ export default class PhysicalWorld
 
 		document.addEventListener('keyup', (event) => {
 			// Update activeKeys object
-			this.activeKeys[event.keyCode] = false;
+			this.activeKeys[event.key] = false;
 
 			// Reset cube velocity
-			const vx = (this.activeKeys[68] ? this.speed : 0) - (this.activeKeys[65] ? this.speed : 0); // D - A
-			const vz = (this.activeKeys[83] ? this.speed : 0) - (this.activeKeys[87] ? this.speed : 0); // S - W
-
-			this.cubeBody.velocity.x = vx;
-			this.cubeBody.velocity.z = vz;
+			this.vx = (this.activeKeys["d"] ? this.speed : 0) - (this.activeKeys["a"] ? this.speed : 0); // D - A
+			this.vz = (this.activeKeys["s"] ? this.speed : 0) - (this.activeKeys["w"] ? this.speed : 0); // S - W
 
 			// Reset throttle timer
 			if (this.throttle) {
@@ -128,14 +123,13 @@ export default class PhysicalWorld
 
 	update()
 	{
-		// time managment
-// 		const elapsedTime = this.clock.getElapsedTime();
-// 		const deltaTime = elapsedTime - this.oldElapsedTime;
-// 		this.oldElapsedTime = elapsedTime;
-
 		// enable physical debugger
 		if (this.debug.active)
 			this.cannonDebugger.update();
+		
+		// Apply velocity changes
+		this.cubeBody.velocity.x = this.vx;
+		this.cubeBody.velocity.z = this.vz;
 
 		// apply the physical world to the cube in the scene
 		this.cube.position.copy(this.cubeBody.position);
@@ -143,9 +137,7 @@ export default class PhysicalWorld
 		// update camera to follow the player
 		const objectPosition = new THREE.Vector3();
 		this.cube.getWorldPosition(objectPosition);
-
 		this.camera.position.copy(objectPosition).add(this.cameraOffset);
-
 
 		// update wrld at 60hz
 		this.world.fixedStep();
