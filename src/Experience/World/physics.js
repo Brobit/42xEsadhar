@@ -9,26 +9,38 @@ export default class PhysicalWorld
 	{
 		this.experience = new Experience();
 		this.debug = this.experience.debug;
+		this.camera = this.experience.camera.instance;
+		this.cameraOffset = this.experience.camera.cameraOffset;
+		console.log(this.camera);
 		this.world = new CANNON.World();
 		this.world.gravity.set(0, -9.82, 0);
 		this.cannonDebugger = new CannonDebugger(this.experience.scene, this.world);
-		console.log(this.cannonDebugger);
 		this.cube = this.experience.mainCube.finalCube;
 		this.cubeSize = this.experience.mainCube.cubeSize;
 		this.mainCubePosition = this.experience.mainCube.position;
 		console.log(this.mainCubePosition);
 		this.clock = new THREE.Clock();
 		this.oldElapsedTime = 0;
+		this.camera.lookAt(this.cube.position);
 
-		this.moveDistance = 10;
-		this.localVelocity = new CANNON.Vec3();
+		this.defaultMaterial = new CANNON.Material('default');
+		this.defaultContactMaterial = new CANNON.ContactMaterial(
+			this.defaultMaterial,
+			this.defaultMaterial,
+			{
+				friction: 0.1,
+				restitution: 0.3
+			}
+		)
+		this.world.addContactMaterial(this.defaultContactMaterial);
+		this.world.defaultContactMaterial = this.defaultContactMaterial;
 
 		this.setCubeBody();
 		this.setPlanesBody();
-//		this.setGroundBody();
 
 		this.setKeyListener();
-		this.tick();
+		this.update();
+
 	}
 
 
@@ -41,23 +53,10 @@ export default class PhysicalWorld
 			shape : new CANNON.Sphere(0.011),
 			linearDamping : 0.5,
 			angularDamping : 1,
+			material : this.defaultMaterial
 		});
 		this.cubeBody.position.set(0, 0.011, 0);
 		this.world.addBody(this.cubeBody);
-
-		/* Add: track state of current throttle timer */
-		this.throttle;
-		/* Add: When keyup happens, just reset the throttle timer */
-		document.addEventListener('keyup', () => {
-		  if (this.throttle) {
-			clearTimeout(this.throttle);
-			this.throttle = null;
-		  }
-		})
-
-
-//		this.tick();
-//		requestAnimationFrame(() => this.tick());
 	}
 
 	setPlanesBody()
@@ -66,6 +65,7 @@ export default class PhysicalWorld
 		this.planeBody = new CANNON.Body()
 		this.planeBody.mass = 0
 		this.planeBody.position.y = 0.001;
+		this.planeBody.material = this.defaultMaterial;
 		this.planeBody.quaternion.setFromAxisAngle(new CANNON.Vec3(- 1, 0, 0), Math.PI * 0.5)
 		this.planeBody.addShape(planeShape)
 		this.world.addBody(this.planeBody)
@@ -75,92 +75,63 @@ export default class PhysicalWorld
 	{
 		this.throttle = null;
 
-		window.addEventListener('keydown', (event) => {
-//	 		console.log('pilou')
-//			console.log(deltaTime);
-			switch (event.keyCode) {
-				case 87: // W
-//					this.cubeBody.velocity.x += 0.2;
-						this.cubeBody.applyForce(new CANNON.Vec3(4, 0, 0), this.cubeBody.position);
-					break;
-				case 83: // S
-//					this.cubeBody.velocity.x -= 0.2;
-						this.cubeBody.applyForce(new CANNON.Vec3(-4, 0, 0), this.cubeBody.position);
-					break;
-				case 68: // D
-//					this.cubeBody.velocity.z += 0.2;
-						this.cubeBody.applyForce(new CANNON.Vec3(0, 0, 4), this.cubeBody.position);
-					break;
-				case 65: // A
-//					this.cubeBody.velocity.z -= 0.2;
-						this.cubeBody.applyForce(new CANNON.Vec3(0, 0, -4), this.cubeBody.position);
-					break;
-				default:
-					break;
-			};
+		// Object to track active keys
+		this.activeKeys = {};
 
-			// reset throttle timer
-			if (this.throttle)
-			{
+		// Speed of movement
+		this.speed = 0.3;
+
+		document.addEventListener('keydown', (event) => {
+			// Update activeKeys object
+			this.activeKeys[event.keyCode] = true;
+			console.log(event.keyCode);
+
+			
+
+			// Calculate velocity changes based on active keys
+			const vx = (this.activeKeys[68] ? this.speed : 0) - (this.activeKeys[65] ? this.speed : 0); // D - A
+			const vz = (this.activeKeys[83] ? this.speed : 0) - (this.activeKeys[87] ? this.speed : 0); // S - W
+
+			// Apply velocity changes
+			this.cubeBody.velocity.x = vx;
+			this.cubeBody.velocity.z = vz;
+
+			// Reset throttle timer
+			if (this.throttle) {
 				clearTimeout(this.throttle);
 				this.throttle = null;
 			}
-
+			
 			this.throttle = setTimeout(() => {
 				this.throttle = null;
-			}, 250);
-
+			}, 1000);
 		});
 
-		window.addEventListener('keyup', () => {
-			if (this.throttle)
-			{
+		document.addEventListener('keyup', (event) => {
+			// Update activeKeys object
+			this.activeKeys[event.keyCode] = false;
+
+			// Reset cube velocity
+			const vx = (this.activeKeys[68] ? this.speed : 0) - (this.activeKeys[65] ? this.speed : 0); // D - A
+			const vz = (this.activeKeys[83] ? this.speed : 0) - (this.activeKeys[87] ? this.speed : 0); // S - W
+
+			this.cubeBody.velocity.x = vx;
+			this.cubeBody.velocity.z = vz;
+
+			// Reset throttle timer
+			if (this.throttle) {
 				clearTimeout(this.throttle);
 				this.throttle = null;
 			}
 		});
 	}
 
-	tick()
+	update()
 	{
 		// time managment
 // 		const elapsedTime = this.clock.getElapsedTime();
 // 		const deltaTime = elapsedTime - this.oldElapsedTime;
 // 		this.oldElapsedTime = elapsedTime;
-//
-// 		// movement
-//
-// 		if (!this.throttle)
-// 		{
-// 			window.addEventListener("keydown", (event) => {
-// //	 			console.log('pilou')
-// 				console.log(deltaTime);
-// 				switch (event.keyCode) {
-// 					case 87: // W
-// 						this.cubeBody.velocity.x += 0.2;
-// //						this.cubeBody.applyForce(new CANNON.Vec3(0.5, 0, 0), this.cubeBody.position);
-// 						break;
-// 					case 83: // S
-// 						this.cubeBody.velocity.x -= 0.2;
-// //						this.cubeBody.applyForce(new CANNON.Vec3(-0.5, 0, 0), this.cubeBody.position);
-// 						break;
-// 					case 68: // D
-// 						this.cubeBody.velocity.z += 0.2;
-// //						this.cubeBody.applyForce(new CANNON.Vec3(0, 0, 0.5), this.cubeBody.position);
-// 						break;
-// 					case 65: // A
-// 						this.cubeBody.velocity.z -= 0.2;
-// //						this.cubeBody.applyForce(new CANNON.Vec3(0, 0, -0.5), this.cubeBody.position);
-// 						break;
-// 					default:
-// 						break;
-// 				}
-// 			});
-// 			this.throttle = setTimeout(() => {
-// 			  this.throttle = null;
-// 			}, 1000);
-// 		}
-//
 
 		// enable physical debugger
 		if (this.debug.active)
@@ -168,12 +139,21 @@ export default class PhysicalWorld
 
 		// apply the physical world to the cube in the scene
 		this.cube.position.copy(this.cubeBody.position);
+
+		// update camera to follow the player
+		const objectPosition = new THREE.Vector3();
+		this.cube.getWorldPosition(objectPosition);
+
+		this.camera.position.copy(objectPosition).add(this.cameraOffset);
+
+
+		// update wrld at 60hz
 		this.world.fixedStep();
 
 		// recall tick function to update in continue
-		 window.requestAnimationFrame(() => {
-		 	this.tick();
-		 })
+		  window.requestAnimationFrame(() => {
+		  	this.update();
+		  })
 	}
 }
 

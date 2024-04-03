@@ -42,3 +42,6 @@ le joueur pourra se deplacer sur plusieurs plan ,
 update :
 faire un seul plan qui va bouger en haut ou en bas
 
+au lieu de faire le mouvement dans le addEvenListener, faire le mouvement dans update
+et se servir du addEventListener dans le constructeur pour mettre une valeur pour
+le keydown ou le keyup, et selon si keydown est a 1, executer les mouvements
