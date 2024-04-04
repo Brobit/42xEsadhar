@@ -23,8 +23,19 @@ export default class PhysicalWorld
 		// create cannon js world
 		this.world = new CANNON.World();
 		this.world.gravity.set(0, -9.82, 0);
+
 		// instanciate cannon debugger
-		this.cannonDebugger = new CannonDebugger(this.experience.scene, this.world);
+		this.cannonDebugger = new CannonDebugger(this.experience.scene, this.world, {
+			onInit(body, mesh) {
+				window.addEventListener('keydown', (event) => {
+					if (event.key == 'e')
+						mesh.visible = !mesh.visible;
+				})
+			}
+			}
+		);
+		if (this.debug.active)
+			this.debug.ui.addFolder("appuyer sur 'e' pour afficher/retirer l'affichage de la physique")
 
 		// create material for physics
 		this.defaultMaterial = new CANNON.Material('default');
@@ -41,12 +52,26 @@ export default class PhysicalWorld
 
 		this.setCubeBody();
 		this.setPlanesBody();
+		this.setBorder();
 
 		this.setKeyListener();
 		this.update();
 
 	}
 
+	toggleDebuger()
+	{
+		if (this.cannonIsActive)
+		{
+			this.cannonDebugger.disable();
+			this.cannonIsActive = false;
+		}
+		else
+		{
+			this.cannonDebugger.enable();
+			this.cannonIsActive = true;
+		}
+	}
 
 	setCubeBody()
 	{
@@ -64,59 +89,55 @@ export default class PhysicalWorld
 
 	setPlanesBody()
 	{
-		const planeShape = new CANNON.Plane()
-		this.planeBody = new CANNON.Body()
-		this.planeBody.mass = 0
-		this.planeBody.position.y = 0.001;
+		const planeShape = new CANNON.Plane();
+		this.planeBody = new CANNON.Body();
+		this.planeBody.mass = 0;
+		this.planeBody.position.y = 0.001;;
 		this.planeBody.material = this.defaultMaterial;
-		this.planeBody.quaternion.setFromAxisAngle(new CANNON.Vec3(- 1, 0, 0), Math.PI * 0.5)
-		this.planeBody.addShape(planeShape)
-		this.world.addBody(this.planeBody)
+		this.planeBody.quaternion.setFromAxisAngle(new CANNON.Vec3(- 1, 0, 0), Math.PI * 0.5);
+		this.planeBody.addShape(planeShape);
+		this.world.addBody(this.planeBody);
 	}
 
 	setBorder()
 	{
-		const boxShape = new CANNON.Box(new CANNON.Vec3(0.5, 0.5, 0.5));
-		this.boxBody = new CANNON.Body({
+		const border1 = new CANNON.Plane();
+		const border2 = new CANNON.Plane();
+		const border3 = new CANNON.Plane();
+		const border4 = new CANNON.Plane();
+		this.borderBody1 = new CANNON.Body({
 			mass : 0,
 			material : this.defaultMaterial,
-			shape : boxShape
+			position : new CANNON.Vec3(0.499, 0, 0), // facing x axea
+			shape : border1
 		});
-		this.world.addBody(this.boxBody);
-	}
+		this.borderBody1.quaternion.setFromAxisAngle(new CANNON.Vec3(0, -1, 0), Math.PI * 0.5);
+		this.borderBody2 = new CANNON.Body({
+			mass : 0,
+			material : this.defaultMaterial,
+			position : new CANNON.Vec3(-0.499, 0, 0), // facing -x axes
+			shape : border2
+		});
+		this.borderBody2.quaternion.setFromAxisAngle(new CANNON.Vec3(0, 1, 0), Math.PI * 0.5);
+		this.borderBody3 = new CANNON.Body({
+			mass : 0,
+			material : this.defaultMaterial,
+			position : new CANNON.Vec3(0, 0, 0.499), // facing z axes
+			shape : border3
+		});
+		this.borderBody3.quaternion.setFromAxisAngle(new CANNON.Vec3(0, 1, 0), Math.PI);
+		this.borderBody4 = new CANNON.Body({
+			mass : 0,
+			material : this.defaultMaterial,
+			position : new CANNON.Vec3(0, 0, -0.499), // facing -z axes
+			shape : border4
+		});
 
-	// setBorder()
-	// {
-	// 	const border1 = new CANNON.Plane();
-	// 	const border3 = new CANNON.Plane();
-	// 	const border4 = new CANNON.Plane();
-	// 	// this.borderBody1 = new CANNON.Body({
-	// 	// 	mass : 0,
-	// 	// 	material : this.defaultMaterial,
-	// 	// 	position : new CANNON.Vec3(0.499, 0, 0), // facing x axea
-	// 	// 	shape : border
-	// 	// });
-	// 	// this.borderBody2 = new CANNON.Body({
-	// 	// 	mass : 0,
-	// 	// 	material : this.defaultMaterial,
-	// 	// 	position : new CANNON.Vec3(-0.499, 0, 0), // facing -x axes
-	// 	// 	shape : border
-	// 	// });
-	// 	this.borderBody3 = new CANNON.Body({
-	// 		mass : 0,
-	// 		material : this.defaultMaterial,
-	// 		position : new CANNON.Vec3(0, 0, 0.499), // facing z axes
-	// 		shape : borde3
-	// 	});
-	// 	this.borderBody4 = new CANNON.Body({
-	// 		mass : 0,
-	// 		material : this.defaultMaterial,
-	// 		position : new CANNON.Vec3(0, 0, -0.499), // facing -z axes
-	// 		shape : border4
-	// 	});
-	//
-	// 	this.world.addBody(this.borderBody4);
-	// }
+		this.world.addBody(this.borderBody1);
+		this.world.addBody(this.borderBody2);
+		this.world.addBody(this.borderBody3);
+		this.world.addBody(this.borderBody4);
+	}
 	
 	setKeyListener()
 	{
@@ -183,6 +204,7 @@ export default class PhysicalWorld
 		const objectPosition = new THREE.Vector3();
 		this.cube.getWorldPosition(objectPosition);
 		this.camera.position.copy(objectPosition).add(this.cameraOffset);
+
 
 		// update wrld at 60hz
 		this.world.fixedStep();
