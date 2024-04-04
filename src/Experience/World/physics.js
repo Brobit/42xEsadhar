@@ -50,9 +50,10 @@ export default class PhysicalWorld
 
 	setCubeBody()
 	{
+		this.cubeShape = new CANNON.Sphere(0.011);
 		this.cubeBody = new CANNON.Body({
 			mass : 1,
-			shape : new CANNON.Sphere(0.011),
+			shape : this.cubeShape,
 			linearDamping : 0.5,
 			angularDamping : 1,
 			material : this.defaultMaterial
@@ -73,6 +74,50 @@ export default class PhysicalWorld
 		this.world.addBody(this.planeBody)
 	}
 
+	setBorder()
+	{
+		const boxShape = new CANNON.Box(new CANNON.Vec3(0.5, 0.5, 0.5));
+		this.boxBody = new CANNON.Body({
+			mass : 0,
+			material : this.defaultMaterial,
+			shape : boxShape
+		});
+		this.world.addBody(this.boxBody);
+	}
+
+	// setBorder()
+	// {
+	// 	const border1 = new CANNON.Plane();
+	// 	const border3 = new CANNON.Plane();
+	// 	const border4 = new CANNON.Plane();
+	// 	// this.borderBody1 = new CANNON.Body({
+	// 	// 	mass : 0,
+	// 	// 	material : this.defaultMaterial,
+	// 	// 	position : new CANNON.Vec3(0.499, 0, 0), // facing x axea
+	// 	// 	shape : border
+	// 	// });
+	// 	// this.borderBody2 = new CANNON.Body({
+	// 	// 	mass : 0,
+	// 	// 	material : this.defaultMaterial,
+	// 	// 	position : new CANNON.Vec3(-0.499, 0, 0), // facing -x axes
+	// 	// 	shape : border
+	// 	// });
+	// 	this.borderBody3 = new CANNON.Body({
+	// 		mass : 0,
+	// 		material : this.defaultMaterial,
+	// 		position : new CANNON.Vec3(0, 0, 0.499), // facing z axes
+	// 		shape : borde3
+	// 	});
+	// 	this.borderBody4 = new CANNON.Body({
+	// 		mass : 0,
+	// 		material : this.defaultMaterial,
+	// 		position : new CANNON.Vec3(0, 0, -0.499), // facing -z axes
+	// 		shape : border4
+	// 	});
+	//
+	// 	this.world.addBody(this.borderBody4);
+	// }
+	
 	setKeyListener()
 	{
 		this.throttle = null;

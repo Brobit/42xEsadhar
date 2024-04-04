@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import Experience from "../experience";
 
 class MainCube
@@ -10,13 +11,16 @@ class MainCube
 		this.debug = this.experience.debug;
 		this.cubeSize = 0.02;
 		this.position = new THREE.Vector3(0, 0.011, 0);
+		this.asset = {};
 
 		 if (this.debug.active)
 		 {
 		 	this.debugCube = this.debug.ui.addFolder('playable cube');
+			this.debug3d = this.debug.ui.addFolder('3d paint');
 		 }
 
 		this.setMainCube();
+		this.setWorld();
 	}
 
 	setMainCube()
@@ -63,6 +67,37 @@ class MainCube
 				this.finalCube.position.y = cube.positionY;
 			});
 		 }
+	}
+
+	setWorld()
+	{
+		const loader = new GLTFLoader();
+		const scene = this.scene;
+		const debug = this.debug;
+		const debug3d = this.debug3d;
+
+		loader.load(
+			'./cube-soleil-levant.glb',
+			function (gltf) {
+				gltf.scene.scale.set(0.05, 0.05, 0.05);
+				gltf.scene.position.x = 0.075;
+				gltf.scene.position.y = 2.37;
+				gltf.scene.position.z = 0.825;
+				gltf.scene.visible = false;
+				const assets = gltf;
+				console.log(assets);
+				scene.add(gltf.scene);
+				if (debug.active)
+					debug3d.add(gltf.scene, 'visible');
+			},
+			function (xhr) {
+				console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+			},
+			function (gltf) {
+				console.log(gltf);
+			}
+		);
+		
 	}
 }
 

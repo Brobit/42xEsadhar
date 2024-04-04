@@ -7,6 +7,7 @@ import Renderer from './renderer.js';
 import World from './World/world.js';
 import Debug from './Utils/debug.js';
 import PhysicalWorld from './World/physics.js';
+import Light from './Utils/light.js';
 
 let instance = null;
 
@@ -34,6 +35,7 @@ export default class Experience
 		this.scene = new THREE.Scene();
 		this.camera = new Camera();
 		this.renderer = new Renderer();
+		this.light = new Light();
 		this.world = new World();
 		this.mainCube = new WORLDCOMPONENT.MainCube();
 		this.enemyCube = new WORLDCOMPONENT.EnnemyCube();

@@ -13,7 +13,8 @@ export default class Camera
 		this.cameraOffset = new THREE.Vector3(0, 0.05, 0.2);
 
 		this.setInstance();
-//		this.setControls();
+		this.setOrbitInstance();
+		this.setControls();
 	}
 
 	setInstance()
@@ -23,9 +24,16 @@ export default class Camera
 		this.scene.add(this.instance);
 	}
 
+	setOrbitInstance()
+	{
+		this.orbitInstance = new THREE.PerspectiveCamera(45, this.sizes.width / this.sizes.height, 0.1, 100);
+		this.orbitInstance.position.set(0, 0.05, 0.2);
+		this.scene.add(this.orbitInstance);
+	}
+
 	setControls()
 	{
-		this.controls = new OrbitControls(this.instance, this.canvas);
+		this.controls = new OrbitControls(this.orbitInstance, this.canvas);
 		this.controls.enableDamping = true;
 	}
 

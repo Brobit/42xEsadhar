@@ -87,7 +87,7 @@ export default class World
 			wireframe : true
 		});
 		const plane = new THREE.Mesh(geometry, material);
-		plane.visible = false;
+		plane.visible = true;
 		plane.rotateX(Math.PI / 2);
 		this.scene.add(plane);
 
@@ -139,6 +139,7 @@ export default class World
 		const material = new THREE.MeshBasicMaterial({
 			color : planeObject.color,
 			side : THREE.DoubleSide,
+			visible : false,
 			wireframe : true
 		});
 
@@ -186,6 +187,9 @@ export default class World
 
 			this.debugAllPlane
 				.add(material, 'wireframe');
+
+			this.debugAllPlane
+				.add(material, 'visible');
 		}
 	}
 }
