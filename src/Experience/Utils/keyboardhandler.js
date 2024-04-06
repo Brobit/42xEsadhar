@@ -30,11 +30,22 @@ export default class KeyboardHandler
 			this.activeKeys[event.key] = true;
 			console.log(this.activeKeys);
 
-			// Calculate velocity changes based on active keys
-			if (this.activeKeys["w"] == true
-				|| this.activeKeys["a"] == true
-				|| this.activeKeys["s"] == true
-				|| this.activeKeys["d"] == true)
+			// try to check if the keybaord is azerty
+			if (this.activeKeys["z"] == true)
+			{
+				// disable the z and enable the w
+				this.activeKeys["z"] = false;
+				this.activeKeys["w"] = true;
+			}
+			if (this.activeKeys["q"] == true)
+			{
+				// disable the q and enable the a
+				this.activeKeys["q"] = false;
+				this.activeKeys["a"] = true;
+			}
+
+			if (this.activeKeys["w"] == true || this.activeKeys["a"] == true
+				|| this.activeKeys["s"] == true || this.activeKeys["d"] == true)
 				this.move();
 			if (this.activeKeys[" "])
 				this.dash();
@@ -54,9 +65,14 @@ export default class KeyboardHandler
 			// Update activeKeys object
 			this.activeKeys[event.key] = false;
 
+			// reseting the azerty input
+			if (event.key === "z")
+				this.activeKeys["w"] = false;
+			if (event.key === "q")
+				this.activeKeys["a"] = false;
+
 			// Reset cube velocity
-			this.vx = (this.activeKeys["d"] ? this.speed : 0) - (this.activeKeys["a"] ? this.speed : 0); // D - A
-			this.vz = (this.activeKeys["s"] ? this.speed : 0) - (this.activeKeys["w"] ? this.speed : 0); // S - W
+			this.move();
 
 			// Reset throttle timer
 			if (this.throttle) {
@@ -68,6 +84,7 @@ export default class KeyboardHandler
 
 	move()
 	{
+			// Calculate velocity changes based on active keys
 			this.vx = (this.activeKeys["d"] ? this.speed : 0) - (this.activeKeys["a"] ? this.speed : 0); // D - A
 			this.vz = (this.activeKeys["s"] ? this.speed : 0) - (this.activeKeys["w"] ? this.speed : 0); // S - W
 	}

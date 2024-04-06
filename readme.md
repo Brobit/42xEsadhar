@@ -25,7 +25,7 @@ npm run dev
   the initial speed of the cube, in fact, fix the ennemy cube if the 
   cube is in a dash action/movment
   maybe do a boolean that tell if the player is in a dash or not
-- [ ] handle another keyboard layout , azerty for example
+- [x] handle another keyboard layout , azerty for example
 - [ ] find a way to slice the gbl model in 2x2x2 cube and if possible store all the 
   2x2x2 cube in an array where you store :
   - the 8 cube that compose the 2x2x2 cube that is going to be displayed
