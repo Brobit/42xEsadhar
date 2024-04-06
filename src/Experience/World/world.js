@@ -9,7 +9,7 @@ export default class World
 		this.scene = this.experience.scene;
 		this.debug = this.experience.debug;
 		this.cubeDivision = 10;
-		this.planeDivision = 40;
+		this.planeDivision = 20;
 
 		if (this.debug.active)
 		{

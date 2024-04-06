@@ -8,6 +8,7 @@ import World from './World/world.js';
 import Debug from './Utils/debug.js';
 import PhysicalWorld from './World/physics.js';
 import Light from './Utils/light.js';
+import KeyboardHandler from './Utils/keyboardhandler.js';
 
 let instance = null;
 
@@ -40,6 +41,7 @@ export default class Experience
 		this.mainCube = new WORLDCOMPONENT.MainCube();
 		this.enemyCube = new WORLDCOMPONENT.EnnemyCube();
 		this.physicalWorld = new PhysicalWorld();
+		this.keyboardHandler = new KeyboardHandler();
 
 		// resize event
 		this.sizes.on('resize', () =>

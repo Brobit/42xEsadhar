@@ -54,7 +54,6 @@ export default class PhysicalWorld
 		this.setPlanesBody();
 		this.setBorder();
 
-		this.setKeyListener();
 		this.update();
 
 	}
@@ -90,47 +89,45 @@ export default class PhysicalWorld
 	setPlanesBody()
 	{
 		const planeShape = new CANNON.Plane();
-		this.planeBody = new CANNON.Body();
-		this.planeBody.mass = 0;
-		this.planeBody.position.y = 0.001;;
-		this.planeBody.material = this.defaultMaterial;
+		this.planeBody = new CANNON.Body({
+			mass : 0,
+			position : new CANNON.Vec3(0, 0.001, 0),
+			material : this.defaultMaterial,
+		shape : planeShape
+		});
 		this.planeBody.quaternion.setFromAxisAngle(new CANNON.Vec3(- 1, 0, 0), Math.PI * 0.5);
-		this.planeBody.addShape(planeShape);
 		this.world.addBody(this.planeBody);
 	}
 
 	setBorder()
 	{
-		const border1 = new CANNON.Plane();
-		const border2 = new CANNON.Plane();
-		const border3 = new CANNON.Plane();
-		const border4 = new CANNON.Plane();
+		const border = new CANNON.Plane();
 		this.borderBody1 = new CANNON.Body({
 			mass : 0,
 			material : this.defaultMaterial,
 			position : new CANNON.Vec3(0.499, 0, 0), // facing x axea
-			shape : border1
+			shape : border
 		});
 		this.borderBody1.quaternion.setFromAxisAngle(new CANNON.Vec3(0, -1, 0), Math.PI * 0.5);
 		this.borderBody2 = new CANNON.Body({
 			mass : 0,
 			material : this.defaultMaterial,
 			position : new CANNON.Vec3(-0.499, 0, 0), // facing -x axes
-			shape : border2
+			shape : border
 		});
 		this.borderBody2.quaternion.setFromAxisAngle(new CANNON.Vec3(0, 1, 0), Math.PI * 0.5);
 		this.borderBody3 = new CANNON.Body({
 			mass : 0,
 			material : this.defaultMaterial,
 			position : new CANNON.Vec3(0, 0, 0.499), // facing z axes
-			shape : border3
+			shape : border
 		});
 		this.borderBody3.quaternion.setFromAxisAngle(new CANNON.Vec3(0, 1, 0), Math.PI);
 		this.borderBody4 = new CANNON.Body({
 			mass : 0,
 			material : this.defaultMaterial,
 			position : new CANNON.Vec3(0, 0, -0.499), // facing -z axes
-			shape : border4
+			shape : border
 		});
 
 		this.world.addBody(this.borderBody1);
@@ -139,64 +136,12 @@ export default class PhysicalWorld
 		this.world.addBody(this.borderBody4);
 	}
 	
-	setKeyListener()
-	{
-		this.throttle = null;
-
-		// Object to track active keys
-		this.activeKeys = {};
-
-		// Speed of movement
-		this.speed = 0.3;
-
-		this.vz = this.vx = 0;
-
-		window.addEventListener('keydown', (event) => {
-			// Update activeKeys object
-			this.activeKeys[event.key] = true;
-			console.log(this.activeKeys[event.key]);
-
-			// // Calculate velocity changes based on active keys
-			this.vx = (this.activeKeys["d"] ? this.speed : 0) - (this.activeKeys["a"] ? this.speed : 0); // D - A
-			this.vz = (this.activeKeys["s"] ? this.speed : 0) - (this.activeKeys["w"] ? this.speed : 0); // S - W
-			
-			// Reset throttle timer
-			if (this.throttle) {
-				clearTimeout(this.throttle);
-				this.throttle = null;
-			}
-			
-			this.throttle = setTimeout(() => {
-				this.throttle = null;
-			}, 1000);
-		});
-
-		document.addEventListener('keyup', (event) => {
-			// Update activeKeys object
-			this.activeKeys[event.key] = false;
-
-			// Reset cube velocity
-			this.vx = (this.activeKeys["d"] ? this.speed : 0) - (this.activeKeys["a"] ? this.speed : 0); // D - A
-			this.vz = (this.activeKeys["s"] ? this.speed : 0) - (this.activeKeys["w"] ? this.speed : 0); // S - W
-
-			// Reset throttle timer
-			if (this.throttle) {
-				clearTimeout(this.throttle);
-				this.throttle = null;
-			}
-		});
-	}
-
 	update()
 	{
 		// enable physical debugger
 		if (this.debug.active)
 			this.cannonDebugger.update();
 		
-		// Apply velocity changes
-		this.cubeBody.velocity.x = this.vx;
-		this.cubeBody.velocity.z = this.vz;
-
 		// apply the physical world to the cube in the scene
 		this.cube.position.copy(this.cubeBody.position);
 
@@ -209,11 +154,9 @@ export default class PhysicalWorld
 		// update wrld at 60hz
 		this.world.fixedStep();
 
-		// recall tick function to update in continue
+		// recall update function to update in continue
 		  window.requestAnimationFrame(() => {
 		  	this.update();
 		  })
 	}
 }
-
-//export { PhysicalWorld };
