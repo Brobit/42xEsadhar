@@ -9,6 +9,10 @@ export default class KeyboardHandler
 		this.cube = this.experience.mainCube.finalCube;
 		this.cubeBody = this.experience.physicalWorld.cubeBody;
 		this.world = this.experience.physicalWorld.world;
+		this.debug = this.experience.debug;
+
+		if (this.debug.active)
+			this.debug.ui.addFolder('press space to dash')
 
 		// timeout setter
 		this.throttle = null;
@@ -16,6 +20,7 @@ export default class KeyboardHandler
 		this.activeKeys = {};
 		// Speed of movement
 		this.speed = 0.3;
+		this.dashSpeed = 1.5;
 		// init velocity modifier
 		this.vz = this.vx = 0;
 
@@ -84,21 +89,26 @@ export default class KeyboardHandler
 
 	move()
 	{
-			// Calculate velocity changes based on active keys
-			this.vx = (this.activeKeys["d"] ? this.speed : 0) - (this.activeKeys["a"] ? this.speed : 0); // D - A
-			this.vz = (this.activeKeys["s"] ? this.speed : 0) - (this.activeKeys["w"] ? this.speed : 0); // S - W
+		// Calculate velocity changes based on active keys
+		this.vx = (this.activeKeys["d"] ? this.speed : 0) - (this.activeKeys["a"] ? this.speed : 0); // D - A
+		this.vz = (this.activeKeys["s"] ? this.speed : 0) - (this.activeKeys["w"] ? this.speed : 0); // S - W
 	}
 
-	// dash()
-	// {
-	// 	gsap.to(this.cubeBody.position,
-	// 	{
-	// 		duration : 1,
-	// 		delay : 1,
-	// 		this.vx = (this.activeKeys["d"] ? this.speed : 0) - (this.activeKeys["a"] ? this.speed : 0); // D - A
-	// 		this.vz = (this.activeKeys["s"] ? this.speed : 0) - (this.activeKeys["w"] ? this.speed : 0); // S - W
-	// 	})
-	// }
+	dash()
+	{
+		// this.move();
+		// gsap.to(this.cubeBody.position,
+		// {
+		// 	duration : 0.5,
+		// 	delay : 0.05,
+		// 	ease : "circ.out",
+		// 	z : this.vz,
+		// 	x : this.vx
+		// })
+
+		this.vx = (this.activeKeys["d"] ? this.dashSpeed : 0) - (this.activeKeys["a"] ? this.dashSpeed : 0); // D - A
+		this.vz = (this.activeKeys["s"] ? this.dashSpeed : 0) - (this.activeKeys["w"] ? this.dashSpeed : 0); // S - W
+	}
 
 	update()
 	{

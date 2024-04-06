@@ -35,7 +35,7 @@ export default class PhysicalWorld
 			}
 		);
 		if (this.debug.active)
-			this.debug.ui.addFolder("appuyer sur 'e' pour afficher/retirer l'affichage de la physique")
+			this.debug.ui.addFolder("press 'e' to toggle physic");
 
 		// create material for physics
 		this.defaultMaterial = new CANNON.Material('default');
@@ -152,7 +152,7 @@ export default class PhysicalWorld
 
 
 		// update wrld at 60hz
-		this.world.fixedStep();
+		this.world.fixedStep(1/120);
 
 		// recall update function to update in continue
 		  window.requestAnimationFrame(() => {

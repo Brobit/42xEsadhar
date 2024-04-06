@@ -15,7 +15,7 @@ npm run dev
 
 ## To do
 
-- [ ] implement the machanic of dash
+- [x] implement the machanic of dash
 - [ ] implement the camera changement direction with the right & left arrow
 - [ ] implement the changement of level with the up & dowm arrow
 - [ ] make cube ennemy ( 3 - 5 alive in the same time )
