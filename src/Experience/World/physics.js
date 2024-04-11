@@ -17,7 +17,7 @@ export default class PhysicalWorld
 		this.mainCubePosition = this.experience.mainCube.position;
 
 		this.camera = this.experience.camera.instance;
-		this.camera.lookAt(this.cube.position);
+//		this.camera.lookAt(this.cube.position);
 		this.cameraOffset = this.experience.camera.cameraOffset;
 
 		// create cannon js world
@@ -55,7 +55,6 @@ export default class PhysicalWorld
 		this.setBorder();
 
 		this.update();
-
 	}
 
 	toggleDebuger()
@@ -144,11 +143,13 @@ export default class PhysicalWorld
 		
 		// apply the physical world to the cube in the scene
 		this.cube.position.copy(this.cubeBody.position);
+		this.cube.quaternion.copy(this.cubeBody.quaternion);
 
 		// update camera to follow the player
-		const objectPosition = new THREE.Vector3();
-		this.cube.getWorldPosition(objectPosition);
-		this.camera.position.copy(objectPosition).add(this.cameraOffset);
+		// update perspective camera
+		// const objectPosition = new THREE.Vector3();
+		// this.cube.getWorldPosition(objectPosition);
+		// this.camera.position.copy(objectPosition).add(this.cameraOffset);
 
 
 		// update wrld at 60hz

@@ -1,3 +1,5 @@
+import * as THREE from 'three'
+import * as CANNON from "cannon-es";
 import Experience from "../experience";
 import gsap from "gsap";
 
@@ -6,13 +8,38 @@ export default class KeyboardHandler
 	constructor()
 	{
 		this.experience = new Experience();
+		// get worls
+		this.world = this.experience.physicalWorld.world;
+		// get the cube info
 		this.cube = this.experience.mainCube.finalCube;
 		this.cubeBody = this.experience.physicalWorld.cubeBody;
-		this.world = this.experience.physicalWorld.world;
+		// get camera info
+		this.camera = this.experience.camera;
+		this.camera.instance.rotateX(-Math.PI / 12);
+//		this.camera.controls.target.copy(this.cube.position);
+//		this.camera.instance.lookAt(this.cube.position);
+		// use to rotate the camera
+		this.rotationQuaternion = new CANNON.Quaternion();
+		this.axisY = new CANNON.Vec3(0, 1, 0);
+		this.delta = new THREE.Clock();
+//		this.controlCamera = false;
+		this.angle = {
+			base : new THREE.Vector3(0, 0.05, 0.2),
+			quarter : new THREE.Vector3(0.2, 0.05, 0),
+			half : new THREE.Vector3(0, 0.05, -0.2),
+			threeQuarter : new THREE.Vector3(-0.2, 0.05, 0)
+		}
+		this.cameraPosition = this.angle.base;
 		this.debug = this.experience.debug;
-
 		if (this.debug.active)
-			this.debug.ui.addFolder('press space to dash')
+		{
+			this.debug.ui.addFolder('press space to dash');
+			this.debugCamera = this.debug.ui.addFolder('debug camera');
+			this.debugCamera.add(this.camera.instance.position, 'x', -Math.PI / 2, Math.PI / 2, 0.01).listen();
+			this.debugCamera.add(this.camera.instance.position, 'y', -Math.PI / 2, Math.PI / 2, 0.01).listen();
+			this.debugCamera.add(this.camera.instance.position, 'z', -Math.PI / 2, Math.PI / 2, 0.01).listen();
+			this.debugCamera.hide();
+		}
 
 		// timeout setter
 		this.throttle = null;
@@ -33,7 +60,7 @@ export default class KeyboardHandler
 		window.addEventListener('keydown', (event) => {
 			// Update activeKeys object
 			this.activeKeys[event.key] = true;
-			console.log(this.activeKeys);
+//			console.log(this.activeKeys);
 
 			// try to check if the keybaord is azerty
 			if (this.activeKeys["z"] == true)
@@ -49,11 +76,18 @@ export default class KeyboardHandler
 				this.activeKeys["a"] = true;
 			}
 
+			// execute the movement
 			if (this.activeKeys["w"] == true || this.activeKeys["a"] == true
 				|| this.activeKeys["s"] == true || this.activeKeys["d"] == true)
 				this.move();
+			// execute the dash
 			if (this.activeKeys[" "])
 				this.dash();
+			// rotate the camera depend of the right/left arroe
+			if (this.activeKeys["ArrowLeft"])
+				this.moveCameraLeft();
+			else if (this.activeKeys["ArrowRight"])
+				this.moveCameraRight();
 			
 			// Reset throttle timer
 			if (this.throttle) {
@@ -66,7 +100,7 @@ export default class KeyboardHandler
 			}, 1000);
 		});
 
-		document.addEventListener('keyup', (event) => {
+		window.addEventListener('keyup', (event) => {
 			// Update activeKeys object
 			this.activeKeys[event.key] = false;
 
@@ -96,18 +130,85 @@ export default class KeyboardHandler
 
 	dash()
 	{
-		// this.move();
-		// gsap.to(this.cubeBody.position,
-		// {
-		// 	duration : 0.5,
-		// 	delay : 0.05,
-		// 	ease : "circ.out",
-		// 	z : this.vz,
-		// 	x : this.vx
-		// })
-
 		this.vx = (this.activeKeys["d"] ? this.dashSpeed : 0) - (this.activeKeys["a"] ? this.dashSpeed : 0); // D - A
 		this.vz = (this.activeKeys["s"] ? this.dashSpeed : 0) - (this.activeKeys["w"] ? this.dashSpeed : 0); // S - W
+	}
+
+	moveCameraLeft()
+	{
+		const cubeRota = this.cube.rotation;
+		gsap.to(cubeRota,
+		{
+				duration : 0.5,
+				delay : 0.05,
+				y : Math.PI / 2,
+		});
+		this.cube.rotation.set(0, 0, 0);
+		// if (this.debug.active)
+		// {
+		// 	this.debugCamera.show();
+		// }
+		if (this.cameraPosition == this.angle.base)
+		{
+			this.camera.instance.position.set(this.angle.quarter);
+		 	this.camera.instance.rotateY(Math.PI / 2).rotateZ(Math.PI / 12).rotateX(-Math.PI / 12);
+			this.cameraPosition = this.angle.quarter;
+		}
+		else if (this.cameraPosition == this.angle.quarter)
+		{
+			this.camera.instance.position.set(this.angle.half);
+		 	this.camera.instance.rotateY(Math.PI / 2).rotateZ(Math.PI / 12).rotateX(-Math.PI / 12);
+			this.cameraPosition = this.angle.half;
+		}
+		else if (this.cameraPosition == this.angle.half)
+		{
+			this.camera.instance.position.set(this.angle.threeQuarter);
+		 	this.camera.instance.rotateY(Math.PI / 2).rotateZ(Math.PI / 12).rotateX(-Math.PI / 12);
+			this.cameraPosition = this.angle.threeQuarter;
+		}
+		else if (this.cameraPosition == this.angle.threeQuarter)
+		{
+			this.camera.instance.position.set(this.angle.base);
+		 	this.camera.instance.rotateY(Math.PI / 2).rotateZ(Math.PI / 12).rotateX(-Math.PI / 12);
+			this.cameraPosition = this.angle.base;
+		}
+	}
+
+	moveCameraRight()
+	{
+		const cubeRota = this.cube.rotation;
+		gsap.to(cubeRota,
+		{
+				duration : 0.5,
+				delay : 0.05,
+				y : -Math.PI / 2,
+		});
+		this.cube.rotation.set(0, 0, 0);
+
+		if (this.cameraPosition == this.angle.base)
+		{
+			this.camera.instance.position.set(this.angle.threeQuarter);
+		 	this.camera.instance.rotateY(-Math.PI / 2).rotateZ(-Math.PI / 12).rotateX(-Math.PI / 12);
+			this.cameraPosition = this.angle.threeQuarter;
+		}
+		else if (this.cameraPosition == this.angle.threeQuarter)
+		{
+			this.camera.instance.position.set(this.angle.half);
+		 	this.camera.instance.rotateY(-Math.PI / 2).rotateZ(-Math.PI / 12).rotateX(-Math.PI / 12);
+			this.cameraPosition = this.angle.half;
+		}
+		else if (this.cameraPosition == this.angle.half)
+		{
+			this.camera.instance.position.set(this.angle.quarter);
+		 	this.camera.instance.rotateY(-Math.PI / 2).rotateZ(-Math.PI / 12).rotateX(-Math.PI / 12);
+			this.cameraPosition = this.angle.quarter;
+		}
+		else if (this.cameraPosition == this.angle.quarter)
+		{
+			this.camera.instance.position.set(this.angle.base);
+		 	this.camera.instance.rotateY(-Math.PI / 2).rotateZ(-Math.PI / 12).rotateX(-Math.PI / 12);
+			this.cameraPosition = this.angle.base;
+		}
 	}
 
 	update()
@@ -115,6 +216,30 @@ export default class KeyboardHandler
 		// Apply velocity changes
 		this.cubeBody.velocity.x = this.vx;
 		this.cubeBody.velocity.z = this.vz;
+
+		// this.rotateAngle = Math.PI / 2 * this.delta.getDelta();
+
+		// if (this.activeKeys["ArrowLeft"])
+		// {
+		// 	this.rotationQuaternion.setFromAxisAngle(this.axisY, this.rotateAngle);
+		// 	this.cubeBody.quaternion = this.rotationQuaternion.mult(this.cubeBody.quaternion);
+		//
+		// 	this.camera.instance.position.copy(this.cube.position).add(this.camera.cameraOffset);
+		// 	this.camera.instance.lookAt(this.cube.position);
+		// }
+		// if (this.activeKeys["ArrowRight"])
+		// {
+		// 	this.rotationQuaternion.setFromAxisAngle(this.axisY, -this.rotateAngle);
+		// 	this.cubeBody.quaternion = this.rotationQuaternion.mult(this.cubeBody.quaternion);
+		//
+		// 	this.camera.instance.position.copy(this.cube.position).add(this.camera.cameraOffset);
+		// 	this.camera.instance.lookAt(this.cube.position);
+		// }
+		
+		// this.camera.controls.target.copy(this.cube.position);
+		// this.camera.controls.update()
+
+		this.camera.instance.position.copy(this.cube.position).add(this.cameraPosition);
 
 		// recall update function to update in continue
 		window.requestAnimationFrame(() => {

@@ -17,7 +17,7 @@ npm run dev
 
 - [x] implement the machanic of dash
 - [ ] implement the camera changement direction with the right & left arrow
-- [ ] implement the changement of level with the up & dowm arrow
+- [ ] implement the changement of level with the up & down arrow
 - [ ] make cube ennemy ( 3 - 5 alive in the same time )
 - [ ] make them constantly lookAt the cube and make them move
 - [ ] fix them when there is a collision between the cube and the ennemy,
@@ -52,6 +52,10 @@ bonus :
 - [ ] make the cube glide a little, to not stop directly when the user stop the movment
 - [ ] implement vertical axes
 - [ ] implement a button to change from horizontal axes to vertical axes
+
+to correct :
+- [ ] put a cooldown on the dash, like 2 second and if you dash and kill an ennemy,
+    there is no cooldown
 
 bug :
 
