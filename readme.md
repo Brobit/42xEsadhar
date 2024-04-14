@@ -14,7 +14,7 @@ npm run dev
 ```
 
 36 day left - 
-14 things to do - 
+15 things to do - 
 2 things to correct - 
 3 bonus to implement
 
