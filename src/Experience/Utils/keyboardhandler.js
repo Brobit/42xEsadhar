@@ -16,13 +16,6 @@ export default class KeyboardHandler
 		// get camera info
 		this.camera = this.experience.camera;
 		this.camera.instance.rotateX(-Math.PI / 12);
-//		this.camera.controls.target.copy(this.cube.position);
-//		this.camera.instance.lookAt(this.cube.position);
-		// use to rotate the camera
-		this.rotationQuaternion = new CANNON.Quaternion();
-		this.axisY = new CANNON.Vec3(0, 1, 0);
-		this.delta = new THREE.Clock();
-//		this.controlCamera = false;
 		this.angle = {
 			base : new THREE.Vector3(0, 0.05, 0.2),
 			quarter : new THREE.Vector3(0.2, 0.05, 0),
@@ -88,7 +81,7 @@ export default class KeyboardHandler
 				this.moveCameraLeft();
 			else if (this.activeKeys["ArrowRight"])
 				this.moveCameraRight();
-			
+
 			// Reset throttle timer
 			if (this.throttle) {
 				clearTimeout(this.throttle);
@@ -136,48 +129,46 @@ export default class KeyboardHandler
 
 	moveCameraLeft()
 	{
-		const cubeRota = this.cube.rotation;
-		gsap.to(cubeRota,
-		{
-				duration : 0.5,
-				delay : 0.05,
-				y : Math.PI / 2,
-		});
-		this.cube.rotation.set(0, 0, 0);
 		// if (this.debug.active)
 		// {
 		// 	this.debugCamera.show();
 		// }
+		gsap.to(this.cube.rotation,
+		{
+				duration : 0.5,
+				delay : 0.05,
+				y : Math.PI / 2,
+				onComplete : () => {
+					this.cube.rotation.set(0, 0, 0);
+				}
+		});
 		if (this.cameraPosition == this.angle.base)
 		{
 			this.camera.instance.position.set(this.angle.quarter);
-		 	this.camera.instance.rotateY(Math.PI / 2).rotateZ(Math.PI / 12).rotateX(-Math.PI / 12);
 			this.cameraPosition = this.angle.quarter;
 		}
 		else if (this.cameraPosition == this.angle.quarter)
 		{
 			this.camera.instance.position.set(this.angle.half);
-		 	this.camera.instance.rotateY(Math.PI / 2).rotateZ(Math.PI / 12).rotateX(-Math.PI / 12);
 			this.cameraPosition = this.angle.half;
 		}
 		else if (this.cameraPosition == this.angle.half)
 		{
 			this.camera.instance.position.set(this.angle.threeQuarter);
-		 	this.camera.instance.rotateY(Math.PI / 2).rotateZ(Math.PI / 12).rotateX(-Math.PI / 12);
 			this.cameraPosition = this.angle.threeQuarter;
 		}
 		else if (this.cameraPosition == this.angle.threeQuarter)
 		{
 			this.camera.instance.position.set(this.angle.base);
-		 	this.camera.instance.rotateY(Math.PI / 2).rotateZ(Math.PI / 12).rotateX(-Math.PI / 12);
 			this.cameraPosition = this.angle.base;
 		}
+		this.camera.instance.rotateY(Math.PI / 2).rotateZ(Math.PI / 12).rotateX(-Math.PI / 12);
 	}
 
 	moveCameraRight()
 	{
-		const cubeRota = this.cube.rotation;
-		gsap.to(cubeRota,
+//		const cubeRota = this.cube.rotation;
+		gsap.to(this.cube.rotation,
 		{
 				duration : 0.5,
 				delay : 0.05,
@@ -216,28 +207,6 @@ export default class KeyboardHandler
 		// Apply velocity changes
 		this.cubeBody.velocity.x = this.vx;
 		this.cubeBody.velocity.z = this.vz;
-
-		// this.rotateAngle = Math.PI / 2 * this.delta.getDelta();
-
-		// if (this.activeKeys["ArrowLeft"])
-		// {
-		// 	this.rotationQuaternion.setFromAxisAngle(this.axisY, this.rotateAngle);
-		// 	this.cubeBody.quaternion = this.rotationQuaternion.mult(this.cubeBody.quaternion);
-		//
-		// 	this.camera.instance.position.copy(this.cube.position).add(this.camera.cameraOffset);
-		// 	this.camera.instance.lookAt(this.cube.position);
-		// }
-		// if (this.activeKeys["ArrowRight"])
-		// {
-		// 	this.rotationQuaternion.setFromAxisAngle(this.axisY, -this.rotateAngle);
-		// 	this.cubeBody.quaternion = this.rotationQuaternion.mult(this.cubeBody.quaternion);
-		//
-		// 	this.camera.instance.position.copy(this.cube.position).add(this.camera.cameraOffset);
-		// 	this.camera.instance.lookAt(this.cube.position);
-		// }
-		
-		// this.camera.controls.target.copy(this.cube.position);
-		// this.camera.controls.update()
 
 		this.camera.instance.position.copy(this.cube.position).add(this.cameraPosition);
 

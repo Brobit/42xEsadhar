@@ -13,17 +13,23 @@ npm run dev
 
 ```
 
+36 day left
+14 things to do
+2 things to correct
+3 bonus to implement
+
 ## To do
 
 - [x] implement the machanic of dash
-- [ ] implement the camera changement direction with the right & left arrow
+- [x] implement the camera changement direction with the right & left arrow
+- [ ] implement the changement of control when rotate
 - [ ] implement the changement of level with the up & down arrow
 - [ ] make cube ennemy ( 3 - 5 alive in the same time )
 - [ ] make them constantly lookAt the cube and make them move
 - [ ] fix them when there is a collision between the cube and the ennemy,
   but the ennemy cube is fix if the speed of the cube is greater than
   the initial speed of the cube, in fact, fix the ennemy cube if the 
-  cube is in a dash action/movment
+  cube is in a dash action/movement
   maybe do a boolean that tell if the player is in a dash or not
 - [x] handle another keyboard layout , azerty for example
 - [ ] find a way to slice the gbl model in 2x2x2 cube and if possible store all the 
@@ -49,17 +55,18 @@ npm run dev
 
 bonus :
 
-- [ ] make the cube glide a little, to not stop directly when the user stop the movment
+- [ ] make the cube glide a little, to not stop directly when the user stop the movement
 - [ ] implement vertical axes
 - [ ] implement a button to change from horizontal axes to vertical axes
 
 to correct :
 - [ ] put a cooldown on the dash, like 2 second and if you dash and kill an ennemy,
     there is no cooldown
+- [ ] make an annimation on the camera movement with gsap
 
 bug :
 
-- movment doesn't stop sometimes and the cube continue to move , cause :
+- movement doesn't stop sometimes and the cube continue to move , cause :
     moving while using the gui to display and undisplay the 3d asset and click in the checkbox
     doesn't reset your input and you keep going in a certain direction, bug might not be in prod
     so no worries

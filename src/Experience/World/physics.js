@@ -27,6 +27,7 @@ export default class PhysicalWorld
 		// instanciate cannon debugger
 		this.cannonDebugger = new CannonDebugger(this.experience.scene, this.world, {
 			onInit(body, mesh) {
+				mesh.visible = !mesh.visible;
 				window.addEventListener('keydown', (event) => {
 					if (event.key == 'e')
 						mesh.visible = !mesh.visible;
