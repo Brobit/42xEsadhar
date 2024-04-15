@@ -1,5 +1,4 @@
 import * as THREE from 'three'
-import * as CANNON from "cannon-es";
 import Experience from "../experience";
 import gsap from "gsap";
 
@@ -70,13 +69,30 @@ export default class KeyboardHandler
 			}
 
 			// execute the movement
-			if (this.activeKeys["w"] == true || this.activeKeys["a"] == true
-				|| this.activeKeys["s"] == true || this.activeKeys["d"] == true)
+			if (this.cameraPosition == this.angle.base)
 				this.move();
+			else if (this.cameraPosition == this.angle.quarter)
+				this.moveQuarter();
+			else if (this.cameraPosition == this.angle.half)
+				this.moveHalf();
+			else if (this.cameraPosition == this.angle.threeQuarter)
+				this.moveThreeQuarter();
+
 			// execute the dash
 			if (this.activeKeys[" "])
-				this.dash();
+			{
+				if (this.cameraPosition == this.angle.base)
+					this.dash();
+				else if (this.cameraPosition == this.angle.quarter)
+					this.dashQuarter();
+				else if (this.cameraPosition == this.angle.half)
+					this.dashHalf();
+				else if (this.cameraPosition == this.angle.threeQuarter)
+					this.dashThreeQuarter();
+			}
+
 			// rotate the camera depend of the right/left arroe
+			console.log(this.activeKeys);
 			if (this.activeKeys["ArrowLeft"])
 				this.moveCameraLeft();
 			else if (this.activeKeys["ArrowRight"])
@@ -104,7 +120,14 @@ export default class KeyboardHandler
 				this.activeKeys["a"] = false;
 
 			// Reset cube velocity
-			this.move();
+			if (this.cameraPosition == this.angle.base)
+				this.move();
+			else if (this.cameraPosition == this.angle.quarter)
+				this.moveQuarter();
+			else if (this.cameraPosition == this.angle.half)
+				this.moveHalf();
+			else if (this.cameraPosition == this.angle.threeQuarter)
+				this.moveThreeQuarter();
 
 			// Reset throttle timer
 			if (this.throttle) {
@@ -125,6 +148,46 @@ export default class KeyboardHandler
 	{
 		this.vx = (this.activeKeys["d"] ? this.dashSpeed : 0) - (this.activeKeys["a"] ? this.dashSpeed : 0); // D - A
 		this.vz = (this.activeKeys["s"] ? this.dashSpeed : 0) - (this.activeKeys["w"] ? this.dashSpeed : 0); // S - W
+	}
+
+	moveQuarter()
+	{
+		// Calculate velocity changes based on active keys
+		this.vz = (this.activeKeys["a"] ? this.speed : 0) - (this.activeKeys["d"] ? this.speed : 0); // A - D
+		this.vx = (this.activeKeys["s"] ? this.speed : 0) - (this.activeKeys["w"] ? this.speed : 0); // S - W
+	}
+
+	dashQuarter()
+	{
+		// Calculate velocity changes based on active keys
+		this.vz = (this.activeKeys["a"] ? this.dashSpeed : 0) - (this.activeKeys["d"] ? this.dashSpeed : 0);
+		this.vx = (this.activeKeys["s"] ? this.dashSpeed : 0) - (this.activeKeys["w"] ? this.dashSpeed : 0);
+	}
+
+	moveHalf()
+	{
+		// Calculate velocity changes based on active keys
+		this.vx = (this.activeKeys["a"] ? this.speed : 0) - (this.activeKeys["d"] ? this.speed : 0); // A - D
+		this.vz = (this.activeKeys["w"] ? this.speed : 0) - (this.activeKeys["s"] ? this.speed : 0); // W - S
+	}
+
+	dashHalf()
+	{
+		this.vx = (this.activeKeys["a"] ? this.dashSpeed : 0) - (this.activeKeys["d"] ? this.dashSpeed : 0);
+		this.vz = (this.activeKeys["w"] ? this.dashSpeed : 0) - (this.activeKeys["s"] ? this.dashSpeed : 0);
+	}
+
+	moveThreeQuarter()
+	{
+		// Calculate velocity changes based on active keys
+		this.vz = (this.activeKeys["d"] ? this.speed : 0) - (this.activeKeys["a"] ? this.speed : 0); // D - A
+		this.vx = (this.activeKeys["w"] ? this.speed : 0) - (this.activeKeys["s"] ? this.speed : 0); // W - S
+	}
+
+	dashThreeQuarter()
+	{
+		this.vz = (this.activeKeys["d"] ? this.dashSpeed : 0) - (this.activeKeys["a"] ? this.dashSpeed : 0);
+		this.vx = (this.activeKeys["w"] ? this.dashSpeed : 0) - (this.activeKeys["s"] ? this.dashSpeed : 0);
 	}
 
 	moveCameraLeft()

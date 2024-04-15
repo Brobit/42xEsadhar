@@ -14,7 +14,7 @@ npm run dev
 ```
 
 35 day left - 
-15 things to do - 
+14 things to do - 
 2 things to correct - 
 3 bonus to implement
 
@@ -22,7 +22,7 @@ npm run dev
 
 - [x] implement the machanic of dash
 - [x] implement the camera changement direction with the right & left arrow
-- [ ] implement the changement of control when rotate
+- [x] implement the changement of control when rotate
 - [ ] implement the changement of level with the up & down arrow
 - [ ] make cube ennemy ( 3 - 5 alive in the same time )
 - [ ] make them constantly lookAt the cube and make them move
