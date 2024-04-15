@@ -13,7 +13,7 @@ npm run dev
 
 ```
 
-36 day left - 
+35 day left - 
 15 things to do - 
 2 things to correct - 
 3 bonus to implement
@@ -62,6 +62,7 @@ bonus :
 to correct :
 - [ ] put a cooldown on the dash, like 2 second and if you dash and kill an ennemy,
     there is no cooldown
+- [ ] put a cooldown on the camera chamgement
 - [ ] make an annimation on the camera movement with gsap
 
 bug :
