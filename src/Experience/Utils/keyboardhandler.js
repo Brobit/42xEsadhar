@@ -283,7 +283,7 @@ export default class KeyboardHandler
 
 	goUp()
 	{
-		if (this.planePosition < 9)
+		if (this.planeBody.position.y <= 0.301 )
 		{
 			gsap.to(this.planeBody.position,
 			{
@@ -293,26 +293,20 @@ export default class KeyboardHandler
 					onUpdate : () => {
 						this.plane.position.copy(this.planeBody.position);
 					},
-					onComplete : () => {
-						this.planePosition++;
-					}
 			});
-			//this.planePosition++;
 		}
 	}
 
 	goDown()
 	{
-		if (this.planePosition > 0)
+		console.log(this.planeBody.position);
+		if (this.planeBody.position.y > -0.4)
 		{
 			gsap.to(this.cubeBody.position,
 			{
 					duration : 1,
 					ease : "sine.in",
 					y : this.cubeBody.position.y - 0.1,
-					onUpdate : () => {
-						this.cube.position.copy(this.cubeBody.position);
-					}
 			});
 
 			gsap.to(this.planeBody.position,
@@ -324,9 +318,6 @@ export default class KeyboardHandler
 					onUpdate : () => {
 						this.plane.position.copy(this.planeBody.position);
 					},
-					onComplete : () => {
-						this.planePosition--;
-					}
 			});
 		}
 	}
