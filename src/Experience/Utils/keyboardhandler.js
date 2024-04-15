@@ -7,11 +7,20 @@ export default class KeyboardHandler
 	constructor()
 	{
 		this.experience = new Experience();
+
 		// get worls
 		this.world = this.experience.physicalWorld.world;
+
 		// get the cube info
 		this.cube = this.experience.mainCube.finalCube;
 		this.cubeBody = this.experience.physicalWorld.cubeBody;
+
+		// get the plane info
+		this.plane = this.experience.world.plane;
+		this.planeBody = this.experience.physicalWorld.planeBody;
+		this.planePosition = 5;
+		console.log(this.planePosition);
+
 		// get camera info
 		this.camera = this.experience.camera;
 		this.camera.instance.rotateX(-Math.PI / 12);
@@ -35,11 +44,14 @@ export default class KeyboardHandler
 
 		// timeout setter
 		this.throttle = null;
+
 		// Object to track active keys
 		this.activeKeys = {};
+
 		// Speed of movement
 		this.speed = 0.3;
 		this.dashSpeed = 1.5;
+
 		// init velocity modifier
 		this.vz = this.vx = 0;
 
@@ -97,6 +109,10 @@ export default class KeyboardHandler
 				this.moveCameraLeft();
 			else if (this.activeKeys["ArrowRight"])
 				this.moveCameraRight();
+			else if (this.activeKeys["ArrowUp"])
+				this.goUp();
+			else if (this.activeKeys["ArrowDown"])
+				this.goDown();
 
 			// Reset throttle timer
 			if (this.throttle) {
@@ -262,6 +278,56 @@ export default class KeyboardHandler
 			this.camera.instance.position.set(this.angle.base);
 		 	this.camera.instance.rotateY(-Math.PI / 2).rotateZ(-Math.PI / 12).rotateX(-Math.PI / 12);
 			this.cameraPosition = this.angle.base;
+		}
+	}
+
+	goUp()
+	{
+		if (this.planePosition < 9)
+		{
+			gsap.to(this.planeBody.position,
+			{
+					duration : 1,
+					ease : "power4.out",
+					y : this.planeBody.position.y + 0.1,
+					onUpdate : () => {
+						this.plane.position.copy(this.planeBody.position);
+					},
+					onComplete : () => {
+						this.planePosition++;
+					}
+			});
+			//this.planePosition++;
+		}
+	}
+
+	goDown()
+	{
+		if (this.planePosition > 0)
+		{
+			gsap.to(this.cubeBody.position,
+			{
+					duration : 1,
+					ease : "sine.in",
+					y : this.cubeBody.position.y - 0.1,
+					onUpdate : () => {
+						this.cube.position.copy(this.cubeBody.position);
+					}
+			});
+
+			gsap.to(this.planeBody.position,
+			{
+					duration : 1,
+					delay : 0.2,
+					ease : "power1.out",
+					y : this.planeBody.position.y - 0.1,
+					onUpdate : () => {
+						this.plane.position.copy(this.planeBody.position);
+					},
+					onComplete : () => {
+						this.planePosition--;
+					}
+			});
 		}
 	}
 

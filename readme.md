@@ -14,8 +14,8 @@ npm run dev
 ```
 
 35 day left - 
-14 things to do - 
-2 things to correct - 
+13 things to do - 
+4 things to correct - 
 3 bonus to implement
 
 ## To do
@@ -23,7 +23,7 @@ npm run dev
 - [x] implement the machanic of dash
 - [x] implement the camera changement direction with the right & left arrow
 - [x] implement the changement of control when rotate
-- [ ] implement the changement of level with the up & down arrow
+- [x] implement the changement of level with the up & down arrow
 - [ ] make cube ennemy ( 3 - 5 alive in the same time )
 - [ ] make them constantly lookAt the cube and make them move
 - [ ] fix them when there is a collision between the cube and the ennemy,
@@ -64,6 +64,7 @@ to correct :
     there is no cooldown
 - [ ] put a cooldown on the camera chamgement
 - [ ] make an annimation on the camera movement with gsap
+- [ ] put a cooldown on the level changement
 
 bug :
 

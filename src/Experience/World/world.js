@@ -86,16 +86,16 @@ export default class World
 			side : THREE.DoubleSide,
 			wireframe : true
 		});
-		const plane = new THREE.Mesh(geometry, material);
-		plane.visible = true;
-		plane.rotateX(Math.PI / 2);
-		this.scene.add(plane);
+		this.plane = new THREE.Mesh(geometry, material);
+		this.plane.visible = true;
+		this.plane.rotateX(Math.PI / 2);
+		this.scene.add(this.plane);
 
 		// Plane debugging
 		if (this.debug.active)
 		{
 			this.debugPlane
-				.add(plane, 'visible');
+				.add(this.plane, 'visible');
 
 			this.debugPlane
 				.addColor(planeObject, 'color')
@@ -104,7 +104,7 @@ export default class World
 			});
 
 			this.debugPlane
-				.add(plane.position, 'y', -0.4, 0.4, 0.1);
+				.add(this.plane.position, 'y', -0.4, 0.4, 0.1);
 
 			planeObject.subdivision = 1;
 
@@ -114,8 +114,8 @@ export default class World
 				.max(50)
 				.step(1)
 				.onFinishChange(() => {
-					plane.geometry.dispose();
-					plane.geometry = new THREE.PlaneGeometry(
+					this.plane.geometry.dispose();
+					this.plane.geometry = new THREE.PlaneGeometry(
 						1, 1,
 						planeObject.subdivision, planeObject.subdivision
 					);
@@ -151,6 +151,7 @@ export default class World
 			objectToAdd.add(plane);
 		}
 		this.scene.add(objectToAdd);
+		console.log(objectToAdd.children);
 		
 		if (this.debug.active)
 		{
