@@ -10,15 +10,20 @@ export default class PhysicalWorld
 		// get info from the scene
 		this.experience = new Experience();
 
+		// get debug info
 		this.debug = this.experience.debug;
 
+		// get player cube info
 		this.cube = this.experience.mainCube.finalCube;
 		this.cubeSize = this.experience.mainCube.cubeSize;
 		this.mainCubePosition = this.experience.mainCube.position;
 
+		// get camera info
 		this.camera = this.experience.camera.instance;
-//		this.camera.lookAt(this.cube.position);
 		this.cameraOffset = this.experience.camera.cameraOffset;
+
+		// get the three.js scene]
+		this.scene = this.experience.scene;
 
 		// create cannon js world
 		this.world = new CANNON.World();
@@ -51,9 +56,18 @@ export default class PhysicalWorld
 		this.world.addContactMaterial(this.defaultContactMaterial);
 		this.world.defaultContactMaterial = this.defaultContactMaterial;
 
+		// general variable
+		this.sphereSize = 0.011;
+
+		// create variable for the ennemy cube
+		this.ennemyCubeArray = [];
+		this.ennemyAlive = 0;
+		this.ennemyMaxNumber = 5;
+
 		this.setCubeBody();
 		this.setPlanesBody();
 		this.setBorder();
+		this.setEnnemyCube();
 
 		this.update();
 	}
@@ -74,7 +88,7 @@ export default class PhysicalWorld
 
 	setCubeBody()
 	{
-		this.cubeShape = new CANNON.Sphere(0.011);
+		this.cubeShape = new CANNON.Sphere(this.sphereSize);
 		this.cubeBody = new CANNON.Body({
 			mass : 1,
 			shape : this.cubeShape,
@@ -84,6 +98,43 @@ export default class PhysicalWorld
 		});
 		this.cubeBody.position.set(0, 0.011, 0);
 		this.world.addBody(this.cubeBody);
+	}
+
+	setEnnemyCube()
+	{
+		// create the mesh template
+		const ennemyGeometry = new THREE.BoxGeometry(this.cubeSize, this.cubeSize, this.cubeSize);
+		const ennemyMaterial = new THREE.MeshBasicMaterial({color : "#62a0ea"});
+
+		//create the body template
+		const ennemyShape = new CANNON.Sphere(this.sphereSize);
+
+		for (; this.ennemyAlive < this.ennemyMaxNumber ; this.ennemyAlive++)
+		{
+			const x = Math.random() - 0.5;
+			const y = this.cubeBody.position.y;
+			const z = Math.random() - 0.5; 
+
+			// create the mesh
+			const ennemyMesh = new THREE.Mesh(ennemyGeometry, ennemyMaterial);
+
+			// create the body
+			const ennemyBody = new CANNON.Body({
+				mass : 1,
+				shape : ennemyShape,
+				linearDamping : 0.5,
+				angularDamping : 1,
+				material : this.defaultMaterial,
+			});
+			ennemyBody.position.set(x, y, z);
+			ennemyMesh.position.copy(ennemyBody.position);
+
+			this.scene.add(ennemyMesh);
+			this.world.addBody(ennemyBody);
+
+			this.ennemyCubeArray.push({mesh : ennemyMesh, body : ennemyBody});
+		}
+		console.log(this.ennemyCubeArray);
 	}
 
 	setPlanesBody()
@@ -146,12 +197,11 @@ export default class PhysicalWorld
 		this.cube.position.copy(this.cubeBody.position);
 		this.cube.quaternion.copy(this.cubeBody.quaternion);
 
-		// update camera to follow the player
-		// update perspective camera
-		// const objectPosition = new THREE.Vector3();
-		// this.cube.getWorldPosition(objectPosition);
-		// this.camera.position.copy(objectPosition).add(this.cameraOffset);
-
+		// update ennemy mesh position with their bodies
+		for (const ennemyCube of this.ennemyCubeArray) {
+			ennemyCube.mesh.position.copy(ennemyCube.body.position);
+			ennemyCube.mesh.quaternion.copy(ennemyCube.body.quaternion);
+		}
 
 		// update wrld at 60hz
 		this.world.fixedStep(1/120);

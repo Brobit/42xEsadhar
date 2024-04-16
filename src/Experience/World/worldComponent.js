@@ -100,15 +100,4 @@ class MainCube
 		
 	}
 }
-
-class EnnemyCube
-{
-	constructor()
-	{
-		this.experience = new Experience();
-		this.scene = this.experience.scene;
-		this.debug = this.experience.debug;
-	}
-}
-
-export { MainCube, EnnemyCube };
+export { MainCube };

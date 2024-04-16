@@ -15,11 +15,13 @@ export default class KeyboardHandler
 		this.cube = this.experience.mainCube.finalCube;
 		this.cubeBody = this.experience.physicalWorld.cubeBody;
 
+		// get the ennemy cube info
+		this.ennemyCubeArray = this.experience.physicalWorld.ennemyCubeArray;
+
 		// get the plane info
 		this.plane = this.experience.world.plane;
 		this.planeBody = this.experience.physicalWorld.planeBody;
 		this.planePosition = 5;
-		console.log(this.planePosition);
 
 		// get camera info
 		this.camera = this.experience.camera;
@@ -64,7 +66,6 @@ export default class KeyboardHandler
 		window.addEventListener('keydown', (event) => {
 			// Update activeKeys object
 			this.activeKeys[event.key] = true;
-//			console.log(this.activeKeys);
 
 			// try to check if the keybaord is azerty
 			if (this.activeKeys["z"] == true)
@@ -104,7 +105,6 @@ export default class KeyboardHandler
 			}
 
 			// rotate the camera depend of the right/left arroe
-			console.log(this.activeKeys);
 			if (this.activeKeys["ArrowLeft"])
 				this.moveCameraLeft();
 			else if (this.activeKeys["ArrowRight"])
@@ -285,6 +285,7 @@ export default class KeyboardHandler
 	{
 		if (this.planeBody.position.y <= 0.301 )
 		{
+			// animation for the player cube
 			gsap.to(this.planeBody.position,
 			{
 					duration : 1,
@@ -302,6 +303,7 @@ export default class KeyboardHandler
 		console.log(this.planeBody.position);
 		if (this.planeBody.position.y > -0.4)
 		{
+			// animation for the player cube
 			gsap.to(this.cubeBody.position,
 			{
 					duration : 1,
@@ -309,6 +311,18 @@ export default class KeyboardHandler
 					y : this.cubeBody.position.y - 0.1,
 			});
 
+			// animation for the ennemy cube
+			for (const ennemy of this.ennemyCubeArray)
+			{
+				gsap.to(ennemy.body.position,
+				{
+						duration : 1,
+						ease : "sine.in",
+						y : ennemy.body.position.y - 0.1,
+				});
+			}
+
+			// animation for the plane
 			gsap.to(this.planeBody.position,
 			{
 					duration : 1,

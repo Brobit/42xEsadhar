@@ -39,7 +39,6 @@ export default class Experience
 		this.light = new Light();
 		this.world = new World();
 		this.mainCube = new WORLDCOMPONENT.MainCube();
-		this.enemyCube = new WORLDCOMPONENT.EnnemyCube();
 		this.physicalWorld = new PhysicalWorld();
 		this.keyboardHandler = new KeyboardHandler();
 
