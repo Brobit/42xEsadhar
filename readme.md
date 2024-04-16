@@ -13,7 +13,7 @@ npm run dev
 
 ```
 
-35 day left - 
+34 day left - 
 13 things to do - 
 4 things to correct - 
 3 bonus to implement
