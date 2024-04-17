@@ -12,10 +12,9 @@ npm install
 npm run dev
 
 ```
-<iframe name="compte_rebours_calendrier_journalier" id="compte_rebours_calendrier_journalier" style="width:300px;height:40px;" src="https://www.calendrier-journalier.fr/affiche_compte_rebours.php?date=20/05/2024&heure=09:00" scrolling="no" frameborder="0" allowtransparency="true"></iframe>
 
-33 day left - 
-12 things to do - 
+32 day left - 
+11 things to do - 
 5 things to correct - 
 3 bonus to implement
 
