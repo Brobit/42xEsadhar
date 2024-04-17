@@ -12,9 +12,6 @@ npm install
 npm run dev
 
 ```
-<iframe width="300" height="154" src="https://w2.countingdownto.com/5496868" frameborder="0"></iframe>
-
-
 
 32 day left - 
 11 things to do - 
