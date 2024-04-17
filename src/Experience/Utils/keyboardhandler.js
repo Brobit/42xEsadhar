@@ -57,6 +57,10 @@ export default class KeyboardHandler
 		// init velocity modifier
 		this.vz = this.vx = 0;
 
+		// init ennemy velocity modifier
+		this.ennemySpeed = 0.2;
+		this.evx = this.evz = 0;
+
 		this.setKeyListener();
 		this.update();
 	}
@@ -204,6 +208,16 @@ export default class KeyboardHandler
 	{
 		this.vz = (this.activeKeys["d"] ? this.dashSpeed : 0) - (this.activeKeys["a"] ? this.dashSpeed : 0);
 		this.vx = (this.activeKeys["w"] ? this.dashSpeed : 0) - (this.activeKeys["s"] ? this.dashSpeed : 0);
+	}
+
+	moveEnnemy()
+	{
+		for (const ennemy of this.ennemyCubeArray)
+		{
+			// ennemy.mesh.lookAt(this.cube.position);
+			// ennemy.mesh.position.x += 0.0001;
+			const direction = new CANNON.V
+		}
 	}
 
 	moveCameraLeft()

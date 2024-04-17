@@ -13,7 +13,7 @@ npm run dev
 
 ```
 
-34 day left - 
+33 day left - 
 12 things to do - 
 5 things to correct - 
 3 bonus to implement
@@ -25,7 +25,7 @@ npm run dev
 - [x] implement the changement of control when rotate
 - [x] implement the changement of level with the up & down arrow
 - [x] make cube ennemy ( 3 - 5 alive in the same time )
-- [ ] make them constantly lookAt the cube and make them move
+- [x] make them constantly lookAt the cube and make them move
 - [ ] fix them when there is a collision between the cube and the ennemy,
   but the ennemy cube is fix if the speed of the cube is greater than
   the initial speed of the cube, in fact, fix the ennemy cube if the 

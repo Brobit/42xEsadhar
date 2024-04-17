@@ -135,6 +135,10 @@ export default class PhysicalWorld
 			this.ennemyCubeArray.push({mesh : ennemyMesh, body : ennemyBody});
 		}
 		console.log(this.ennemyCubeArray);
+		for (const e of this.ennemyCubeArray)
+		{
+			console.log(e.mesh.isObject3D);
+		}
 	}
 
 	setPlanesBody()
@@ -199,6 +203,21 @@ export default class PhysicalWorld
 
 		// update ennemy mesh position with their bodies
 		for (const ennemyCube of this.ennemyCubeArray) {
+			// compute direction to the player cube
+			const direction = new CANNON.Vec3();
+			this.cubeBody.position.vsub(ennemyCube.body.position, direction);
+			direction.y = 0;
+			direction.normalize();
+
+			// get the roatation betwwen forward and direction vector
+			const forward = new CANNON.Vec3(0, 0, 1);
+			ennemyCube.body.quaternion.setFromVectors(forward, direction);
+
+			//apply movement
+			const speed = 0.075;
+			direction.scale(speed, ennemyCube.body.velocity);
+
+			// update the mesh position & quaternian
 			ennemyCube.mesh.position.copy(ennemyCube.body.position);
 			ennemyCube.mesh.quaternion.copy(ennemyCube.body.quaternion);
 		}
