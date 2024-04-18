@@ -43,16 +43,8 @@ export default class PhysicalWorld
 		if (this.debug.active)
 			this.debug.ui.addFolder("press 'e' to toggle physic");
 
-		// create material for physics
-		this.defaultMaterial = new CANNON.Material('default');
-		this.defaultContactMaterial = new CANNON.ContactMaterial(
-			this.defaultMaterial,
-			this.defaultMaterial,
-			{
-				friction: 0.1,
-				restitution: 0.1
-			}
-		)
+		this.setMaterial();
+
 		this.world.addContactMaterial(this.defaultContactMaterial);
 		this.world.defaultContactMaterial = this.defaultContactMaterial;
 
@@ -64,10 +56,17 @@ export default class PhysicalWorld
 		this.ennemyAlive = 0;
 		this.ennemyMaxNumber = 5;
 
+		// check if the player is in a dash
+		this.isInDash = false;
+		
+		// check collision
+		this.ObjectCollisionMatrix = new CANNON.ObjectCollisionMatrix();
+
 		this.setCubeBody();
+		this.setEnnemyCube();
+		this.checkCollision();
 		this.setPlanesBody();
 		this.setBorder();
-		this.setEnnemyCube();
 
 		this.update();
 	}
@@ -86,6 +85,51 @@ export default class PhysicalWorld
 		}
 	}
 
+	setMaterial()
+	{
+		// create material for physics
+		this.defaultMaterial = new CANNON.Material('default');
+		this.playerMaterial = new CANNON.Material('player');
+		this.ennemyMaterial = new CANNON.Material('ennemy');
+
+		// tell the beahavior if to material collide
+		this.defaultContactMaterial = new CANNON.ContactMaterial(
+			this.defaultMaterial,
+			this.defaultMaterial,
+			{
+				friction: 0.1,
+				restitution: 0.1
+			}
+		);
+
+		this.playerEnvironnmentContactMaterial = new CANNON.ContactMaterial(
+			this.defaultMaterial,
+			this.playerMaterial,
+			{
+				friction : 0.1,
+				restitution : 0.1
+			}
+		);
+
+		this.ennemyEnvironmentContactMaterial = new CANNON.ContactMaterial(
+			this.defaultMaterial,
+			this.ennemyMaterial,
+			{
+				friction : 0.1,
+				restitution : 0.1
+			}
+		);
+		
+		this.playerEnnemyCollisionContactMaterial = new CANNON.ContactMaterial(
+			this.playerMaterial,
+			this.ennemyMaterial,
+			{
+				friction : 0.1,
+				restitution : 0.5
+			}
+		);
+	}
+
 	setCubeBody()
 	{
 		this.cubeShape = new CANNON.Sphere(this.sphereSize);
@@ -94,7 +138,7 @@ export default class PhysicalWorld
 			shape : this.cubeShape,
 			linearDamping : 0.5,
 			angularDamping : 1,
-			material : this.defaultMaterial
+			material : this.playerMaterial,
 		});
 		this.cubeBody.position.set(0, 0.011, 0);
 		this.world.addBody(this.cubeBody);
@@ -124,7 +168,7 @@ export default class PhysicalWorld
 				shape : ennemyShape,
 				linearDamping : 0.5,
 				angularDamping : 1,
-				material : this.defaultMaterial,
+				material : this.ennemyMaterial,
 			});
 			ennemyBody.position.set(x, y, z);
 			ennemyMesh.position.copy(ennemyBody.position);
@@ -139,6 +183,14 @@ export default class PhysicalWorld
 		{
 			console.log(e.mesh.isObject3D);
 		}
+	}
+
+	checkCollision()
+	{
+		this.cubeBody.addEventListener('collide', (event) => {
+			if (event.body.material == this.ennemyMaterial)
+				console.log("salut pd, y'as une collision !");
+		})
 	}
 
 	setPlanesBody()
@@ -200,6 +252,10 @@ export default class PhysicalWorld
 		// apply the physical world to the cube in the scene
 		this.cube.position.copy(this.cubeBody.position);
 		this.cube.quaternion.copy(this.cubeBody.quaternion);
+
+		// check if there is always 5 ennemy cube
+		if (this.ennemyAlive < this.ennemyMaxNumber)
+			this.setEnnemyCube();
 
 		// update ennemy mesh position with their bodies
 		for (const ennemyCube of this.ennemyCubeArray) {

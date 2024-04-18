@@ -54,12 +54,11 @@ export default class KeyboardHandler
 		this.speed = 0.3;
 		this.dashSpeed = 1.5;
 
+		// check if the player is in a dash movement
+		this.isInDash = this.experience.physicalWorld.isInDash;
+
 		// init velocity modifier
 		this.vz = this.vx = 0;
-
-		// init ennemy velocity modifier
-		this.ennemySpeed = 0.2;
-		this.evx = this.evz = 0;
 
 		this.setKeyListener();
 		this.update();
@@ -210,22 +209,8 @@ export default class KeyboardHandler
 		this.vx = (this.activeKeys["w"] ? this.dashSpeed : 0) - (this.activeKeys["s"] ? this.dashSpeed : 0);
 	}
 
-	moveEnnemy()
-	{
-		for (const ennemy of this.ennemyCubeArray)
-		{
-			// ennemy.mesh.lookAt(this.cube.position);
-			// ennemy.mesh.position.x += 0.0001;
-			const direction = new CANNON.V
-		}
-	}
-
 	moveCameraLeft()
 	{
-		// if (this.debug.active)
-		// {
-		// 	this.debugCamera.show();
-		// }
 		gsap.to(this.cube.rotation,
 		{
 				duration : 0.5,
@@ -352,6 +337,12 @@ export default class KeyboardHandler
 
 	update()
 	{
+		if (this.vx == this.dashSpeed || this.vx == -this.dashSpeed
+			|| this.vz == this.dashSpeed || this.vz == -this.dashSpeed)
+			this.isInDash = true;
+		else
+			this.isInDash = false
+		
 		// Apply velocity changes
 		this.cubeBody.velocity.x = this.vx;
 		this.cubeBody.velocity.z = this.vz;
