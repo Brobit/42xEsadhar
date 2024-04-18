@@ -56,15 +56,11 @@ export default class PhysicalWorld
 		this.ennemyAlive = 0;
 		this.ennemyMaxNumber = 5;
 
-		// check if the player is in a dash
-		this.isInDash = false;
-		
 		// check collision
 		this.ObjectCollisionMatrix = new CANNON.ObjectCollisionMatrix();
 
 		this.setCubeBody();
 		this.setEnnemyCube();
-		this.checkCollision();
 		this.setPlanesBody();
 		this.setBorder();
 
@@ -139,6 +135,8 @@ export default class PhysicalWorld
 			linearDamping : 0.5,
 			angularDamping : 1,
 			material : this.playerMaterial,
+			collisionFilterGroup : 1,
+			collisionFilterMask : 1
 		});
 		this.cubeBody.position.set(0, 0.011, 0);
 		this.world.addBody(this.cubeBody);
@@ -169,6 +167,8 @@ export default class PhysicalWorld
 				linearDamping : 0.5,
 				angularDamping : 1,
 				material : this.ennemyMaterial,
+				collisionFilterGroup : 1,
+				collisionFilterMask : 1
 			});
 			ennemyBody.position.set(x, y, z);
 			ennemyMesh.position.copy(ennemyBody.position);
@@ -185,14 +185,6 @@ export default class PhysicalWorld
 		}
 	}
 
-	checkCollision()
-	{
-		this.cubeBody.addEventListener('collide', (event) => {
-			if (event.body.material == this.ennemyMaterial)
-				console.log("salut pd, y'as une collision !");
-		})
-	}
-
 	setPlanesBody()
 	{
 		const planeShape = new CANNON.Plane();
@@ -200,7 +192,7 @@ export default class PhysicalWorld
 			mass : 0,
 			position : new CANNON.Vec3(0, 0.001, 0),
 			material : this.defaultMaterial,
-		shape : planeShape
+			shape : planeShape,
 		});
 		this.planeBody.quaternion.setFromAxisAngle(new CANNON.Vec3(- 1, 0, 0), Math.PI * 0.5);
 		this.world.addBody(this.planeBody);
@@ -259,23 +251,27 @@ export default class PhysicalWorld
 
 		// update ennemy mesh position with their bodies
 		for (const ennemyCube of this.ennemyCubeArray) {
-			// compute direction to the player cube
-			const direction = new CANNON.Vec3();
-			this.cubeBody.position.vsub(ennemyCube.body.position, direction);
-			direction.y = 0;
-			direction.normalize();
+			// move the ennemyCube if it is not asleep
+			if (ennemyCube.body.sleepState == 0)
+			{
+				// compute direction to the player cube
+				const direction = new CANNON.Vec3();
+				this.cubeBody.position.vsub(ennemyCube.body.position, direction);
+				direction.y = 0;
+				direction.normalize();
 
-			// get the roatation betwwen forward and direction vector
-			const forward = new CANNON.Vec3(0, 0, 1);
-			ennemyCube.body.quaternion.setFromVectors(forward, direction);
+				// get the roatation betwwen forward and direction vector
+				const forward = new CANNON.Vec3(0, 0, 1);
+				ennemyCube.body.quaternion.setFromVectors(forward, direction);
 
-			//apply movement
-			const speed = 0.075;
-			direction.scale(speed, ennemyCube.body.velocity);
+				//apply movement
+				const speed = 0.075;
+				direction.scale(speed, ennemyCube.body.velocity);
 
-			// update the mesh position & quaternian
-			ennemyCube.mesh.position.copy(ennemyCube.body.position);
-			ennemyCube.mesh.quaternion.copy(ennemyCube.body.quaternion);
+				// update the mesh position & quaternian
+				ennemyCube.mesh.position.copy(ennemyCube.body.position);
+				ennemyCube.mesh.quaternion.copy(ennemyCube.body.quaternion);
+			}
 		}
 
 		// update wrld at 60hz

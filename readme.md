@@ -14,7 +14,7 @@ npm run dev
 ```
 
 32 day left - 
-11 things to do - 
+10 things to do - 
 5 things to correct - 
 3 bonus to implement
 
@@ -26,7 +26,7 @@ npm run dev
 - [x] implement the changement of level with the up & down arrow
 - [x] make cube ennemy ( 3 - 5 alive in the same time )
 - [x] make them constantly lookAt the cube and make them move
-- [ ] fix them when there is a collision between the cube and the ennemy,
+- [x] fix them when there is a collision between the cube and the ennemy,
   but the ennemy cube is fix if the speed of the cube is greater than
   the initial speed of the cube, in fact, fix the ennemy cube if the 
   cube is in a dash action/movement

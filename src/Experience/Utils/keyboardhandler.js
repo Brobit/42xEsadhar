@@ -17,6 +17,7 @@ export default class KeyboardHandler
 
 		// get the ennemy cube info
 		this.ennemyCubeArray = this.experience.physicalWorld.ennemyCubeArray;
+		this.ennemyMaterial = this.experience.physicalWorld.ennemyMaterial;
 
 		// get the plane info
 		this.plane = this.experience.world.plane;
@@ -55,12 +56,13 @@ export default class KeyboardHandler
 		this.dashSpeed = 1.5;
 
 		// check if the player is in a dash movement
-		this.isInDash = this.experience.physicalWorld.isInDash;
+		this.isInDash = false;
 
 		// init velocity modifier
 		this.vz = this.vx = 0;
 
 		this.setKeyListener();
+		this.checkCollision();
 		this.update();
 	}
 
@@ -333,6 +335,22 @@ export default class KeyboardHandler
 					},
 			});
 		}
+	}
+
+	checkCollision()
+	{
+		this.cubeBody.addEventListener('collide', (ennemyCube) => {
+			if (ennemyCube.body.material == this.ennemyMaterial)
+			{
+				if (this.isInDash == true)
+				{
+					console.log("salut pd, y'as une collision !");
+					console.log(ennemyCube.body.id);
+					ennemyCube.body.collisionFilterGroup = 2;
+					ennemyCube.body.sleep();
+				}
+			}
+		})
 	}
 
 	update()
