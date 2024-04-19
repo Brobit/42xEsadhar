@@ -274,6 +274,18 @@ export default class PhysicalWorld
 			}
 		}
 
+		for (const ennemyCube of this.ennemyCubeArray)
+		{
+			if (ennemyCube.body.sleepState == 1 || ennemyCube.body.sleepState == 2)
+			{
+				this.world.removeBody(ennemyCube.body);
+				this.scene.remove(ennemyCube.mesh);
+				const index = this.ennemyCubeArray.indexOf(ennemyCube);
+				this.ennemyCubeArray.splice(index, 1);
+				this.ennemyAlive--;
+			}
+		}
+
 		// update wrld at 60hz
 		this.world.fixedStep(1/120);
 

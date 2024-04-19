@@ -13,9 +13,9 @@ npm run dev
 
 ```
 
-32 day left - 
+31 day left - 
 10 things to do - 
-5 things to correct - 
+4 things to correct - 
 3 bonus to implement
 
 ## To do
@@ -60,12 +60,12 @@ bonus :
 - [ ] implement a button to change from horizontal axes to vertical axes
 
 to correct :
-- [ ] put a cooldown on the dash, like 2 second and if you dash and kill an ennemy,
+- [x] put a cooldown on the dash, like 2 second and if you dash and kill an ennemy,
     there is no cooldown
-- [ ] put a cooldown on the camera chamgement
+- [x] put a cooldown on the camera chamgement
+- [x] put a cooldown on the level changement
 - [ ] make an annimation on the camera movement with gsap
-- [ ] put a cooldown on the level changement
-- [ ] implement the respawn of the ennemy
+- [x] implement the respawn of the ennemy
 
 bug :
 

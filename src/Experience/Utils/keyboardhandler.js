@@ -48,6 +48,13 @@ export default class KeyboardHandler
 		// timeout setter
 		this.throttle = null;
 
+		// cooldown setter
+		this.moveCameraLeftCooldown = false;
+		this.moveCameraRightCooldown = false;
+		this.goUpCooldown = false;
+		this.goDownCooldown = false;
+		this.dashCooldown = false;
+
 		// Object to track active keys
 		this.activeKeys = {};
 
@@ -99,6 +106,9 @@ export default class KeyboardHandler
 			// execute the dash
 			if (this.activeKeys[" "])
 			{
+				if (this.dashCooldown)
+					return ;
+
 				if (this.cameraPosition == this.angle.base)
 					this.dash();
 				else if (this.cameraPosition == this.angle.quarter)
@@ -107,6 +117,13 @@ export default class KeyboardHandler
 					this.dashHalf();
 				else if (this.cameraPosition == this.angle.threeQuarter)
 					this.dashThreeQuarter();
+				this.executeDash();
+
+				this.dashCooldown = true;
+
+				setTimeout( () => {
+					this.dashCooldown = false;
+				}, 2000);
 			}
 
 			// rotate the camera depend of the right/left arroe
@@ -211,8 +228,17 @@ export default class KeyboardHandler
 		this.vx = (this.activeKeys["w"] ? this.dashSpeed : 0) - (this.activeKeys["s"] ? this.dashSpeed : 0);
 	}
 
+	executeDash()
+	{
+		this.cubeBody.velocity.x = this.vx;
+		this.cubeBody.velocity.z = this.vz;
+	}
+
 	moveCameraLeft()
 	{
+		if (this.moveCameraLeftCooldown)
+			return ;
+
 		gsap.to(this.cube.rotation,
 		{
 				duration : 0.5,
@@ -243,10 +269,18 @@ export default class KeyboardHandler
 			this.cameraPosition = this.angle.base;
 		}
 		this.camera.instance.rotateY(Math.PI / 2).rotateZ(Math.PI / 12).rotateX(-Math.PI / 12);
+
+		this.moveCameraLeftCooldown = true;
+
+		setTimeout( () => {
+			this.moveCameraLeftCooldown = false;
+		}, 2000);
 	}
 
 	moveCameraRight()
 	{
+		if (this.moveCameraRightCooldown)
+			return ;
 //		const cubeRota = this.cube.rotation;
 		gsap.to(this.cube.rotation,
 		{
@@ -280,10 +314,18 @@ export default class KeyboardHandler
 		 	this.camera.instance.rotateY(-Math.PI / 2).rotateZ(-Math.PI / 12).rotateX(-Math.PI / 12);
 			this.cameraPosition = this.angle.base;
 		}
+		this.moveCameraRightCooldown = true;
+
+		setTimeout( () => {
+			this.moveCameraRightCooldown = false
+		}, 2000);
 	}
 
 	goUp()
 	{
+		if (this.goUpCooldown)
+			return ;
+
 		if (this.planeBody.position.y <= 0.301 )
 		{
 			// animation for the player cube
@@ -297,10 +339,19 @@ export default class KeyboardHandler
 					},
 			});
 		}
+
+		this.goUpCooldown = true;
+
+		setTimeout( () => {
+			this.goUpCooldown = false;
+		}, 2000);
 	}
 
 	goDown()
 	{
+		if (this.goDownCooldown)
+			return ;
+
 		console.log(this.planeBody.position);
 		if (this.planeBody.position.y > -0.4)
 		{
@@ -335,6 +386,12 @@ export default class KeyboardHandler
 					},
 			});
 		}
+		
+		this.goDownCooldown = true;
+
+		setTimeout( () => {
+			this.goDownCooldown = false;
+		}, 2000);
 	}
 
 	checkCollision()
@@ -361,7 +418,7 @@ export default class KeyboardHandler
 		else
 			this.isInDash = false
 		
-		// Apply velocity changes
+		
 		this.cubeBody.velocity.x = this.vx;
 		this.cubeBody.velocity.z = this.vz;
 
