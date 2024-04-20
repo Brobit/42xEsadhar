@@ -277,7 +277,7 @@ export default class KeyboardHandler
 
 		setTimeout( () => {
 			this.moveCameraLeftCooldown = false;
-		}, 1000);
+		}, 1500);
 	}
 
 	moveCameraRight()
@@ -290,8 +290,10 @@ export default class KeyboardHandler
 				duration : 0.5,
 				delay : 0.05,
 				y : -Math.PI / 2,
+				onComplete : () => {
+					this.cube.rotation.set(0, 0, 0);
+				}
 		});
-		this.cube.rotation.set(0, 0, 0);
 
 		if (this.cameraPosition == this.angle.base)
 		{
@@ -318,8 +320,8 @@ export default class KeyboardHandler
 		this.moveCameraRightCooldown = true;
 
 		setTimeout( () => {
-			this.moveCameraRightCooldown = false
-		}, 1000);
+			this.moveCameraRightCooldown = false;
+		}, 1500);
 	}
 
 	goUp()

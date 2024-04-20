@@ -284,14 +284,16 @@ export default class PhysicalWorld
 		{
 			if (ennemyCube.body.sleepState === 1 || ennemyCube.body.sleepState === 2)
 			{
-				gsap.to(ennemyCube.mesh.material, {
-					duration : 3,
-					opacity : 0,
-					onComplete : () => {
-						this.world.removeBody(ennemyCube.body);
-						this.scene.remove(ennemyCube.mesh);
-					}
-				})
+				// gsap.to(ennemyCube.mesh.material, {
+				// 	duration : 2,
+				// 	opacity : 0.5,
+				// 	onComplete : () => {
+				// 		this.world.removeBody(ennemyCube.body);
+				// 		this.scene.remove(ennemyCube.mesh);
+				// 	}
+				// })
+				this.world.removeBody(ennemyCube.body);
+				this.scene.remove(ennemyCube.mesh);
 				const index = this.ennemyCubeArray.indexOf(ennemyCube);
 				this.ennemyCubeArray.splice(index, 1);
 				this.ennemyAlive--;
