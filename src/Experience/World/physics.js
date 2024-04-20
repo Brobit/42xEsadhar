@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import * as CANNON from "cannon-es";
+import gsap from "gsap";
 import Experience from "../experience";
 import CannonDebugger from 'cannon-es-debugger';
 
@@ -58,6 +59,7 @@ export default class PhysicalWorld
 
 		// check collision
 		this.ObjectCollisionMatrix = new CANNON.ObjectCollisionMatrix();
+
 
 		this.setCubeBody();
 		this.setEnnemyCube();
@@ -146,7 +148,6 @@ export default class PhysicalWorld
 	{
 		// create the mesh template
 		const ennemyGeometry = new THREE.BoxGeometry(this.cubeSize, this.cubeSize, this.cubeSize);
-		const ennemyMaterial = new THREE.MeshBasicMaterial({color : "#62a0ea"});
 
 		//create the body template
 		const ennemyShape = new CANNON.Sphere(this.sphereSize);
@@ -156,6 +157,11 @@ export default class PhysicalWorld
 			const x = Math.random() - 0.5;
 			const y = this.cubeBody.position.y;
 			const z = Math.random() - 0.5; 
+
+			const ennemyMaterial = new THREE.MeshBasicMaterial({
+				color : "#62a0ea",
+				transparent : true
+			});
 
 			// create the mesh
 			const ennemyMesh = new THREE.Mesh(ennemyGeometry, ennemyMaterial);
@@ -276,10 +282,16 @@ export default class PhysicalWorld
 
 		for (const ennemyCube of this.ennemyCubeArray)
 		{
-			if (ennemyCube.body.sleepState == 1 || ennemyCube.body.sleepState == 2)
+			if (ennemyCube.body.sleepState === 1 || ennemyCube.body.sleepState === 2)
 			{
-				this.world.removeBody(ennemyCube.body);
-				this.scene.remove(ennemyCube.mesh);
+				gsap.to(ennemyCube.mesh.material, {
+					duration : 3,
+					opacity : 0,
+					onComplete : () => {
+						this.world.removeBody(ennemyCube.body);
+						this.scene.remove(ennemyCube.mesh);
+					}
+				})
 				const index = this.ennemyCubeArray.indexOf(ennemyCube);
 				this.ennemyCubeArray.splice(index, 1);
 				this.ennemyAlive--;

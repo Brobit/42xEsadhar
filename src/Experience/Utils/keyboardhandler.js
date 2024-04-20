@@ -65,6 +65,9 @@ export default class KeyboardHandler
 		// check if the player is in a dash movement
 		this.isInDash = false;
 
+		// check if there is a collision
+		this.isCollide = false;
+
 		// init velocity modifier
 		this.vz = this.vx = 0;
 
@@ -274,14 +277,14 @@ export default class KeyboardHandler
 
 		setTimeout( () => {
 			this.moveCameraLeftCooldown = false;
-		}, 2000);
+		}, 1000);
 	}
 
 	moveCameraRight()
 	{
 		if (this.moveCameraRightCooldown)
 			return ;
-//		const cubeRota = this.cube.rotation;
+
 		gsap.to(this.cube.rotation,
 		{
 				duration : 0.5,
@@ -293,32 +296,30 @@ export default class KeyboardHandler
 		if (this.cameraPosition == this.angle.base)
 		{
 			this.camera.instance.position.set(this.angle.threeQuarter);
-		 	this.camera.instance.rotateY(-Math.PI / 2).rotateZ(-Math.PI / 12).rotateX(-Math.PI / 12);
 			this.cameraPosition = this.angle.threeQuarter;
 		}
 		else if (this.cameraPosition == this.angle.threeQuarter)
 		{
 			this.camera.instance.position.set(this.angle.half);
-		 	this.camera.instance.rotateY(-Math.PI / 2).rotateZ(-Math.PI / 12).rotateX(-Math.PI / 12);
 			this.cameraPosition = this.angle.half;
 		}
 		else if (this.cameraPosition == this.angle.half)
 		{
 			this.camera.instance.position.set(this.angle.quarter);
-		 	this.camera.instance.rotateY(-Math.PI / 2).rotateZ(-Math.PI / 12).rotateX(-Math.PI / 12);
 			this.cameraPosition = this.angle.quarter;
 		}
 		else if (this.cameraPosition == this.angle.quarter)
 		{
 			this.camera.instance.position.set(this.angle.base);
-		 	this.camera.instance.rotateY(-Math.PI / 2).rotateZ(-Math.PI / 12).rotateX(-Math.PI / 12);
 			this.cameraPosition = this.angle.base;
 		}
+		this.camera.instance.rotateY(-Math.PI / 2).rotateZ(-Math.PI / 12).rotateX(-Math.PI / 12);
+
 		this.moveCameraRightCooldown = true;
 
 		setTimeout( () => {
 			this.moveCameraRightCooldown = false
-		}, 2000);
+		}, 1000);
 	}
 
 	goUp()
@@ -401,13 +402,12 @@ export default class KeyboardHandler
 			{
 				if (this.isInDash == true)
 				{
-					console.log("salut pd, y'as une collision !");
-					console.log(ennemyCube.body.id);
 					ennemyCube.body.collisionFilterGroup = 2;
 					ennemyCube.body.sleep();
+					this.isCollide = true;
 				}
 			}
-		})
+		});
 	}
 
 	update()
