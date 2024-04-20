@@ -73,5 +73,5 @@ bug :
     moving while using the gui to display and undisplay the 3d asset and click in the checkbox
     doesn't reset your input and you keep going in a certain direction, bug might not be in prod
     so no worries
-- ennemyCube animation when they have been hit block the aniamation of the cube rotation when
+- ennemyCube animation when they have been hit block the animation of the cube rotation when
   he wants to move the camera to the left/right , maybe too much animation ?
