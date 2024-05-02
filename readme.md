@@ -54,9 +54,9 @@ npm run dev
 - [ ] make a button that allow the player to check the progression by change there
       perspective camera to an orbit control, and animate the changement if possible
 - [ ] make it responsive, to do that :
-      - [ ] change the fov of the camera
-      - [ ] implement a joystick for movement
-      - [ ] 6 button : up/down, right/left, dash & change camera view
+  - [ ] change the fov of the camera
+  - [ ] implement a joystick for movement
+  - [ ] 6 button : up/down, right/left, dash & change camera view
 
 bonus :
 
