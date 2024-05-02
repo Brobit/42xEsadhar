@@ -12,6 +12,7 @@ class MainCube
 		this.cubeSize = 0.02;
 		this.position = new THREE.Vector3(0, 0.011, 0);
 		this.asset = {};
+		this.arrayOfMaskingCube = [];
 
 		 if (this.debug.active)
 		 {
@@ -20,7 +21,8 @@ class MainCube
 		 }
 
 		this.setMainCube();
-		this.setWorld();
+		this.playWithAsset();
+		this.setMaskLayout();
 	}
 
 	setMainCube()
@@ -72,32 +74,119 @@ class MainCube
 	setWorld()
 	{
 		const loader = new GLTFLoader();
+		// const loader = new OBJLoader();
 		const scene = this.scene;
 		const debug = this.debug;
 		const debug3d = this.debug3d;
 
-		loader.load(
-			'./cube-soleil-levant.glb',
-			function (gltf) {
-				gltf.scene.scale.set(0.05, 0.05, 0.05);
-				gltf.scene.position.x = 0.075;
-				gltf.scene.position.y = 2.37;
-				gltf.scene.position.z = 0.825;
-				gltf.scene.visible = false;
-				const assets = gltf;
-				console.log(assets);
-				scene.add(gltf.scene);
-				if (debug.active)
-					debug3d.add(gltf.scene, 'visible');
-			},
-			function (xhr) {
-				console.log((xhr.loaded / xhr.total * 100) + '% loaded');
-			},
-			function (gltf) {
-				console.log(gltf);
+		return new Promise ((resolve, reject) => {
+			loader.load(
+				// './cube-soleil-levant.glb',
+				'cube-soleil-levant.glb',
+				(gltf) => {
+					this.asset = gltf;
+					// gltf.scale.set(0.05, 0.05, 0.05);
+					// gltf.position.set(0.075, 2.375, 0.825);
+					gltf.scene.scale.set(0.05, 0.05, 0.05);
+					// gltf.scene.scale.set(0.03, 0.03, 0.03);
+					gltf.scene.position.set(0.075, 2.375, 0.825);
+					// gltf.scene.visible = false;
+					// change the renderOrder to 2 to see the 3d model : default 0
+					// gltf.scene.renderOrder = 0;
+					scene.add(gltf.scene);
+					if (debug.active)
+						debug3d.add(gltf.scene, 'visible');
+					resolve(gltf);
+				},
+				(xhr) => {
+					console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+				},
+				(error) => {
+					reject(error);
+				}
+			);
+		})
+	}
+
+	async playWithAsset()
+	{
+		try {
+			await this.setWorld();
+			// console.log(this.asset);
+		} catch (error) {
+			console.error('ca fonctionne pas', error);
+		}
+		this.arrayOfCubeAsset = this.asset.scene.children;
+
+		// console.log(this.arrayOfCubeAsset[0]);
+		// for (let pos = 0; pos < this.arrayOfCubeAsset.length; pos++)
+		// {
+		// 	console.log(this.arrayOfCubeAsset[pos].position);
+		// }
+		// const suppress = (i) => {
+		// 	setTimeout( () => {
+		// 		this.arrayOfCubeAsset[i].visible = false;
+		// 	}, i * 100);
+		// };
+		// let index = 0;
+		// while (index < this.arrayOfCubeAsset.length)
+		// {
+		// 	suppress(index);
+		// 	index++;
+		// }
+
+		for (const cube of this.arrayOfCubeAsset)
+		{
+			cube.material.transparent = true;
+			// cube.material.opacity = false;
+		}
+	}
+
+	setMaskLayout()
+	{
+		const material = new THREE.MeshPhongMaterial({
+			polygonOffset : 1,
+			polygonOffsetFactor : -1,
+			polygonOffsetUnits : -1,
+		});
+
+		const geometry = new THREE.BoxGeometry(0.1, 0.1, 0.1);
+
+		const mesh = new THREE.Mesh(geometry, material.clone());
+		mesh.material.color.set(0xff0000);
+		// mesh.material.wireframe = true;
+
+		for (let y = -0.45; y < 0.5; y += 0.1)
+		{
+			for (let x = -0.45; x < 0.5; x += 0.1)
+			{
+				for (let z = -0.45; z < 0.5; z += 0.1)
+				{
+					const maskingCube = mesh.clone();
+					// uncomment to allow transparency
+					mesh.material.transparent = true;
+					mesh.material.colorWrite = false;
+					mesh.renderOrder = -1;
+					maskingCube.position.set(x, y, z);
+					
+					// create the perimeter of the masking cube
+					const maskingCubePerimeter = {
+						"xPos" : maskingCube.position.x + 0.05,
+						"xNeg" : maskingCube.position.x - 0.05,
+						"zNeg" : maskingCube.position.z - 0.05,
+						"zPos" : maskingCube.position.z + 0.05,
+						"yNeg" : maskingCube.position.y - 0.05,
+						"yPos" : maskingCube.position.y + 0.05
+					};
+					this.arrayOfMaskingCube.push({
+						"mesh" : maskingCube,
+						"material" : maskingCube.material,
+						"geometry" : maskingCube.geometry,
+						"perimeter" : maskingCubePerimeter});
+					this.scene.add(maskingCube);
+				}
 			}
-		);
-		
+		}
 	}
 }
 export { MainCube };

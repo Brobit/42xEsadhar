@@ -355,7 +355,6 @@ export default class KeyboardHandler
 		if (this.goDownCooldown)
 			return ;
 
-		console.log(this.planeBody.position);
 		if (this.planeBody.position.y > -0.4)
 		{
 			// animation for the player cube
@@ -420,10 +419,10 @@ export default class KeyboardHandler
 		else
 			this.isInDash = false
 		
-		
 		this.cubeBody.velocity.x = this.vx;
 		this.cubeBody.velocity.z = this.vz;
 
+		// uncomment this for prod
 		this.camera.instance.position.copy(this.cube.position).add(this.cameraPosition);
 
 		// recall update function to update in continue

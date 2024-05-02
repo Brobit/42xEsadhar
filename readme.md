@@ -13,9 +13,9 @@ npm run dev
 
 ```
 
-30 day left - 
-10 things to do - 
-1 things to correct - 
+17 day left - 
+6 things to do - 
+2 things to correct - 
 3 bonus to implement
 
 ## To do
@@ -32,18 +32,18 @@ npm run dev
   cube is in a dash action/movement
   maybe do a boolean that tell if the player is in a dash or not
 - [x] handle another keyboard layout , azerty for example
-- [ ] find a way to slice the gbl model in 2x2x2 cube and if possible store all the 
+- [x] find a way to slice the gbl model in 2x2x2 cube and if possible store all the 
   2x2x2 cube in an array where you store :
   - the 8 cube that compose the 2x2x2 cube that is going to be displayed
   - the position of the 8 cube that compose the 2x2x2 cube
   - maybe the position where the cannon.box needs to be
   - maybe the cannon.box, but it is maybe a lot of 3d component to create
     the browser and maybe it's going to be hard to support for the device
-- [ ] display only a cube of 2x2x2 of the glb model
-- [ ] make a box in cannon.js when the cube of 2x2x2 is display
-- [ ] display the cube of 2x2x2 of the gbl model when the ennemy cube is fixed
+- [x] display only a cube of 2x2x2 of the glb model
+- [x] make a box in cannon.js when the cube of 2x2x2 is display
+- [x] display the cube of 2x2x2 of the gbl model when the ennemy cube is fixed
   and at the position where the cube was fixed
-- [ ] try with different 3d asset and try to generalize the slicing and all the rest
+- [x] try with different 3d asset and try to generalize the slicing and all the rest
 - [ ] add an another page with a menu, it must have :
   - [ ] a play button 
   - [ ] a tuto / command button 
@@ -51,7 +51,12 @@ npm run dev
 - [ ] create the tuto / command page
 - [ ] create the credit page
 - [ ] implement them in the project
-- [ ] allow the player to click on play only if the canva is loaded
+- [ ] make a button that allow the player to check the progression by change there
+      perspective camera to an orbit control, and animate the changement if possible
+- [ ] make it responsive, to do that :
+      - [ ] change the fov of the camera
+      - [ ] implement a joystick for movement
+      - [ ] 6 button : up/down, right/left, dash & change camera view
 
 bonus :
 
@@ -66,6 +71,8 @@ to correct :
 - [x] put a cooldown on the level changement
 - [ ] make an annimation on the camera movement with gsap
 - [x] implement the respawn of the ennemy
+- [ ] correct the malfunction of the 3d asset, the method used doesn't allow to resolve this problem,
+      we need to rework the 3d assets, or find an another solution.
 
 bug :
 

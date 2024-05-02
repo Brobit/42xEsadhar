@@ -151,7 +151,6 @@ export default class World
 			objectToAdd.add(plane);
 		}
 		this.scene.add(objectToAdd);
-		console.log(objectToAdd.children);
 		
 		if (this.debug.active)
 		{

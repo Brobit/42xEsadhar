@@ -13,13 +13,15 @@ export default class Camera
 		this.cameraOffset = new THREE.Vector3(0, 0.05, 0.2);
 
 		this.setInstance();
-//		this.setControls();
+		// comment line under for prod
+		// this.setControls();
 	}
 
 	setInstance()
 	{
-		this.instance = new THREE.PerspectiveCamera(45, this.sizes.width / this.sizes.height, 0.001, 100);
-//		this.instance.position.set(this.cameraOffset.x, this.cameraOffset.y, this.cameraOffset.z);
+		this.instance = new THREE.PerspectiveCamera(45, this.sizes.width / this.sizes.height, 0.01, 100);
+		// comment line under for prod
+		// this.instance.position.set(this.cameraOffset.x, this.cameraOffset.y, this.cameraOffset.z);
 		this.scene.add(this.instance);
 	}
 
@@ -32,8 +34,8 @@ export default class Camera
 		// this.controls.minPolarAngle = 1.25;
 		// this.controls.enableDamping = true;
 		// this.controls.dampingFactor = 0.5;
-		this.controls.enablePan = false;
-		this.controls.enableZoom = false;
+		// this.controls.enablePan = false;
+		// this.controls.enableZoom = false;
 	}
 
 	resize()
@@ -44,6 +46,7 @@ export default class Camera
 
 	update()
 	{
-//		this.controls.update();
+		// comment line under for prod
+		// this.controls.update();
 	}
 }
