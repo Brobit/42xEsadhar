@@ -13,8 +13,8 @@ npm run dev
 
 ```
 
-17 day left - 
-6 things to do - 
+9 day left - 
+5 things to do - 
 2 things to correct - 
 3 bonus to implement
 
@@ -53,10 +53,10 @@ npm run dev
 - [ ] implement them in the project
 - [ ] make a button that allow the player to check the progression by change there
       perspective camera to an orbit control, and animate the changement if possible
-- [ ] make it responsive, to do that :
-  - [ ] change the fov of the camera
-  - [ ] implement a joystick for movement
-  - [ ] 6 button : up/down, right/left, dash & change camera view
+- [x] make it responsive, to do that :
+  - [x] change the fov of the camera
+  - [x] implement a joystick for movement
+  - [x] 6 button : up/down, right/left, dash & change camera view
 
 bonus :
 
