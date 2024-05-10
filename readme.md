@@ -82,3 +82,5 @@ bug :
     so no worries
 - ennemyCube animation when they have been hit block the animation of the cube rotation when
   he wants to move the camera to the left/right , maybe too much animation ?
+
+try to change the way to do the movement on mobile device by multiply vx and vz by the radian

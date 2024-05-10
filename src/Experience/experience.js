@@ -8,6 +8,7 @@ import World from './World/world.js';
 import Debug from './Utils/debug.js';
 import PhysicalWorld from './World/physics.js';
 import Light from './Utils/light.js';
+import JoystickHandler from './Utils/joystickhandler.js';
 import KeyboardHandler from './Utils/keyboardhandler.js';
 
 let instance = null;
@@ -40,7 +41,11 @@ export default class Experience
 		this.world = new World();
 		this.mainCube = new WORLDCOMPONENT.MainCube();
 		this.physicalWorld = new PhysicalWorld();
-		this.keyboardHandler = new KeyboardHandler();
+		console.log(navigator.maxTouchPoints);
+		if (navigator.maxTouchPoints <= 1)
+			this.keyboardHandler = new KeyboardHandler();
+		else if (navigator.maxTouchPoints > 1)
+			this.joystickhandler = new JoystickHandler();
 
 		// resize event
 		this.sizes.on('resize', () =>
