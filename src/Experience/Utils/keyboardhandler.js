@@ -34,6 +34,7 @@ export default class KeyboardHandler
 			threeQuarter : new THREE.Vector3(-0.2, 0.05, 0)
 		}
 		this.cameraPosition = this.angle.base;
+		this.isInOrbitControl = false;
 		this.debug = this.experience.debug;
 		if (this.debug.active)
 		{
@@ -82,73 +83,81 @@ export default class KeyboardHandler
 			// Update activeKeys object
 			this.activeKeys[event.key] = true;
 
-			// try to check if the keybaord is azerty
-			if (this.activeKeys["z"] == true)
+			if (!this.camera.controls)
 			{
-				// disable the z and enable the w
-				this.activeKeys["z"] = false;
-				this.activeKeys["w"] = true;
-			}
-			if (this.activeKeys["q"] == true)
-			{
-				// disable the q and enable the a
-				this.activeKeys["q"] = false;
-				this.activeKeys["a"] = true;
-			}
+				// try to check if the keybaord is azerty
+				if (this.activeKeys["z"] == true)
+				{
+					// disable the z and enable the w
+					this.activeKeys["z"] = false;
+					this.activeKeys["w"] = true;
+				}
+				if (this.activeKeys["q"] == true)
+				{
+					// disable the q and enable the a
+					this.activeKeys["q"] = false;
+					this.activeKeys["a"] = true;
+				}
 
-			// execute the movement
-			if (this.cameraPosition == this.angle.base)
-				this.move();
-			else if (this.cameraPosition == this.angle.quarter)
-				this.moveQuarter();
-			else if (this.cameraPosition == this.angle.half)
-				this.moveHalf();
-			else if (this.cameraPosition == this.angle.threeQuarter)
-				this.moveThreeQuarter();
-
-			// execute the dash
-			if (this.activeKeys[" "])
-			{
-				if (this.dashCooldown)
-					return ;
-
+				// execute the movement
 				if (this.cameraPosition == this.angle.base)
-					this.dash();
+					this.move();
 				else if (this.cameraPosition == this.angle.quarter)
-					this.dashQuarter();
+					this.moveQuarter();
 				else if (this.cameraPosition == this.angle.half)
-					this.dashHalf();
+					this.moveHalf();
 				else if (this.cameraPosition == this.angle.threeQuarter)
-					this.dashThreeQuarter();
-				this.executeDash();
+					this.moveThreeQuarter();
 
-				this.dashCooldown = true;
+				// execute the dash
+				if (this.activeKeys[" "])
+				{
+					if (this.dashCooldown)
+						return ;
 
-				setTimeout( () => {
-					this.dashCooldown = false;
-				}, 2000);
+					if (this.cameraPosition == this.angle.base)
+						this.dash();
+					else if (this.cameraPosition == this.angle.quarter)
+						this.dashQuarter();
+					else if (this.cameraPosition == this.angle.half)
+						this.dashHalf();
+					else if (this.cameraPosition == this.angle.threeQuarter)
+						this.dashThreeQuarter();
+					this.executeDash();
+
+					this.dashCooldown = true;
+
+					setTimeout( () => {
+						this.dashCooldown = false;
+					}, 2000);
+				}
+
+				// rotate the camera depend of the right/left arroe
+				if (this.activeKeys["ArrowLeft"])
+					this.moveCameraLeft();
+				else if (this.activeKeys["ArrowRight"])
+					this.moveCameraRight();
+				else if (this.activeKeys["ArrowUp"])
+					this.goUp();
+				else if (this.activeKeys["ArrowDown"])
+					this.goDown();
 			}
-
-			// rotate the camera depend of the right/left arroe
-			if (this.activeKeys["ArrowLeft"])
-				this.moveCameraLeft();
-			else if (this.activeKeys["ArrowRight"])
-				this.moveCameraRight();
-			else if (this.activeKeys["ArrowUp"])
-				this.goUp();
-			else if (this.activeKeys["ArrowDown"])
-				this.goDown();
 
 			if (this.activeKeys["e"])
 			{
-				if (this.camera.controls)
+				if (!this.isInOrbitControl)
 				{
-					this.camera.removeControls();
-					this.camera.instance.position.copy(this.experience.mainCube.finalCube.position).add(this.cameraPosition);
-					this.camera.instance.lookAt(this.experience.mainCube.finalCube.position);
+					if (this.camera.controls)
+					{
+						this.camera.removeControls();
+						this.camera.instance.position.copy(this.experience.mainCube.finalCube.position).add(this.cameraPosition);
+						this.camera.instance.lookAt(this.experience.mainCube.finalCube.position);
+					}
+					else if (!this.camera.controls)
+						this.camera.setControls();
+					this.isInOrbitControl = true;
+					setTimeout(() => {this.isInOrbitControl = false}, 1000);
 				}
-				else if (!this.camera.controls)
-					this.camera.setControls();
 			}
 
 			// Reset throttle timer
@@ -166,21 +175,24 @@ export default class KeyboardHandler
 			// Update activeKeys object
 			this.activeKeys[event.key] = false;
 
-			// reseting the azerty input
-			if (event.key === "z")
-				this.activeKeys["w"] = false;
-			if (event.key === "q")
-				this.activeKeys["a"] = false;
+				// reseting the azerty input
+				if (event.key === "z")
+					this.activeKeys["w"] = false;
+				if (event.key === "q")
+					this.activeKeys["a"] = false;
 
-			// Reset cube velocity
-			if (this.cameraPosition == this.angle.base)
-				this.move();
-			else if (this.cameraPosition == this.angle.quarter)
-				this.moveQuarter();
-			else if (this.cameraPosition == this.angle.half)
-				this.moveHalf();
-			else if (this.cameraPosition == this.angle.threeQuarter)
-				this.moveThreeQuarter();
+			if (!this.camera.controls)
+			{
+				// Reset cube velocity
+				if (this.cameraPosition == this.angle.base)
+					this.move();
+				else if (this.cameraPosition == this.angle.quarter)
+					this.moveQuarter();
+				else if (this.cameraPosition == this.angle.half)
+					this.moveHalf();
+				else if (this.cameraPosition == this.angle.threeQuarter)
+					this.moveThreeQuarter();
+			}
 
 			// Reset throttle timer
 			if (this.throttle) {
@@ -431,8 +443,11 @@ export default class KeyboardHandler
 		else
 			this.isInDash = false
 		
-		this.cubeBody.velocity.x = this.vx;
-		this.cubeBody.velocity.z = this.vz;
+		if (!this.camera.controls)
+		{
+			this.cubeBody.velocity.x = this.vx;
+			this.cubeBody.velocity.z = this.vz;
+		}
 
 		// uncomment this for prod
 		if (!this.camera.controls)

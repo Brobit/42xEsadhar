@@ -20,7 +20,7 @@ export default class PhysicalWorld
 		this.mainCubePosition = this.experience.mainCube.position;
 
 		// get camera info
-		this.camera = this.experience.camera.instance;
+		this.camera = this.experience.camera;
 		this.cameraOffset = this.experience.camera.cameraOffset;
 
 		// get the three.js scene]
@@ -288,53 +288,55 @@ export default class PhysicalWorld
 		if (this.ennemyAlive < this.ennemyMaxNumber)
 			this.setEnnemyCube();
 
-		// update ennemy mesh position with their bodies
-		for (const ennemyCube of this.ennemyCubeArray) {
-			// move the ennemyCube if it is not asleep
-			if (ennemyCube.body.sleepState == 0)
-			{
-				// compute direction to the player cube
-				const direction = new CANNON.Vec3();
-				this.cubeBody.position.vsub(ennemyCube.body.position, direction);
-				direction.y = 0;
-				direction.normalize();
-
-				// get the roatation betwwen forward and direction vector
-				const forward = new CANNON.Vec3(0, 0, 1);
-				ennemyCube.body.quaternion.setFromVectors(forward, direction);
-
-				//apply movement
-				const speed = 0.075;
-				direction.scale(speed, ennemyCube.body.velocity);
-
-				// update the mesh position & quaternian
-				ennemyCube.mesh.position.copy(ennemyCube.body.position);
-				ennemyCube.mesh.quaternion.copy(ennemyCube.body.quaternion);
-				// console.log(ennemyCube.mesh.position);
-			}
-		}
-
-		for (const ennemyCube of this.ennemyCubeArray)
+		if (!this.camera.controls)
 		{
-			if (ennemyCube.body.sleepState === 1 || ennemyCube.body.sleepState === 2)
+			// update ennemy mesh position with their bodies
+			for (const ennemyCube of this.ennemyCubeArray) {
+				// move the ennemyCube if it is not asleep
+				if (ennemyCube.body.sleepState == 0)
+				{
+					// compute direction to the player cube
+					const direction = new CANNON.Vec3();
+					this.cubeBody.position.vsub(ennemyCube.body.position, direction);
+					direction.y = 0;
+					direction.normalize();
+
+					// get the roatation betwwen forward and direction vector
+					const forward = new CANNON.Vec3(0, 0, 1);
+					ennemyCube.body.quaternion.setFromVectors(forward, direction);
+
+					//apply movement
+					const speed = 0.075;
+					direction.scale(speed, ennemyCube.body.velocity);
+
+					// update the mesh position & quaternian
+					ennemyCube.mesh.position.copy(ennemyCube.body.position);
+					ennemyCube.mesh.quaternion.copy(ennemyCube.body.quaternion);
+					// console.log(ennemyCube.mesh.position);
+				}
+			}
+
+			for (const ennemyCube of this.ennemyCubeArray)
 			{
-				// gsap.to(ennemyCube.mesh.material, {
-				// 	duration : 2,
-				// 	opacity : 0,
-				// 	onComplete : () => {
-				// 		this.world.removeBody(ennemyCube.body);
-				// 		this.scene.remove(ennemyCube.mesh);
-				// 	}
-				// })
-				this.world.removeBody(ennemyCube.body);
-				this.scene.remove(ennemyCube.mesh);
-				const index = this.ennemyCubeArray.indexOf(ennemyCube);
-				const removed = this.ennemyCubeArray.splice(index, 1);
-				this.removeMaskingCube(removed);
-				this.ennemyAlive--;
+				if (ennemyCube.body.sleepState === 1 || ennemyCube.body.sleepState === 2)
+				{
+					// gsap.to(ennemyCube.mesh.material, {
+					// 	duration : 2,
+					// 	opacity : 0,
+					// 	onComplete : () => {
+					// 		this.world.removeBody(ennemyCube.body);
+					// 		this.scene.remove(ennemyCube.mesh);
+					// 	}
+					// })
+					this.world.removeBody(ennemyCube.body);
+					this.scene.remove(ennemyCube.mesh);
+					const index = this.ennemyCubeArray.indexOf(ennemyCube);
+					const removed = this.ennemyCubeArray.splice(index, 1);
+					this.removeMaskingCube(removed);
+					this.ennemyAlive--;
+				}
 			}
 		}
-
 		// update wrld at 60hz
 		this.world.fixedStep(1/120);
 

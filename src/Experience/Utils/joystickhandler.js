@@ -81,16 +81,18 @@ export default class JoystickHandler
 			y : '10%',
 			hideContextMenu : true
 		}, (data) => {
-			console.log(data);
-			if (this.cameraPosition == this.angle.base)
-				this.move(data.angle, this.speed);
-			else if (this.cameraPosition == this.angle.quarter)
-				// this.move(data.angle, this.speed);
-				this.moveQuarter(data.angle, this.speed);
-			else if (this.cameraPosition == this.angle.half)
-				this.moveHalf(data.angle, this.speed);
-			else if (this.cameraPosition == this.angle.threeQuarter)
-				this.moveThreeQuarter(data.angle, this.speed);
+			if (!this.camera.controls)
+			{
+				if (this.cameraPosition == this.angle.base)
+					this.move(data.angle, this.speed);
+				else if (this.cameraPosition == this.angle.quarter)
+					// this.move(data.angle, this.speed);
+					this.moveQuarter(data.angle, this.speed);
+				else if (this.cameraPosition == this.angle.half)
+					this.moveHalf(data.angle, this.speed);
+				else if (this.cameraPosition == this.angle.threeQuarter)
+					this.moveThreeQuarter(data.angle, this.speed);
+			}
 		});
 
 		const camButton = new JoystickController({
@@ -543,8 +545,11 @@ export default class JoystickHandler
 		else
 			this.isInDash = false
 		
-		this.cubeBody.velocity.x = this.vx;
-		this.cubeBody.velocity.z = this.vz;
+		if (!this.camera.controls)
+		{
+			this.cubeBody.velocity.x = this.vx;
+			this.cubeBody.velocity.z = this.vz;
+		}
 
 		if (!this.camera.controls)
 			this.camera.instance.position.copy(this.cube.position).add(this.cameraPosition);
