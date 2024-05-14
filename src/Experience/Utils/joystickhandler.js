@@ -36,6 +36,7 @@ export default class JoystickHandler
 		}
 		this.cameraPosition = this.angle.base;
 		this.isInOrbitControl = false;
+		this.start = 0;
 		
 		// timeout setter
 		this.throttle = null;
@@ -103,9 +104,9 @@ export default class JoystickHandler
 			y : '5%',
 			hideContextMenu : true
 		}, (data) => {
-			if (!this.isInOrbitControl)
-			{
 				console.log(this.camera.controls);
+			if (!this.isInOrbitControl && this.start != 0)
+			{
 				if (!this.camera.controls)
 					this.camera.setControls();
 				else if (this.camera.controls)
@@ -117,6 +118,7 @@ export default class JoystickHandler
 				this.isInOrbitControl = true;
 				setTimeout(() => {this.isInOrbitControl = false;}, 1000);
 			}
+			this.start++;
 		});
 
 		const dashButton = new JoystickController({
