@@ -42,9 +42,9 @@ export default class Experience
 		this.mainCube = new WORLDCOMPONENT.MainCube();
 		this.physicalWorld = new PhysicalWorld();
 		console.log(navigator.maxTouchPoints);
-		if (navigator.maxTouchPoints <= 1)
-			this.keyboardHandler = new KeyboardHandler();
-		else if (navigator.maxTouchPoints > 1)
+		// if (navigator.maxTouchPoints <= 1)
+		// 	this.keyboardHandler = new KeyboardHandler();
+		// else if (navigator.maxTouchPoints > 1)
 			this.joystickhandler = new JoystickHandler();
 
 		// resize event

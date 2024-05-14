@@ -74,23 +74,17 @@ class MainCube
 	setWorld()
 	{
 		const loader = new GLTFLoader();
-		// const loader = new OBJLoader();
 		const scene = this.scene;
 		const debug = this.debug;
 		const debug3d = this.debug3d;
 
 		return new Promise ((resolve, reject) => {
 			loader.load(
-				// './cube-soleil-levant.glb',
 				'cube-soleil-levant.glb',
 				(gltf) => {
 					this.asset = gltf;
-					// gltf.scale.set(0.05, 0.05, 0.05);
-					// gltf.position.set(0.075, 2.375, 0.825);
 					gltf.scene.scale.set(0.05, 0.05, 0.05);
-					// gltf.scene.scale.set(0.03, 0.03, 0.03);
 					gltf.scene.position.set(0.075, 2.375, 0.825);
-					// gltf.scene.visible = false;
 					// change the renderOrder to 2 to see the 3d model : default 0
 					// gltf.scene.renderOrder = 0;
 					scene.add(gltf.scene);
@@ -117,23 +111,6 @@ class MainCube
 			console.error('ca fonctionne pas', error);
 		}
 		this.arrayOfCubeAsset = this.asset.scene.children;
-
-		// console.log(this.arrayOfCubeAsset[0]);
-		// for (let pos = 0; pos < this.arrayOfCubeAsset.length; pos++)
-		// {
-		// 	console.log(this.arrayOfCubeAsset[pos].position);
-		// }
-		// const suppress = (i) => {
-		// 	setTimeout( () => {
-		// 		this.arrayOfCubeAsset[i].visible = false;
-		// 	}, i * 100);
-		// };
-		// let index = 0;
-		// while (index < this.arrayOfCubeAsset.length)
-		// {
-		// 	suppress(index);
-		// 	index++;
-		// }
 
 		for (const cube of this.arrayOfCubeAsset)
 		{

@@ -35,6 +35,7 @@ export default class JoystickHandler
 			threeQuarter : new THREE.Vector3(-0.2, 0.05, 0)
 		}
 		this.cameraPosition = this.angle.base;
+		this.isInOrbitControl = false;
 		
 		// timeout setter
 		this.throttle = null;
@@ -102,7 +103,20 @@ export default class JoystickHandler
 			y : '5%',
 			hideContextMenu : true
 		}, (data) => {
-			console.log(data, "camera button");
+			if (!this.isInOrbitControl)
+			{
+				console.log(this.camera.controls);
+				if (!this.camera.controls)
+					this.camera.setControls();
+				else if (this.camera.controls)
+				{
+					this.camera.removeControls();
+					this.camera.instance.position.copy(this.experience.mainCube.finalCube.position).add(this.cameraPosition);
+					this.camera.instance.lookAt(this.experience.mainCube.finalCube.position);
+				}
+				this.isInOrbitControl = true;
+				setTimeout(() => {this.isInOrbitControl = false;}, 1000);
+			}
 		});
 
 		const dashButton = new JoystickController({
@@ -530,8 +544,8 @@ export default class JoystickHandler
 		this.cubeBody.velocity.x = this.vx;
 		this.cubeBody.velocity.z = this.vz;
 
-		// uncomment this for prod
-		this.camera.instance.position.copy(this.cube.position).add(this.cameraPosition);
+		if (!this.camera.controls)
+			this.camera.instance.position.copy(this.cube.position).add(this.cameraPosition);
 
 		// recall update function to update in continue
 		window.requestAnimationFrame(() => {

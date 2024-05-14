@@ -139,6 +139,18 @@ export default class KeyboardHandler
 			else if (this.activeKeys["ArrowDown"])
 				this.goDown();
 
+			if (this.activeKeys["e"])
+			{
+				if (this.camera.controls)
+				{
+					this.camera.removeControls();
+					this.camera.instance.position.copy(this.experience.mainCube.finalCube.position).add(this.cameraPosition);
+					this.camera.instance.lookAt(this.experience.mainCube.finalCube.position);
+				}
+				else if (!this.camera.controls)
+					this.camera.setControls();
+			}
+
 			// Reset throttle timer
 			if (this.throttle) {
 				clearTimeout(this.throttle);
@@ -423,7 +435,8 @@ export default class KeyboardHandler
 		this.cubeBody.velocity.z = this.vz;
 
 		// uncomment this for prod
-		this.camera.instance.position.copy(this.cube.position).add(this.cameraPosition);
+		if (!this.camera.controls)
+			this.camera.instance.position.copy(this.cube.position).add(this.cameraPosition);
 
 		// recall update function to update in continue
 		window.requestAnimationFrame(() => {

@@ -31,14 +31,30 @@ export default class Camera
 	setControls()
 	{
 		this.controls = new OrbitControls(this.instance, this.canvas);
-		// this.controls.minDistance = 0.2;
-		// this.controls.maxDistance = 0.2;
-		// this.controls.maxPolarAngle = 1.25;
-		// this.controls.minPolarAngle = 1.25;
-		// this.controls.enableDamping = true;
-		// this.controls.dampingFactor = 0.5;
-		// this.controls.enablePan = false;
-		// this.controls.enableZoom = false;
+		if (navigator.maxTouchPoints <= 1)
+		{
+			this.controls.minDistance = 2.2;
+			this.controls.maxDistance = 3.2;
+		}
+		else if (navigator.maxTouchPoints > 1)
+		{
+			this.controls.minDistance = 4.2;
+			this.controls.maxDistance = 5.2;
+		}
+		this.controls.maxPolarAngle = 1.8;
+		this.controls.minPolarAngle = 1.1;
+		this.controls.enableDamping = true;
+		this.controls.dampingFactor = 0.15;
+		this.controls.enablePan = true;
+		this.controls.enableZoom = true;
+	}
+
+	removeControls()
+	{
+		this.controls.enabled = false;
+		this.controls = null;
+		// this.cameraPosition = (this.experience.keyboardHandler ? this.experience.keyboardHandler.cameraPosition : this.experience.joystickhandler.cameraPosition);
+		// this.instance.position.copy(this.experience.mainCube.finalCube.position).add(this.cameraPosition);
 	}
 
 	resize()
@@ -49,7 +65,7 @@ export default class Camera
 
 	update()
 	{
-		// comment line under for prod
-		// this.controls.update();
+		if (this.controls)
+			this.controls.update();
 	}
 }
