@@ -4,13 +4,11 @@ import Mobile from "./Home_page/Page/Mobile";
 
 const experience = new Experience(document.querySelector('canvas.webgl'));
 
-// if (navigator.maxTouchPoints <= 1)
-// {
-	// window.alert("desktop");
-	// const desktopVersion = new Desktop();
-// }
-// else if (navigator.maxTouchPoints > 1)
-// {
-	// window.alert("mobile");
+if (navigator.maxTouchPoints <= 1)
+{
+	const desktopVersion = new Desktop();
+}
+else if (navigator.maxTouchPoints > 1)
+{
 	const mobileVersion = new Mobile();
-// }
+}

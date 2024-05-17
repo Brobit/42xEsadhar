@@ -24,9 +24,6 @@ export default class Experience
 		}
 		instance = this;
 
-		// global acces
-		//window.experience = this;
-
 		// options
 		this.canvas = canvas;
 

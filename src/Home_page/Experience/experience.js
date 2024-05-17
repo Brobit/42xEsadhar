@@ -33,10 +33,6 @@ export default class Experience
 		this.light = new Light();
 		this.world = new World();
 		console.log(navigator.maxTouchPoints);
-		// if (navigator.maxTouchPoints <= 1)
-			// this.keyboardHandler = new KeyboardHandler();
-		// else if (navigator.maxTouchPoints > 1)
-			// this.joystickhandler = new JoystickHandler();
 
 		// resize event
 		this.sizes.on('resize', () =>

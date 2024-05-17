@@ -1,3 +1,21 @@
+@font-face
+{
+	font-family: 'pixel-regular';
+	src: url('./Redaction_20-Regular.woff2') format('woff2');
+}
+
+@font-face
+{
+	font-family: 'pixel-bold';
+	src: url('./Redaction_20-Bold.woff2'), format('woff2');
+}
+
+@font-face
+{
+	font-family: 'pixel-italic';
+	src: url('./Redaction_20-Italic.woff2'), format('woff2');
+}
+
 *
 {
     margin: 0;
@@ -12,6 +30,7 @@ body
 	/* align-items: flex-end; */
 	width: 100%;
 	height: 100%;
+	font-family: 'pixel-bold';
 }
 
 .webgl
@@ -21,3 +40,402 @@ body
     left: 0;
     outline: none;
 }
+
+.landscape_mode
+{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background-color: black;
+	z-index: 1;
+}
+
+.landscape_text
+{
+	position: relative;
+	display: flex;
+	justify-content: center;
+	top: 48%;
+	color: white;
+	z-index: 2;
+}
+
+.container
+{
+	position: relative;
+	display: flex;
+	flex-wrap: nowrap;
+	flex-direction: column;
+	width: 100%;
+	height: 100%;
+}
+
+.title
+{
+	position: relative;
+	display: flex;
+	flex: 1.5;
+	width: 100%;
+	height: 20%;
+	color: white;
+	align-items: end;
+	justify-content: center;
+	font-size: 3em;
+}
+
+.title_desktop
+{
+	position: relative;
+	display: flex;
+	flex: 1.5;
+	width: 100%;
+	height: 20%;
+	color: white;
+	align-items: end;
+	justify-content: center;
+	font-size: 6em;
+}
+
+.menu
+{
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	height: 80%;
+	align-items: center;
+	justify-content: center;
+	font-size: 2em;
+}
+
+.menu_desktop
+{
+	position: relative;
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	height: 80%;
+	align-items: center;
+	justify-content: center;
+	font-size: 2em;
+}
+
+.text_button
+{
+	position: relative;
+	display: flex;
+	width: 100%;
+	height: 35%;
+	color: white;
+	align-items: center;
+	justify-content: center;
+}
+
+.tuto_button
+{
+	font-size: 2em;
+}
+
+.play_button
+{
+	display: flex;
+	align-items: flex-start;
+	font-size: 2em;
+}
+
+.credit_button
+{
+	font-size: 2em;
+}
+
+.link
+{
+	text-decoration: none;
+	color: white;
+}
+
+.popUpContainer
+{
+	position: absolute;
+	display: flex;
+	flex-direction: row;
+	left: 12.5%;
+	top: 12.5%;
+	width: 75%;
+	height: 75%;
+	z-index: 1;
+	background-color: rgb(25, 25, 35);
+	border: solid;
+	border-radius: 4em 2em;
+	border-color: #62a0ea;
+	border-width: 0.2em;
+}
+
+.close {
+  position: absolute;
+  left: 85%;
+  top: 2%;
+  width: 5%;
+  height: 10%;
+  opacity: 0.5;
+}
+
+.close {
+  position: absolute;
+  left: 97%;
+  top: 2%;
+  width: 1%;
+  height: 10%;
+  opacity: 0.5;
+}
+
+.close:before, .close:after {
+  position: absolute;
+  right: 10%;
+  content: ' ';
+  height: 50%;
+  width: 50%;
+  background-color: white;
+}
+
+.close:before {
+  transform: rotate(45deg);
+}
+
+.close:after {
+  transform: rotate(-45deg);
+}
+
+.img_tutorial
+{
+	position: relative;
+	display: flex;
+	width: 100%;
+	flex: 0.34;
+	align-items: flex-start;
+	border-radius: 3.8em 1.8em 0 0;
+	background-color: rgb(25, 25, 35);
+	background-size: cover;
+	background-image: url(./tuto3.png);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.img_tutorial_desktop
+{
+	position: relative;
+	display: flex;
+	width: 100%;
+	flex: 0.92;
+	align-items: flex-start;
+	border-radius: 3.8em 0 0 1.8em;
+	background-color: rgb(25, 25, 35);
+	background-size: contain;
+	background-image: url(./tuto2.png);
+	background-repeat: no-repeat;
+	background-position: left;
+}
+
+.grid_container
+{
+	position: relative;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: 1fr 1fr;
+	/* gap: 10%; */
+	width: 60%;
+	height: 100%;
+}
+
+.tutorial_text
+{
+	position: relative;
+	display: flex;
+	flex: 0.2;
+	color: white;
+	align-items: center;
+	text-align: center;
+	width: 90%;
+	left: 5%;
+}
+
+.tutorial_text_desktop
+{
+	font-size: 1.5em;
+}
+
+.text_joystick_left
+{
+	display: flex;
+	align-items: flex-end;
+}
+
+.text_button_left
+{
+	display: flex;
+}
+
+.text_button_right
+{
+	display: flex;
+}
+
+.text_joystick_right
+{
+	display: flex;
+	flex: 0.3;
+	top: -2%;
+}
+
+.parent {
+	position: relative;
+	display: grid;
+	grid-template-columns: repeat(6, 1fr);
+	grid-template-rows: repeat(5, 1fr);
+	grid-column-gap: 0px;
+	grid-row-gap: 0px;
+}
+
+.div1 { grid-area: 1 / 1 / 3 / 7; }
+.div2 { grid-area: 3 / 1 / 4 / 5; }
+.div3 { grid-area: 4 / 1 / 6 / 3; }
+.div4 { grid-area: 4 / 3 / 6 / 5; }
+.div5 { grid-area: 3 / 5 / 4 / 7; }
+.div6 { grid-area: 4 / 5 / 6 / 7; }
+
+.credit_text
+{
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	color: white;
+}
+
+.credit_title
+{
+	display: flex;
+	flex: 2;
+	align-items: center;
+	justify-content: flex-end;
+	font-size: 2em;
+}
+
+.credit_title_desktop
+{
+	display: flex;
+	flex: 2;
+	align-items: center;
+	justify-content: center;
+	font-size: 5em;
+	width: 600%;
+	height: 300%;
+}
+
+.artist_role
+{
+	display: flex;
+	flex: 2;
+	align-items: center;
+	justify-content: flex-end;
+}
+
+.artist_role_desktop
+{
+	display: flex;
+	flex: 2;
+	align-items: center;
+	justify-content: center;
+	width: 600%;
+	height: 500%;
+	font-size: 1.5em;
+}
+
+.artist_name
+{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.email_container
+{
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 20%;
+}
+
+.email_icon
+{
+	position: relative;
+	max-width: 100%;
+	height: auto;
+}
+
+.dev_role
+{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.dev_role_desktop
+{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 335%;
+	height: 500%;
+	font-size: 1.5em;
+}
+
+.dev_name
+{
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+}
+
+.email_dev
+{
+	position: relative;
+	max-width: 60%;
+	height: auto;
+}
+
+.github
+{
+	position: relative;
+	max-width: 50%;
+	height: auto;
+}
+
+.linkedin_icon
+{
+	position: relative;
+	max-width: 50%;
+	height: auto;
+}
+
+.contact
+{
+	display: flex;
+	flex: 2;
+	flex-flow: row wrap;
+	justify-content: center;
+}
+
+.logo
+{
+	position: relative;
+	display: flex;
+	flex : 1;
+	align-items: flex-start;
+	justify-content: center;
+	height: 100%;
+	width: auto;
+}
+
+
