@@ -47,7 +47,11 @@ export default class Mobile
 	{
 		this.title = document.createElement("div");
 		this.title.classList.add("webgl", "title");
-		this.title.textContent = "Pixel";
+		this.titleImage = document.createElement("img");
+		this.titleImage.classList.add("webgl", "title_image");
+		this.titleImage.src = "./game_title.gif";
+		// this.title.textContent = "Pixel";
+		this.title.appendChild(this.titleImage);
 		this.container.appendChild(this.title);
 	}
 
@@ -61,7 +65,7 @@ export default class Mobile
 	createPlayButton()
 	{
 		this.playButton = document.createElement("div");
-		this.playButton.classList.add("webgl", "text_button");
+		this.playButton.classList.add("webgl", "text_button", "play_button_mobile");
 		this.menu.appendChild(this.playButton);
 		this.playText = document.createElement("a");
 		this.playText.textContent = "Jouer";
@@ -82,8 +86,8 @@ export default class Mobile
 	createCreditButton()
 	{
 		this.creditButton = document.createElement("div");
-		this.creditButton.classList.add("webgl", "text_button");
-		this.creditButton.textContent = "Crédit";
+		this.creditButton.classList.add("webgl", "text_button", "credit_button_mobile");
+		this.creditButton.textContent = "Crédits";
 		this.menu.appendChild(this.creditButton);
 		this.creditInteraction();
 	}
@@ -107,7 +111,7 @@ export default class Mobile
 		if (this.body.contains(this.tutorialPopUp))
 			return;
 		this.tutorialPopUp = document.createElement("div");
-		this.tutorialPopUp.classList.add("webgl", "popUpContainer");
+		this.tutorialPopUp.classList.add("webgl", "popUpContainer_mobile");
 		this.body.appendChild(this.tutorialPopUp);
 		this.createTutorialContent(this.tutorialPopUp);
 		this.createCloseCross(this.tutorialPopUp);
@@ -118,7 +122,7 @@ export default class Mobile
 		if (this.body.contains(this.creditPopUp))
 			return;
 		this.creditPopUp = document.createElement("div");
-		this.creditPopUp.classList.add("webgl", "popUpContainer");
+		this.creditPopUp.classList.add("webgl", "popUpContainer_mobile");
 		this.body.appendChild(this.creditPopUp);
 		this.createCreditContent(this.creditPopUp);
 		this.createCloseCross(this.creditPopUp);
@@ -127,7 +131,7 @@ export default class Mobile
 	createCloseCross(div)
 	{
 		this.tutorialCross = document.createElement("div");
-		this.tutorialCross.classList.add("webgl", "close");
+		this.tutorialCross.classList.add("webgl", "close_mobile");
 		div.appendChild(this.tutorialCross);
 		this.tutorialCross.addEventListener("click", () => {
 			this.body.removeChild(div);
@@ -163,13 +167,10 @@ export default class Mobile
 
 	createCreditContent(div)
 	{
-		// emile.robinot@esadhar.fr
-		// louiza.zafane@esadhar.fr
-
 		// create credit title
 		this.creditTitle = document.createElement("div");
 		this.creditTitle.classList.add("webgl", "credit_text", "credit_title");
-		this.creditTitle.textContent = "Crédit";
+		this.creditTitle.textContent = "Crédits";
 		div.appendChild(this.creditTitle);
 
 		// create artist role

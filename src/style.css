@@ -76,9 +76,9 @@ body
 	display: flex;
 	flex: 1.5;
 	width: 100%;
-	height: 20%;
+	height: 30%;
 	color: white;
-	align-items: end;
+	align-items: flex-end;
 	justify-content: center;
 	font-size: 3em;
 }
@@ -89,11 +89,25 @@ body
 	display: flex;
 	flex: 1.5;
 	width: 100%;
-	height: 20%;
+	height: 30%;
 	color: white;
 	align-items: end;
 	justify-content: center;
 	font-size: 6em;
+}
+
+.title_image
+{
+	position: relative;
+	height: 80%;
+	width: auto;
+}
+
+.title_image_desktop
+{
+	position: relative;
+	height: 100%;
+	width: auto;
 }
 
 .menu
@@ -131,20 +145,36 @@ body
 	justify-content: center;
 }
 
+.play_button_mobile
+{
+	display: flex;
+	align-items: flex-end;
+}
+
+.credit_button_mobile
+{
+	display: flex;
+	align-items: flex-start;
+}
+
 .tuto_button
 {
+	display: flex;
+	align-items: flex-end;
 	font-size: 2em;
 }
 
 .play_button
 {
 	display: flex;
-	align-items: flex-start;
-	font-size: 2em;
+	align-items: flex-end;
+	font-size: 3em;
 }
 
 .credit_button
 {
+	display: flex;
+	align-items: flex-end;
 	font-size: 2em;
 }
 
@@ -152,6 +182,23 @@ body
 {
 	text-decoration: none;
 	color: white;
+}
+
+.popUpContainer_mobile
+{
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	left: 12.5%;
+	top: 12.5%;
+	width: 75%;
+	height: 75%;
+	z-index: 1;
+	background-color: rgb(25, 25, 35);
+	border: solid;
+	border-radius: 4em 2em;
+	border-color: #62a0ea;
+	border-width: 0.2em;
 }
 
 .popUpContainer
@@ -171,11 +218,11 @@ body
 	border-width: 0.2em;
 }
 
-.close {
+.close_mobile {
   position: absolute;
-  left: 85%;
+  left: 88%;
   top: 2%;
-  width: 5%;
+  width: 3%;
   height: 10%;
   opacity: 0.5;
 }
@@ -189,6 +236,15 @@ body
   opacity: 0.5;
 }
 
+.close_mobile:before, .close_mobile:after {
+  position: absolute;
+  right: 10%;
+  content: ' ';
+  height: 50%;
+  width: 50%;
+  background-color: white;
+}
+
 .close:before, .close:after {
   position: absolute;
   right: 10%;
@@ -198,8 +254,16 @@ body
   background-color: white;
 }
 
+.close_mobile:before {
+  transform: rotate(45deg);
+}
+
 .close:before {
   transform: rotate(45deg);
+}
+
+.close_mobile:after {
+  transform: rotate(-45deg);
 }
 
 .close:after {
@@ -211,6 +275,7 @@ body
 	position: relative;
 	display: flex;
 	width: 100%;
+	height: auto;
 	flex: 0.34;
 	align-items: flex-start;
 	border-radius: 3.8em 1.8em 0 0;
@@ -328,8 +393,6 @@ body
 	align-items: center;
 	justify-content: center;
 	font-size: 5em;
-	width: 600%;
-	height: 300%;
 }
 
 .artist_role
@@ -346,8 +409,6 @@ body
 	flex: 2;
 	align-items: center;
 	justify-content: center;
-	width: 600%;
-	height: 500%;
 	font-size: 1.5em;
 }
 
@@ -355,7 +416,7 @@ body
 {
 	display: flex;
 	align-items: center;
-	justify-content: center;
+	font-size: 1.5em;
 }
 
 .email_container
@@ -374,6 +435,13 @@ body
 	height: auto;
 }
 
+.email_icon_desktop
+{
+	position: relative;
+	max-width: 80%;
+	height: auto;
+}
+
 .dev_role
 {
 	display: flex;
@@ -386,8 +454,8 @@ body
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	width: 335%;
-	height: 500%;
+	/* width: 335%; */
+	/* height: 500%; */
 	font-size: 1.5em;
 }
 
@@ -396,12 +464,20 @@ body
 	display: flex;
 	align-items: center;
 	justify-content: flex-start;
+	font-size: 1.5em;
 }
 
 .email_dev
 {
 	position: relative;
 	max-width: 60%;
+	height: auto;
+}
+
+.email_dev_desktop
+{
+	position: relative;
+	max-width: 48%;
 	height: auto;
 }
 
@@ -412,10 +488,24 @@ body
 	height: auto;
 }
 
+.github_desktop
+{
+	position: relative;
+	max-width: 38%;
+	height: auto;
+}
+
 .linkedin_icon
 {
 	position: relative;
 	max-width: 50%;
+	height: auto;
+}
+
+.linkedin_icon_desktop
+{
+	position: relative;
+	max-width: 38%;
 	height: auto;
 }
 
@@ -425,6 +515,15 @@ body
 	flex: 2;
 	flex-flow: row wrap;
 	justify-content: center;
+}
+
+.contact_desktop
+{
+	display: flex;
+	flex: 2;
+	flex-flow: row wrap;
+	justify-content: center;
+	align-items: center;
 }
 
 .logo
@@ -438,4 +537,13 @@ body
 	width: auto;
 }
 
-
+.logo_desktop
+{
+	position: relative;
+	display: flex;
+	flex: 1;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	width: auto;
+}

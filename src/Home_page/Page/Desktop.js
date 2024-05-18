@@ -23,7 +23,11 @@ export default class Desktop
 	{
 		this.title = document.createElement("div");
 		this.title.classList.add("webgl", "title_desktop");
-		this.title.textContent = "Pixel";
+		this.titleImage = document.createElement("img");
+		this.titleImage.classList.add("webgl", "title_image_desktop");
+		this.titleImage.src = "./game_title.gif";
+		this.title.appendChild(this.titleImage);
+		// this.title.textContent = "Pixel";
 		this.container.appendChild(this.title);
 	}
 
@@ -59,7 +63,7 @@ export default class Desktop
 	{
 		this.creditButton = document.createElement("div");
 		this.creditButton.classList.add("webgl", "text_button", "credit_button");
-		this.creditButton.textContent = "Crédit";
+		this.creditButton.textContent = "Crédits";
 		this.menu.appendChild(this.creditButton);
 		this.creditInteraction();
 	}
@@ -147,135 +151,144 @@ export default class Desktop
 		this.parent = document.createElement("div");
 		this.parent.classList.add("webgl", "parent");
 
-		this.div1 = document.createElement("div");
-		this.div1.classList.add("webgl", "parent", "div1");
+		// this.div1 = document.createElement("div");
+		// this.div1.classList.add("webgl", "parent", "div1");
 		
 		// create credit title
 		this.creditTitle = document.createElement("div");
-		this.creditTitle.classList.add("webgl", "credit_text", "credit_title_desktop");
-		this.creditTitle.textContent = "Crédit";
-		this.div1.appendChild(this.creditTitle);
+		this.creditTitle.classList.add("webgl", "credit_text", "credit_title_desktop", "parent", "div1");
+		this.creditTitle.textContent = "Crédits";
+		// this.div1.appendChild(this.creditTitle);
 
 		
-		this.div2 = document.createElement("div");
-		this.div2.classList.add("webgl", "parent", "div2");
+		// this.div2 = document.createElement("div");
+		// this.div2.classList.add("webgl", "parent", "div2");
 
 		// create artist role
 		this.artistRole = document.createElement("div");
-		this.artistRole.classList.add("webgl", "credit_text", "artist_role_desktop");
+		this.artistRole.classList.add("webgl", "credit_text", "artist_role_desktop", "parent", "div2");
 		this.artistRole.textContent = "3D artist - UI/UX designer";
-		this.div2.appendChild(this.artistRole);
+		// this.div2.appendChild(this.artistRole);
 
 
-		this.div3 = document.createElement("div");
-		this.div3.classList.add("webgl", "parent", "div3");
+		// this.div3 = document.createElement("div");
+		// this.div3.classList.add("webgl", "parent", "div3");
 
 		// create name + link to the email
 		this.artistNameOne = document.createElement("div");
-		this.artistNameOne.classList.add("webgl", "credit_text", "artist_name");
+		this.artistNameOne.classList.add("webgl", "credit_text", "artist_name", "parent", "div3");
 		this.artistNameOne.textContent = "ZAFANE Louiza";
-		this.div3.appendChild(this.artistNameOne);
+		// this.div3.appendChild(this.artistNameOne);
 
 		this.artistEmailOne = document.createElement("div");
-		this.artistEmailOne.classList.add("webgl", "credit_text", "contact");
+		this.artistEmailOne.classList.add("webgl", "credit_text", "contact", "parent", "div3");
 
 		this.emailLinkOne = document.createElement("a");
 		this.emailLinkOne.classList.add("webgl", "email_container");
 		this.emailLinkOne.href = "mailto:louiza.zafane@esadhar.fr";
 		this.emailLinkOne.target = "_blank";
 		this.emailIconOne = document.createElement("img");
-		this.emailIconOne.classList.add("webgl", "email_icon");
+		this.emailIconOne.classList.add("webgl", "email_icon_desktop");
 		this.emailIconOne.src = "./lettre.png";
 		this.emailLinkOne.appendChild(this.emailIconOne);
 		this.artistEmailOne.appendChild(this.emailLinkOne);
-		this.div3.appendChild(this.artistEmailOne);
+		// this.div3.appendChild(this.artistEmailOne);
 
 
-		this.div4 = document.createElement("div");
-		this.div4.classList.add("webgl", "parent", "div4");
+		// this.div4 = document.createElement("div");
+		// this.div4.classList.add("webgl", "parent", "div4");
 
 		// create name + link to the email
 		this.artistNameTwo = document.createElement("div");
-		this.artistNameTwo.classList.add("webgl", "credit_text", "artist_name");
+		this.artistNameTwo.classList.add("webgl", "credit_text", "artist_name", "parent", "div4");
 		this.artistNameTwo.textContent = "ROBINOT Emile";
-		this.div4.appendChild(this.artistNameTwo);
+		// this.div4.appendChild(this.artistNameTwo);
 
 		this.artistEmailTwo = document.createElement("div");
-		this.artistEmailTwo.classList.add("webgl", "credit_text", "contact");
+		this.artistEmailTwo.classList.add("webgl", "credit_text", "contact", "parent", "div4");
 
 		this.emailLinkTwo = document.createElement("a");
 		this.emailLinkTwo.classList.add("webgl", "email_container");
 		this.emailLinkTwo.href = "mailto:emile.robinot@esadhar.fr";
 		this.emailLinkTwo.target = "_blank";
 		this.emailIconTwo = document.createElement("img");
-		this.emailIconTwo.classList.add("webgl", "email_icon");
+		this.emailIconTwo.classList.add("webgl", "email_icon_desktop");
 		this.emailIconTwo.src = "./lettre.png";
 		this.emailLinkTwo.appendChild(this.emailIconTwo);
 		this.artistEmailTwo.appendChild(this.emailLinkTwo);
-		this.div4.appendChild(this.artistEmailTwo);
+		// this.div4.appendChild(this.artistEmailTwo);
 
 
-		this.div5 = document.createElement("div");
-		this.div5.classList.add("webgl", "parent", "div5");
+		// this.div5 = document.createElement("div");
+		// this.div5.classList.add("webgl", "parent", "div5");
 
 		// create dev role
 		this.devRole = document.createElement("div");
-		this.devRole.classList.add("webgl", "credit_text", "dev_role_desktop");
+		this.devRole.classList.add("webgl", "credit_text", "dev_role_desktop", "parent", "div5");
 		this.devRole.textContent = "Développeur";
-		this.div5.appendChild(this.devRole);
+		// this.div5.appendChild(this.devRole);
 
 
-		this.div6 = document.createElement("div");
-		this.div6.classList.add("webgl", "parent", "div6");
+		// this.div6 = document.createElement("div");
+		// this.div6.classList.add("webgl", "parent", "div6");
 
 		// create the name + all the link
 		this.devName = document.createElement("div");
-		this.devName.classList.add("webgl", "credit_text", "dev_name");
+		this.devName.classList.add("webgl", "credit_text", "dev_name", "parent", "div6");
 		this.devName.textContent = "MARICOURT Alann";
-		this.div6.appendChild(this.devName);
+		// this.div6.appendChild(this.devName);
 
 		this.contactDev = document.createElement("div");
-		this.contactDev.classList.add("webgl", "credit_text", "contact");
+		this.contactDev.classList.add("webgl", "credit_text", "contact_desktop", "parent", "div6");
 		
 		this.devEmail = document.createElement("a");
-		this.devEmail.classList.add("webgl", "logo");
+		this.devEmail.classList.add("webgl", "logo_desktop");
 		this.devEmail.href = "mailto:contactme@alann.coffee";
 		this.devEmail.target = "_blank";
 		this.emailIconThree = document.createElement("img");
-		this.emailIconThree.classList.add("webgl", "email_dev");
+		this.emailIconThree.classList.add("webgl", "email_dev_desktop");
 		this.emailIconThree.src = "./lettre.png";
 		this.devEmail.appendChild(this.emailIconThree);
 		this.contactDev.appendChild(this.devEmail);
 
 		this.devGit = document.createElement("a");
-		this.devGit.classList.add("webgl", "logo");
+		this.devGit.classList.add("webgl", "logo_desktop");
 		this.devGit.href = "https://github.com/Brobit";
 		this.devGit.target = "_blank";
 		this.gitIcon = document.createElement("img");
-		this.gitIcon.classList.add("webgl", "github")
+		this.gitIcon.classList.add("webgl", "github_desktop")
 		this.gitIcon.src = "./github-mark-white.png";
 		this.devGit.appendChild(this.gitIcon);
 		this.contactDev.appendChild(this.devGit);
 
 		this.devLinkedin = document.createElement("a");
-		this.devLinkedin.classList.add("webgl", "logo");
+		this.devLinkedin.classList.add("webgl", "logo_desktop");
 		this.devLinkedin.href = "https://www.linkedin.com/in/alann-maricourt-developpeur-c-javascript-freelance";
 		this.devLinkedin.target = "_blank";
 		this.linkedinIcon = document.createElement("img");
-		this.linkedinIcon.classList.add("webgl", "linkedin_icon");
+		this.linkedinIcon.classList.add("webgl", "linkedin_icon_desktop");
 		this.linkedinIcon.src = "./LI-In-Bug.png";
 		this.devLinkedin.appendChild(this.linkedinIcon);
 		this.contactDev.appendChild(this.devLinkedin);
 
-		this.div6.appendChild(this.contactDev);
+		// this.div6.appendChild(this.contactDev);
 
 
-		this.parent.appendChild(this.div1);
-		this.parent.appendChild(this.div2);
-		this.parent.appendChild(this.div3);
-		this.parent.appendChild(this.div4);
-		this.parent.appendChild(this.div5);
-		this.parent.appendChild(this.div6);
+		// this.parent.appendChild(this.div1);
+		this.parent.appendChild(this.creditTitle);
+		// this.parent.appendChild(this.div2);
+		this.parent.appendChild(this.artistRole);
+		// this.parent.appendChild(this.div3);
+		this.parent.appendChild(this.artistNameOne);
+		this.parent.appendChild(this.artistEmailOne);
+		// this.parent.appendChild(this.div4);
+		this.parent.appendChild(this.artistNameTwo);
+		this.parent.appendChild(this.artistEmailTwo);
+		// this.parent.appendChild(this.div5);
+		this.parent.appendChild(this.devRole);
+		// this.parent.appendChild(this.div6);
+		this.parent.appendChild(this.devName);
+		this.parent.appendChild(this.contactDev);
 		div.appendChild(this.parent);
 	}
 }
