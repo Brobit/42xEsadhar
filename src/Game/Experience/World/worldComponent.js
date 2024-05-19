@@ -80,7 +80,7 @@ class MainCube
 
 		return new Promise ((resolve, reject) => {
 			loader.load(
-				'cube-soleil-levant.glb',
+				'/cube-soleil-levant.glb',
 				(gltf) => {
 					this.asset = gltf;
 					gltf.scene.scale.set(0.05, 0.05, 0.05);
@@ -106,7 +106,6 @@ class MainCube
 	{
 		try {
 			await this.setWorld();
-			// console.log(this.asset);
 		} catch (error) {
 			console.error('ca fonctionne pas', error);
 		}

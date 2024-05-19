@@ -49,8 +49,7 @@ export default class Mobile
 		this.title.classList.add("webgl", "title");
 		this.titleImage = document.createElement("img");
 		this.titleImage.classList.add("webgl", "title_image");
-		this.titleImage.src = "./game_title.gif";
-		// this.title.textContent = "Pixel";
+		this.titleImage.src = "/game_title.gif";
 		this.title.appendChild(this.titleImage);
 		this.container.appendChild(this.title);
 	}
@@ -194,7 +193,7 @@ export default class Mobile
 		this.emailLinkOne.target = "_blank";
 		this.emailIconOne = document.createElement("img");
 		this.emailIconOne.classList.add("webgl", "email_icon");
-		this.emailIconOne.src = "./lettre.png";
+		this.emailIconOne.src = "/lettre.png";
 		this.emailLinkOne.appendChild(this.emailIconOne);
 		this.artistEmailOne.appendChild(this.emailLinkOne);
 		div.appendChild(this.artistEmailOne);
@@ -213,7 +212,7 @@ export default class Mobile
 		this.emailLinkTwo.target = "_blank";
 		this.emailIconTwo = document.createElement("img");
 		this.emailIconTwo.classList.add("webgl", "email_icon");
-		this.emailIconTwo.src = "./lettre.png";
+		this.emailIconTwo.src = "/lettre.png";
 		this.emailLinkTwo.appendChild(this.emailIconTwo);
 		this.artistEmailTwo.appendChild(this.emailLinkTwo);
 		div.appendChild(this.artistEmailTwo);
@@ -239,7 +238,7 @@ export default class Mobile
 		this.devEmail.target = "_blank";
 		this.emailIconThree = document.createElement("img");
 		this.emailIconThree.classList.add("webgl", "email_dev");
-		this.emailIconThree.src = "./lettre.png";
+		this.emailIconThree.src = "/lettre.png";
 		this.devEmail.appendChild(this.emailIconThree);
 		this.contactDev.appendChild(this.devEmail);
 
@@ -249,7 +248,7 @@ export default class Mobile
 		this.devGit.target = "_blank";
 		this.gitIcon = document.createElement("img");
 		this.gitIcon.classList.add("webgl", "github")
-		this.gitIcon.src = "./github-mark-white.png";
+		this.gitIcon.src = "/github-mark-white.png";
 		this.devGit.appendChild(this.gitIcon);
 		this.contactDev.appendChild(this.devGit);
 
@@ -259,7 +258,7 @@ export default class Mobile
 		this.devLinkedin.target = "_blank";
 		this.linkedinIcon = document.createElement("img");
 		this.linkedinIcon.classList.add("webgl", "linkedin_icon");
-		this.linkedinIcon.src = "./LI-In-Bug.png";
+		this.linkedinIcon.src = "/LI-In-Bug.png";
 		this.devLinkedin.appendChild(this.linkedinIcon);
 		this.contactDev.appendChild(this.devLinkedin);
 

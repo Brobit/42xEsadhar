@@ -1,19 +1,19 @@
 @font-face
 {
 	font-family: 'pixel-regular';
-	src: url('./Redaction_20-Regular.woff2') format('woff2');
+	src: url('/Redaction_20-Regular.woff2') format('woff2');
 }
 
 @font-face
 {
 	font-family: 'pixel-bold';
-	src: url('./Redaction_20-Bold.woff2'), format('woff2');
+	src: url('/Redaction_20-Bold.woff2'), format('woff2');
 }
 
 @font-face
 {
 	font-family: 'pixel-italic';
-	src: url('./Redaction_20-Italic.woff2'), format('woff2');
+	src: url('/Redaction_20-Italic.woff2'), format('woff2');
 }
 
 *
@@ -281,7 +281,7 @@ body
 	border-radius: 3.8em 1.8em 0 0;
 	background-color: rgb(25, 25, 35);
 	background-size: cover;
-	background-image: url(./tuto3.png);
+	background-image: url(/tuto3.png);
 	background-repeat: no-repeat;
 	background-position: center;
 }
@@ -291,14 +291,15 @@ body
 	position: relative;
 	display: flex;
 	width: 100%;
-	flex: 0.92;
-	align-items: flex-start;
-	border-radius: 3.8em 0 0 1.8em;
+	flex: 1;
+	align-items: center;
+	justify-content: center;
+	border-radius: 3.8em 1.8em 3.8em 1.8em;
 	background-color: rgb(25, 25, 35);
 	background-size: contain;
-	background-image: url(./tuto2.png);
+	background-image: url(/keys.png);
 	background-repeat: no-repeat;
-	background-position: left;
+	background-position: center;
 }
 
 .grid_container

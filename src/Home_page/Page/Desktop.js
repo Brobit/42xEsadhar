@@ -25,7 +25,7 @@ export default class Desktop
 		this.title.classList.add("webgl", "title_desktop");
 		this.titleImage = document.createElement("img");
 		this.titleImage.classList.add("webgl", "title_image_desktop");
-		this.titleImage.src = "./game_title.gif";
+		this.titleImage.src = "/game_title.gif";
 		this.title.appendChild(this.titleImage);
 		// this.title.textContent = "Pixel";
 		this.container.appendChild(this.title);
@@ -120,30 +120,30 @@ export default class Desktop
 		this.imgTutorial.classList.add("webgl", "img_tutorial_desktop");
 		div.appendChild(this.imgTutorial);
 
-		this.gridContainer = document.createElement("div");
-		this.gridContainer.classList.add("webgl", "grid_container");
-
-		this.joystickLeftText = document.createElement("div");
-		this.joystickLeftText.classList.add("webgl", "tutorial_text", "tutorial_text_desktop");
-		this.joystickLeftText.textContent = "Joystick de gauche : Sert à se déplacer dans toutes les directions.";
-		this.gridContainer.appendChild(this.joystickLeftText);
-
-		this.leftButton = document.createElement("div")
-		this.leftButton.classList.add("webgl", "tutorial_text", "tutorial_text_desktop");
-		this.leftButton.textContent = "Bouton de gauche : Sert à changer la vue 3 ème personne en vu orbital.";
-		this.gridContainer.appendChild(this.leftButton);
-
-		this.rightButton = document.createElement("div");
-		this.rightButton.classList.add("webgl", "tutorial_text", "tutorial_text_desktop");
-		this.rightButton.textContent = "Bouton de droite : Sert à effectuer une courte accélération, permet de fixer un cube si il est toucher pendant l'accélération.";
-		this.gridContainer.appendChild(this.rightButton);
-
-		this.joystickRightText = document.createElement("div");
-		this.joystickRightText.classList.add("webgl", "tutorial_text", "tutorial_text_desktop");
-		this.joystickRightText.textContent = "Joystick de droite : Sert à monter/descendre d'un niveau ou à faire une rotation d'un quart de tour vers la gauche/droite."
-		this.gridContainer.appendChild(this.joystickRightText);
-
-		div.appendChild(this.gridContainer);
+		// this.gridContainer = document.createElement("div");
+		// this.gridContainer.classList.add("webgl", "grid_container");
+		//
+		// this.joystickLeftText = document.createElement("div");
+		// this.joystickLeftText.classList.add("webgl", "tutorial_text", "tutorial_text_desktop");
+		// this.joystickLeftText.textContent = "Joystick de gauche : Sert à se déplacer dans toutes les directions.";
+		// this.gridContainer.appendChild(this.joystickLeftText);
+		//
+		// this.leftButton = document.createElement("div")
+		// this.leftButton.classList.add("webgl", "tutorial_text", "tutorial_text_desktop");
+		// this.leftButton.textContent = "Bouton de gauche : Sert à changer la vue 3 ème personne en vu orbital.";
+		// this.gridContainer.appendChild(this.leftButton);
+		//
+		// this.rightButton = document.createElement("div");
+		// this.rightButton.classList.add("webgl", "tutorial_text", "tutorial_text_desktop");
+		// this.rightButton.textContent = "Bouton de droite : Sert à effectuer une courte accélération, permet de fixer un cube si il est toucher pendant l'accélération.";
+		// this.gridContainer.appendChild(this.rightButton);
+		//
+		// this.joystickRightText = document.createElement("div");
+		// this.joystickRightText.classList.add("webgl", "tutorial_text", "tutorial_text_desktop");
+		// this.joystickRightText.textContent = "Joystick de droite : Sert à monter/descendre d'un niveau ou à faire une rotation d'un quart de tour vers la gauche/droite."
+		// this.gridContainer.appendChild(this.joystickRightText);
+		//
+		// div.appendChild(this.gridContainer);
 	}
 
 	createCreditContent(div)
@@ -189,7 +189,7 @@ export default class Desktop
 		this.emailLinkOne.target = "_blank";
 		this.emailIconOne = document.createElement("img");
 		this.emailIconOne.classList.add("webgl", "email_icon_desktop");
-		this.emailIconOne.src = "./lettre.png";
+		this.emailIconOne.src = "/lettre.png";
 		this.emailLinkOne.appendChild(this.emailIconOne);
 		this.artistEmailOne.appendChild(this.emailLinkOne);
 		// this.div3.appendChild(this.artistEmailOne);
@@ -213,7 +213,7 @@ export default class Desktop
 		this.emailLinkTwo.target = "_blank";
 		this.emailIconTwo = document.createElement("img");
 		this.emailIconTwo.classList.add("webgl", "email_icon_desktop");
-		this.emailIconTwo.src = "./lettre.png";
+		this.emailIconTwo.src = "/lettre.png";
 		this.emailLinkTwo.appendChild(this.emailIconTwo);
 		this.artistEmailTwo.appendChild(this.emailLinkTwo);
 		// this.div4.appendChild(this.artistEmailTwo);
@@ -247,7 +247,7 @@ export default class Desktop
 		this.devEmail.target = "_blank";
 		this.emailIconThree = document.createElement("img");
 		this.emailIconThree.classList.add("webgl", "email_dev_desktop");
-		this.emailIconThree.src = "./lettre.png";
+		this.emailIconThree.src = "/lettre.png";
 		this.devEmail.appendChild(this.emailIconThree);
 		this.contactDev.appendChild(this.devEmail);
 
@@ -257,7 +257,7 @@ export default class Desktop
 		this.devGit.target = "_blank";
 		this.gitIcon = document.createElement("img");
 		this.gitIcon.classList.add("webgl", "github_desktop")
-		this.gitIcon.src = "./github-mark-white.png";
+		this.gitIcon.src = "/github-mark-white.png";
 		this.devGit.appendChild(this.gitIcon);
 		this.contactDev.appendChild(this.devGit);
 
@@ -267,7 +267,7 @@ export default class Desktop
 		this.devLinkedin.target = "_blank";
 		this.linkedinIcon = document.createElement("img");
 		this.linkedinIcon.classList.add("webgl", "linkedin_icon_desktop");
-		this.linkedinIcon.src = "./LI-In-Bug.png";
+		this.linkedinIcon.src = "/LI-In-Bug.png";
 		this.devLinkedin.appendChild(this.linkedinIcon);
 		this.contactDev.appendChild(this.devLinkedin);
 
