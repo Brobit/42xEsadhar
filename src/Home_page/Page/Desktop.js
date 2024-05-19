@@ -27,7 +27,6 @@ export default class Desktop
 		this.titleImage.classList.add("webgl", "title_image_desktop");
 		this.titleImage.src = "/game_title.gif";
 		this.title.appendChild(this.titleImage);
-		// this.title.textContent = "Pixel";
 		this.container.appendChild(this.title);
 	}
 
@@ -55,7 +54,7 @@ export default class Desktop
 		this.playText = document.createElement("a");
 		this.playText.textContent = "Jouer";
 		this.playText.classList.add("link");
-		this.playText.href = "../../Game/game.html";
+		this.playText.href = "./Game/game.html";
 		this.playButton.appendChild(this.playText);
 	}
 

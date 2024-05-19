@@ -69,7 +69,7 @@ export default class Mobile
 		this.playText = document.createElement("a");
 		this.playText.textContent = "Jouer";
 		this.playText.classList.add("link");
-		this.playText.href = "../../Game/game.html";
+		this.playText.href = "./Game/game.html";
 		this.playButton.appendChild(this.playText);
 	}
 
