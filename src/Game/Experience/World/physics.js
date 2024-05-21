@@ -59,7 +59,10 @@ export default class PhysicalWorld
 
 		// get info about the masking cube
 		this.arrayOfMaskingCube = this.experience.mainCube.arrayOfMaskingCube;
-		// console.log(this.arrayOfMaskingCube);
+		// get the info about the assetOfCubeAsset
+		this.arrayOfCubeAsset = this.experience.mainCube.arrayOfCubeAsset;
+
+		this.plane = this.experience.world.plane;
 
 		this.setCubeBody();
 		this.setEnnemyCube();
@@ -240,38 +243,90 @@ export default class PhysicalWorld
 
 	removeMaskingCube(cubeRemoved)
 	{
-		for (const maskingCube of this.arrayOfMaskingCube)
+		// console.log(this.arrayOfCubeAsset)
+		// cubeRemoved.mesh.position.y += 4;
+		console.log(cubeRemoved.mesh.position.y , cubeRemoved.ennemyCubePerimeter.yNeg, cubeRemoved.ennemyCubePerimeter.yPos);
+		for (const cube of this.arrayOfCubeAsset)
 		{
-			if ((cubeRemoved[0].mesh.position.x > maskingCube.perimeter.xNeg
-				&& cubeRemoved[0].mesh.position.x < maskingCube.perimeter.xPos)
-			&& (cubeRemoved[0].mesh.position.z > maskingCube.perimeter.zNeg
-				&& cubeRemoved[0].mesh.position.z < maskingCube.perimeter.zPos)
-			&& (cubeRemoved[0].mesh.position.y > maskingCube.perimeter.yNeg
-				&& cubeRemoved[0].mesh.position.y < maskingCube.perimeter.yPos))
+			// if ((cube.fakePosition.x > cubeRemoved.ennemyCubePerimeter.xNeg
+			// 	&& cube.fakePosition.x < cubeRemoved.ennemyCubePerimeter.xPos)
+			// && (cube.fakePosition.z > cubeRemoved.ennemyCubePerimeter.zNeg
+			// 	&& cube.fakePosition.z < cubeRemoved.ennemyCubePerimeter.zPos))
+			// && (cube.fakePosition.y > cubeRemoved.ennemyCubePerimeter.yNeg
+			// 	&& cube.fakePosition.y < cubeRemoved.ennemyCubePerimeter.yPos))
+			// if (cube.position.y > cubeRemoved.ennemyCubePerimeter.yNeg
+			// 	&& cube.position.y < cubeRemoved.ennemyCubePerimeter.yPos)
+			// {
+			// 	if (cube.visible == false)
+			// 	{
+			// 		cube.visible = true;
+			// 		// console.log(cube);
+			// 	}
+			// }
+
+			// console.log(cube.fakePosition);
+			if (cube.fakePosition.y > 0.35
+				&& cube.fakePosition.y < 0.4)
 			{
-				console.log(maskingCube)
-				console.log('pilou');
-				// const maskingCubeBody = new CANNON.Body({
-				// 	mass : 0,
-				// 	shape : new CANNON.Box(new CANNON.Vec3(0.1 / 2, 0.1 / 2, 0.1 / 2)),
-				// 	position : maskingCube.mesh.position
-				// });
-				// this.world.addBody(maskingCubeBody);
-				// const sphereBody = new CANNON.Body({
-				// 	mass : 0,
-				// 	shape : new CANNON.Sphere(0.05),
-				// 	position : maskingCube.mesh.position
-				// })
-				// sphereBody.position.y -= 0.03;
-				// this.world.addBody(sphereBody);
-				const index = this.arrayOfMaskingCube.indexOf(maskingCube);
-				// maskingCube.mesh.renderOrder = 0;
-				maskingCube.geometry.dispose();
-				maskingCube.material.dispose();
-				this.scene.remove(maskingCube.mesh);
-				this.arrayOfMaskingCube.splice(index, 1);
+				console.log(cube.fakePosition);
+				if (cube.visible == false)
+				{
+					cube.visible = true;
+					// console.log(cube);
+				}
 			}
 		}
+
+		// for (const maskingCube of this.arrayOfMaskingCube)
+		// {
+			// if ((cubeRemoved[0].mesh.position.x > maskingCube.perimeter.xNeg
+			// 	&& cubeRemoved[0].mesh.position.x < maskingCube.perimeter.xPos)
+			// && (cubeRemoved[0].mesh.position.z > maskingCube.perimeter.zNeg
+			// 	&& cubeRemoved[0].mesh.position.z < maskingCube.perimeter.zPos)
+			// && (cubeRemoved[0].mesh.position.y > maskingCube.perimeter.yNeg
+			// 	&& cubeRemoved[0].mesh.position.y < maskingCube.perimeter.yPos))
+			// {
+			// 	// console.log(maskingCube);
+			// 	// console.log('pilou');
+			//
+			// 	// const maskingCubeBody = new CANNON.Body({
+			// 	// 	mass : 0,
+			// 	// 	shape : new CANNON.Box(new CANNON.Vec3(0.1 / 2, 0.1 / 2, 0.1 / 2)),
+			// 	// 	position : maskingCube.mesh.position
+			// 	// });
+			// 	// this.world.addBody(maskingCubeBody);
+			// 	// const sphereBody = new CANNON.Body({
+			// 	// 	mass : 0,
+			// 	// 	shape : new CANNON.Sphere(0.05),
+			// 	// 	position : maskingCube.mesh.position
+			// 	// })
+			// 	// sphereBody.position.y -= 0.03;
+			// 	// this.world.addBody(sphereBody);
+			// 	const index = this.arrayOfMaskingCube.indexOf(maskingCube);
+			// 	// maskingCube.mesh.renderOrder = 0;
+			// 	maskingCube.geometry.dispose();
+			// 	maskingCube.material.dispose();
+			// 	this.scene.remove(maskingCube.mesh);
+			// 	this.arrayOfMaskingCube.splice(index, 1);
+			//
+
+
+
+			// if ((cubeRemoved[0].mesh.position.x > maskingCube.perimeter.xNeg
+			// 	&& cubeRemoved[0].mesh.position.x < maskingCube.perimeter.xPos)
+			// && (cubeRemoved[0].mesh.position.z > maskingCube.perimeter.zNeg
+			// 	&& cubeRemoved[0].mesh.position.z < maskingCube.perimeter.zPos)
+			// && (cubeRemoved[0].mesh.position.y > maskingCube.perimeter.yNeg
+			// 	&& cubeRemoved[0].mesh.position.y < maskingCube.perimeter.yPos))
+			// {
+			// 	const index = this.arrayOfMaskingCube.indexOf(maskingCube);
+			// 	// maskingCube.mesh.renderOrder = 0;
+			// 	maskingCube.geometry.dispose();
+			// 	maskingCube.material.dispose();
+			// 	this.scene.remove(maskingCube.mesh);
+			// 	this.arrayOfMaskingCube.splice(index, 1);
+			// }
+		// }
 	}
 	
 	update()
@@ -328,11 +383,35 @@ export default class PhysicalWorld
 					// 		this.scene.remove(ennemyCube.mesh);
 					// 	}
 					// })
+
+					const normPos = new THREE.Vector3();
+					normPos.copy(ennemyCube.mesh.position).normalize();
+					const ennemyCubePerimeter = {
+						"xPos" : normPos.x + 0.05,
+						"xNeg" : normPos.x - 0.05,
+						"zNeg" : normPos.z - 0.05,
+						"zPos" : normPos.z + 0.05,
+						"yNeg" : normPos.y,
+						"yPos" : normPos.y + 0.05
+					};
+
+					// const ennemyCubePerimeter = {
+					// 	"xPos" : ennemyCube.mesh.position.x + 0.05,
+					// 	"xNeg" : ennemyCube.mesh.position.x - 0.05,
+					// 	"zNeg" : ennemyCube.mesh.position.z - 0.05,
+					// 	"zPos" : ennemyCube.mesh.position.z + 0.05,
+					// 	"yNeg" : ennemyCube.mesh.position.y + 4,
+					// 	"yPos" : ennemyCube.mesh.position.y + 6
+					// };
+					ennemyCube.ennemyCubePerimeter = ennemyCubePerimeter;
+					this.removeMaskingCube(ennemyCube);
+					// console.log(ennemyCube);
+
 					this.world.removeBody(ennemyCube.body);
 					this.scene.remove(ennemyCube.mesh);
 					const index = this.ennemyCubeArray.indexOf(ennemyCube);
 					const removed = this.ennemyCubeArray.splice(index, 1);
-					this.removeMaskingCube(removed);
+					// this.removeMaskingCube(removed);
 					this.ennemyAlive--;
 				}
 			}

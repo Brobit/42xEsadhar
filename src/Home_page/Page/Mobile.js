@@ -110,7 +110,8 @@ export default class Mobile
 		if (this.body.contains(this.tutorialPopUp))
 			return;
 		this.tutorialPopUp = document.createElement("div");
-		this.tutorialPopUp.classList.add("webgl", "popUpContainer_mobile");
+		// this.tutorialPopUp.classList.add("webgl", "popUpContainer_mobile");
+		this.tutorialPopUp.classList.add("webgl", "parent2");
 		this.body.appendChild(this.tutorialPopUp);
 		this.createTutorialContent(this.tutorialPopUp);
 		this.createCloseCross(this.tutorialPopUp);
@@ -121,7 +122,8 @@ export default class Mobile
 		if (this.body.contains(this.creditPopUp))
 			return;
 		this.creditPopUp = document.createElement("div");
-		this.creditPopUp.classList.add("webgl", "popUpContainer_mobile");
+		// this.creditPopUp.classList.add("webgl", "popUpContainer_mobile");
+		this.creditPopUp.classList.add("webgl", "parent2");
 		this.body.appendChild(this.creditPopUp);
 		this.createCreditContent(this.creditPopUp);
 		this.createCloseCross(this.creditPopUp);
@@ -130,7 +132,8 @@ export default class Mobile
 	createCloseCross(div)
 	{
 		this.tutorialCross = document.createElement("div");
-		this.tutorialCross.classList.add("webgl", "close_mobile");
+		// this.tutorialCross.classList.add("webgl", "close_mobile");
+		this.tutorialCross.classList.add("webgl", "parent2", "div_pop_up", "closev2");
 		div.appendChild(this.tutorialCross);
 		this.tutorialCross.addEventListener("click", () => {
 			this.body.removeChild(div);
@@ -140,129 +143,131 @@ export default class Mobile
 	createTutorialContent(div)
 	{
 		this.imgTutorial = document.createElement("div");
-		this.imgTutorial.classList.add("webgl", "img_tutorial");
+		this.imgTutorial.classList.add("webgl", "parent2", "div_pop_up", "img_tutorial_mobile");
+		// this.imgTutorial.classList.add("webgl", "img_tutorial");
 		div.appendChild(this.imgTutorial);
 
-		this.joystickLeftText = document.createElement("div");
-		this.joystickLeftText.classList.add("webgl", "tutorial_text", "text_joystick_left");
-		this.joystickLeftText.textContent = "Joystick de gauche : Sert à se déplacer dans toutes les directions.";
-		div.appendChild(this.joystickLeftText);
-
-		this.leftButton = document.createElement("div")
-		this.leftButton.classList.add("webgl", "tutorial_text", "text_button_left");
-		this.leftButton.textContent = "Bouton de gauche : Sert à changer la vue 3 ème personne en vu orbital.";
-		div.appendChild(this.leftButton);
-
-		this.rightButton = document.createElement("div");
-		this.rightButton.classList.add("webgl", "tutorial_text", "text_button_right");
-		this.rightButton.textContent = "Bouton de droite : Sert à effectuer une courte accélération, permet de fixer un cube si il est toucher pendant l'accélération.";
-		div.appendChild(this.rightButton);
-
-		this.joystickRightText = document.createElement("div");
-		this.joystickRightText.classList.add("webgl", "tutorial_text", "text_joystick_right");
-		this.joystickRightText.textContent = "Joystick de droite : Sert à monter/descendre d'un niveau ou à faire une rotation d'un quart de tour vers la gauche/droite."
-		div.appendChild(this.joystickRightText);
+		// this.joystickLeftText = document.createElement("div");
+		// this.joystickLeftText.classList.add("webgl", "tutorial_text", "text_joystick_left");
+		// this.joystickLeftText.textContent = "Joystick de gauche : Sert à se déplacer dans toutes les directions.";
+		// div.appendChild(this.joystickLeftText);
+		//
+		// this.leftButton = document.createElement("div")
+		// this.leftButton.classList.add("webgl", "tutorial_text", "text_button_left");
+		// this.leftButton.textContent = "Bouton de gauche : Sert à changer la vue 3 ème personne en vu orbital.";
+		// div.appendChild(this.leftButton);
+		//
+		// this.rightButton = document.createElement("div");
+		// this.rightButton.classList.add("webgl", "tutorial_text", "text_button_right");
+		// this.rightButton.textContent = "Bouton de droite : Sert à effectuer une courte accélération, permet de fixer un cube si il est toucher pendant l'accélération.";
+		// div.appendChild(this.rightButton);
+		//
+		// this.joystickRightText = document.createElement("div");
+		// this.joystickRightText.classList.add("webgl", "tutorial_text", "text_joystick_right");
+		// this.joystickRightText.textContent = "Joystick de droite : Sert à monter/descendre d'un niveau ou à faire une rotation d'un quart de tour vers la gauche/droite."
+		// div.appendChild(this.joystickRightText);
 	}
 
 	createCreditContent(div)
 	{
 		// create credit title
 		this.creditTitle = document.createElement("div");
-		this.creditTitle.classList.add("webgl", "credit_text", "credit_title");
-		this.creditTitle.textContent = "Crédits";
+		this.creditTitle.classList.add("webgl", "parent2", "div_pop_up", "img_credit_mobile");
+		// this.creditTitle.classList.add("webgl", "credit_text", "credit_title");
+		// this.creditTitle.textContent = "Crédits";
 		div.appendChild(this.creditTitle);
 
 		// create artist role
-		this.artistRole = document.createElement("div");
-		this.artistRole.classList.add("webgl", "credit_text", "artist_role");
-		this.artistRole.textContent = "3D artist - UI/UX designer";
-		div.appendChild(this.artistRole);
+		// this.artistRole = document.createElement("div");
+		// this.artistRole.classList.add("webgl", "credit_text", "artist_role");
+		// this.artistRole.textContent = "3D artist - UI/UX designer";
+		// div.appendChild(this.artistRole);
 
 		// create name + link to the email
-		this.artistNameOne = document.createElement("div");
-		this.artistNameOne.classList.add("webgl", "credit_text", "artist_name");
-		this.artistNameOne.textContent = "ZAFANE Louiza";
-		div.appendChild(this.artistNameOne);
-
-		this.artistEmailOne = document.createElement("div");
-		this.artistEmailOne.classList.add("webgl", "credit_text", "contact");
-
-		this.emailLinkOne = document.createElement("a");
-		this.emailLinkOne.classList.add("webgl", "email_container");
-		this.emailLinkOne.href = "mailto:louiza.zafane@esadhar.fr";
-		this.emailLinkOne.target = "_blank";
-		this.emailIconOne = document.createElement("img");
-		this.emailIconOne.classList.add("webgl", "email_icon");
-		this.emailIconOne.src = "/lettre.png";
-		this.emailLinkOne.appendChild(this.emailIconOne);
-		this.artistEmailOne.appendChild(this.emailLinkOne);
-		div.appendChild(this.artistEmailOne);
-
-		this.artistNameTwo = document.createElement("div");
-		this.artistNameTwo.classList.add("webgl", "credit_text", "artist_name");
-		this.artistNameTwo.textContent = "ROBINOT Emile";
-		div.appendChild(this.artistNameTwo);
-
-		this.artistEmailTwo = document.createElement("div");
-		this.artistEmailTwo.classList.add("webgl", "credit_text", "contact");
-
-		this.emailLinkTwo = document.createElement("a");
-		this.emailLinkTwo.classList.add("webgl", "email_container");
-		this.emailLinkTwo.href = "mailto:emile.robinot@esadhar.fr";
-		this.emailLinkTwo.target = "_blank";
-		this.emailIconTwo = document.createElement("img");
-		this.emailIconTwo.classList.add("webgl", "email_icon");
-		this.emailIconTwo.src = "/lettre.png";
-		this.emailLinkTwo.appendChild(this.emailIconTwo);
-		this.artistEmailTwo.appendChild(this.emailLinkTwo);
-		div.appendChild(this.artistEmailTwo);
+		// this.artistNameOne = document.createElement("div");
+		// this.artistNameOne.classList.add("webgl", "credit_text", "artist_name");
+		// this.artistNameOne.textContent = "ZAFANE Louiza";
+		// div.appendChild(this.artistNameOne);
+		//
+		// this.artistEmailOne = document.createElement("div");
+		// this.artistEmailOne.classList.add("webgl", "credit_text", "contact");
+		//
+		// this.emailLinkOne = document.createElement("a");
+		// this.emailLinkOne.classList.add("webgl", "email_container");
+		// this.emailLinkOne.href = "mailto:louiza.zafane@esadhar.fr";
+		// this.emailLinkOne.target = "_blank";
+		// this.emailIconOne = document.createElement("img");
+		// this.emailIconOne.classList.add("webgl", "email_icon");
+		// this.emailIconOne.src = "/lettre.png";
+		// this.emailLinkOne.appendChild(this.emailIconOne);
+		// this.artistEmailOne.appendChild(this.emailLinkOne);
+		// div.appendChild(this.artistEmailOne);
+		//
+		// this.artistNameTwo = document.createElement("div");
+		// this.artistNameTwo.classList.add("webgl", "credit_text", "artist_name");
+		// this.artistNameTwo.textContent = "ROBINOT Emile";
+		// div.appendChild(this.artistNameTwo);
+		//
+		// this.artistEmailTwo = document.createElement("div");
+		// this.artistEmailTwo.classList.add("webgl", "credit_text", "contact");
+		//
+		// this.emailLinkTwo = document.createElement("a");
+		// this.emailLinkTwo.classList.add("webgl", "email_container");
+		// this.emailLinkTwo.href = "mailto:emile.robinot@esadhar.fr";
+		// this.emailLinkTwo.target = "_blank";
+		// this.emailIconTwo = document.createElement("img");
+		// this.emailIconTwo.classList.add("webgl", "email_icon");
+		// this.emailIconTwo.src = "/lettre.png";
+		// this.emailLinkTwo.appendChild(this.emailIconTwo);
+		// this.artistEmailTwo.appendChild(this.emailLinkTwo);
+		// div.appendChild(this.artistEmailTwo);
 
 		// create dev role
-		this.devRole = document.createElement("div");
-		this.devRole.classList.add("webgl", "credit_text", "dev_role");
-		this.devRole.textContent = "Développeur";
-		div.appendChild(this.devRole);
+		// this.devRole = document.createElement("div");
+		// this.devRole.classList.add("webgl", "credit_text", "dev_role");
+		// this.devRole.textContent = "Développeur";
+		// div.appendChild(this.devRole);
 
 		// create the name + all the link
-		this.devName = document.createElement("div");
-		this.devName.classList.add("webgl", "credit_text", "dev_name");
-		this.devName.textContent = "MARICOURT Alann";
-		div.appendChild(this.devName);
-
-		this.contactDev = document.createElement("div");
-		this.contactDev.classList.add("webgl", "credit_text", "contact");
-		
-		this.devEmail = document.createElement("a");
-		this.devEmail.classList.add("webgl", "logo");
-		this.devEmail.href = "mailto:contactme@alann.coffee";
-		this.devEmail.target = "_blank";
-		this.emailIconThree = document.createElement("img");
-		this.emailIconThree.classList.add("webgl", "email_dev");
-		this.emailIconThree.src = "/lettre.png";
-		this.devEmail.appendChild(this.emailIconThree);
-		this.contactDev.appendChild(this.devEmail);
-
-		this.devGit = document.createElement("a");
-		this.devGit.classList.add("webgl", "logo");
-		this.devGit.href = "https://github.com/Brobit";
-		this.devGit.target = "_blank";
-		this.gitIcon = document.createElement("img");
-		this.gitIcon.classList.add("webgl", "github")
-		this.gitIcon.src = "/github-mark-white.png";
-		this.devGit.appendChild(this.gitIcon);
-		this.contactDev.appendChild(this.devGit);
-
-		this.devLinkedin = document.createElement("a");
-		this.devLinkedin.classList.add("webgl", "logo");
-		this.devLinkedin.href = "https://www.linkedin.com/in/alann-maricourt-developpeur-c-javascript-freelance";
-		this.devLinkedin.target = "_blank";
-		this.linkedinIcon = document.createElement("img");
-		this.linkedinIcon.classList.add("webgl", "linkedin_icon");
-		this.linkedinIcon.src = "/LI-In-Bug.png";
-		this.devLinkedin.appendChild(this.linkedinIcon);
-		this.contactDev.appendChild(this.devLinkedin);
-
-		div.appendChild(this.contactDev);
+		// this.devName = document.createElement("div");
+		// this.devName.classList.add("webgl", "credit_text", "dev_name");
+		// this.devName.textContent = "MARICOURT Alann";
+		// div.appendChild(this.devName);
+		//
+		// this.contactDev = document.createElement("div");
+		// this.contactDev.classList.add("webgl", "credit_text", "contact");
+		// 
+		// this.devEmail = document.createElement("a");
+		// this.devEmail.classList.add("webgl", "logo");
+		// this.devEmail.href = "mailto:contactme@alann.coffee";
+		// this.devEmail.target = "_blank";
+		// this.emailIconThree = document.createElement("img");
+		// this.emailIconThree.classList.add("webgl", "email_dev");
+		// this.emailIconThree.src = "/lettre.png";
+		// this.devEmail.appendChild(this.emailIconThree);
+		// this.contactDev.appendChild(this.devEmail);
+		//
+		// this.devGit = document.createElement("a");
+		// this.devGit.classList.add("webgl", "logo");
+		// this.devGit.href = "https://github.com/Brobit";
+		// this.devGit.target = "_blank";
+		// this.gitIcon = document.createElement("img");
+		// this.gitIcon.classList.add("webgl", "github")
+		// this.gitIcon.src = "/github-mark-white.png";
+		// this.devGit.appendChild(this.gitIcon);
+		// this.contactDev.appendChild(this.devGit);
+		//
+		// this.devLinkedin = document.createElement("a");
+		// this.devLinkedin.classList.add("webgl", "logo");
+		// this.devLinkedin.href = "https://www.linkedin.com/in/alann-maricourt-developpeur-c-javascript-freelance";
+		// this.devLinkedin.target = "_blank";
+		// this.linkedinIcon = document.createElement("img");
+		// this.linkedinIcon.classList.add("webgl", "linkedin_icon");
+		// this.linkedinIcon.src = "/LI-In-Bug.png";
+		// this.devLinkedin.appendChild(this.linkedinIcon);
+		// this.contactDev.appendChild(this.devLinkedin);
+		//
+		// div.appendChild(this.contactDev);
 
 		// github - linkedin - email 
 	}
