@@ -12,6 +12,9 @@ export default class JoystickHandler
 		// get worlds
 		this.world = this.experience.physicalWorld.world;
 
+		// get the info on the big cube
+		this.cubeEnvironment = this.experience.world.testCube;
+
 		// get the cube info
 		this.cube = this.experience.mainCube.finalCube;
 		this.cubeBody = this.experience.physicalWorld.cubeBody;
