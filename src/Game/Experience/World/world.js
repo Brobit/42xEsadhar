@@ -38,9 +38,10 @@ export default class World
 		const material = new THREE.MeshBasicMaterial({
 			color : cube.color,
 			side : THREE.DoubleSide,
+			transparent : true,
 			wireframe : true
 		});
-		const testCube = new THREE.Mesh(geometry, material);
+		this.testCube = new THREE.Mesh(geometry, material);
 
 		// Cube debugging
 		if (this.debug.active)
@@ -59,8 +60,8 @@ export default class World
 				.max(20)
 				.step(1)
 				.onFinishChange(() => {
-					testCube.geometry.dispose();
-					testCube.geometry = new THREE.BoxGeometry(
+					this.testCube.geometry.dispose();
+					this.testCube.geometry = new THREE.BoxGeometry(
 						1, 1, 1,
 						cube.subdivision, cube.subdivision, cube.subdivision 
 					);
@@ -70,7 +71,7 @@ export default class World
 				.add(material, 'wireframe');
 		}
 
-		this.scene.add(testCube);
+		this.scene.add(this.testCube);
 	}
 
 	setOnePlaneCreation()
@@ -84,6 +85,7 @@ export default class World
 		const material = new THREE.MeshBasicMaterial({
 			color : planeObject.color,
 			side : THREE.DoubleSide,
+			transparent : true,
 			wireframe : true
 		});
 		this.plane = new THREE.Mesh(geometry, material);

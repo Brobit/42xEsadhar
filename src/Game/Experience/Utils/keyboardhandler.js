@@ -11,6 +11,9 @@ export default class KeyboardHandler
 		// get worls
 		this.world = this.experience.physicalWorld.world;
 
+		// get the info on the big cube
+		this.cubeEnvironment = this.experience.world.testCube;
+
 		// get the cube info
 		this.cube = this.experience.mainCube.finalCube;
 		this.cubeBody = this.experience.physicalWorld.cubeBody;
@@ -148,12 +151,19 @@ export default class KeyboardHandler
 				{
 					if (this.camera.controls)
 					{
+						this.cubeEnvironment.material.opacity = 1;
+						this.plane.material.opacity = 1;
 						this.camera.removeControls();
 						this.camera.instance.position.copy(this.experience.mainCube.finalCube.position).add(this.cameraPosition);
 						this.camera.instance.lookAt(this.experience.mainCube.finalCube.position);
 					}
 					else if (!this.camera.controls)
+					{
+						console.log(this.cubeEnvironment)
 						this.camera.setControls();
+						this.plane.material.opacity = 0.5;
+						this.cubeEnvironment.material.opacity = 0.1;
+					}
 					this.isInOrbitControl = true;
 					setTimeout(() => {this.isInOrbitControl = false}, 1000);
 				}

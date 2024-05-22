@@ -428,7 +428,8 @@ export default class PhysicalWorld
 					ennemyCube.body.quaternion.setFromVectors(forward, direction);
 
 					//apply movement
-					const speed = 0.075;
+					// const speed = 0.075;
+					const speed = 0.125;
 					direction.scale(speed, ennemyCube.body.velocity);
 
 					// update the mesh position & quaternian
@@ -462,23 +463,13 @@ export default class PhysicalWorld
 						"yPos" : normPos.y + 0.05
 					};
 
-					// const ennemyCubePerimeter = {
-					// 	"xPos" : ennemyCube.mesh.position.x + 0.05,
-					// 	"xNeg" : ennemyCube.mesh.position.x - 0.05,
-					// 	"zNeg" : ennemyCube.mesh.position.z - 0.05,
-					// 	"zPos" : ennemyCube.mesh.position.z + 0.05,
-					// 	"yNeg" : ennemyCube.mesh.position.y + 4,
-					// 	"yPos" : ennemyCube.mesh.position.y + 6
-					// };
 					ennemyCube.ennemyCubePerimeter = ennemyCubePerimeter;
 					this.removeMaskingCube(ennemyCube);
-					// console.log(ennemyCube);
 
 					this.world.removeBody(ennemyCube.body);
 					this.scene.remove(ennemyCube.mesh);
 					const index = this.ennemyCubeArray.indexOf(ennemyCube);
 					const removed = this.ennemyCubeArray.splice(index, 1);
-					// this.removeMaskingCube(removed);
 					this.ennemyAlive--;
 				}
 			}
