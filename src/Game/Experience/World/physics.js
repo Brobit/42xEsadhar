@@ -245,9 +245,9 @@ export default class PhysicalWorld
 	{
 		// console.log(this.arrayOfCubeAsset)
 		// cubeRemoved.mesh.position.y += 4;
-		console.log(cubeRemoved.mesh.position.y , cubeRemoved.ennemyCubePerimeter.yNeg, cubeRemoved.ennemyCubePerimeter.yPos);
-		for (const cube of this.arrayOfCubeAsset)
-		{
+		// console.log(cubeRemoved.mesh.position.y , cubeRemoved.ennemyCubePerimeter.yNeg, cubeRemoved.ennemyCubePerimeter.yPos);
+		// for (const cube of this.arrayOfCubeAsset)
+		// {
 			// if ((cube.fakePosition.x > cubeRemoved.ennemyCubePerimeter.xNeg
 			// 	&& cube.fakePosition.x < cubeRemoved.ennemyCubePerimeter.xPos)
 			// && (cube.fakePosition.z > cubeRemoved.ennemyCubePerimeter.zNeg
@@ -265,20 +265,20 @@ export default class PhysicalWorld
 			// }
 
 			// console.log(cube.fakePosition);
-			if (cube.fakePosition.y > 0.35
-				&& cube.fakePosition.y < 0.4)
-			{
-				console.log(cube.fakePosition);
-				if (cube.visible == false)
-				{
-					cube.visible = true;
-					// console.log(cube);
-				}
-			}
-		}
+			// if (cube.fakePosition.y > 0.35
+			// 	&& cube.fakePosition.y < 0.4)
+			// {
+			// 	console.log(cube.fakePosition);
+			// 	if (cube.visible == false)
+			// 	{
+			// 		cube.visible = true;
+			// 		// console.log(cube);
+			// 	}
+			// }
+		// }
 
-		// for (const maskingCube of this.arrayOfMaskingCube)
-		// {
+		for (const maskingCube of this.arrayOfMaskingCube)
+		{
 			// if ((cubeRemoved[0].mesh.position.x > maskingCube.perimeter.xNeg
 			// 	&& cubeRemoved[0].mesh.position.x < maskingCube.perimeter.xPos)
 			// && (cubeRemoved[0].mesh.position.z > maskingCube.perimeter.zNeg
@@ -302,31 +302,98 @@ export default class PhysicalWorld
 			// 	// })
 			// 	// sphereBody.position.y -= 0.03;
 			// 	// this.world.addBody(sphereBody);
-			// 	const index = this.arrayOfMaskingCube.indexOf(maskingCube);
-			// 	// maskingCube.mesh.renderOrder = 0;
-			// 	maskingCube.geometry.dispose();
-			// 	maskingCube.material.dispose();
-			// 	this.scene.remove(maskingCube.mesh);
-			// 	this.arrayOfMaskingCube.splice(index, 1);
-			//
+				// const index = this.arrayOfMaskingCube.indexOf(maskingCube);
+				// maskingCube.mesh.renderOrder = 0;
+				// maskingCube.geometry.dispose();
+				// maskingCube.material.dispose();
+				// this.scene.remove(maskingCube.mesh);
+				// this.arrayOfMaskingCube.splice(index, 1);
 
 
 
-			// if ((cubeRemoved[0].mesh.position.x > maskingCube.perimeter.xNeg
-			// 	&& cubeRemoved[0].mesh.position.x < maskingCube.perimeter.xPos)
-			// && (cubeRemoved[0].mesh.position.z > maskingCube.perimeter.zNeg
-			// 	&& cubeRemoved[0].mesh.position.z < maskingCube.perimeter.zPos)
-			// && (cubeRemoved[0].mesh.position.y > maskingCube.perimeter.yNeg
-			// 	&& cubeRemoved[0].mesh.position.y < maskingCube.perimeter.yPos))
-			// {
-			// 	const index = this.arrayOfMaskingCube.indexOf(maskingCube);
-			// 	// maskingCube.mesh.renderOrder = 0;
-			// 	maskingCube.geometry.dispose();
-			// 	maskingCube.material.dispose();
-			// 	this.scene.remove(maskingCube.mesh);
-			// 	this.arrayOfMaskingCube.splice(index, 1);
-			// }
-		// }
+
+			if ((cubeRemoved.mesh.position.x > maskingCube.perimeter.xNeg
+				&& cubeRemoved.mesh.position.x < maskingCube.perimeter.xPos)
+			&& (cubeRemoved.mesh.position.z > maskingCube.perimeter.zNeg
+				&& cubeRemoved.mesh.position.z < maskingCube.perimeter.zPos)
+			&& (cubeRemoved.mesh.position.y > maskingCube.perimeter.yNeg
+				&& cubeRemoved.mesh.position.y < maskingCube.perimeter.yPos))
+			{
+				const index = this.arrayOfMaskingCube.indexOf(maskingCube);
+				// maskingCube.mesh.renderOrder = 0;
+				// maskingCube.geometry.dispose();
+				// maskingCube.material.dispose();
+
+				// maskingCube.mesh.material.transparent = false;
+				// maskingCube.mesh.material.colorWrite = true;
+				maskingCube.material.color.set(this.getRandomColor());
+				maskingCube.mesh.visible = true;
+				console.log(maskingCube);
+
+				// this.scene.remove(maskingCube.mesh);
+				// console.log(this.arrayOfMaskingCube[index]);
+				this.arrayOfMaskingCube.splice(index, 1);
+			}
+		}
+	}
+
+	getRandomColor()
+	{
+		const colorChoice = Math.random() * 4;
+		if (colorChoice >= 0 && colorChoice < 1)
+			return (this.getRandomColorGreen());
+		else if (colorChoice >= 1 && colorChoice < 2)
+			return (this.getRandomColorBlue());
+		else if (colorChoice >= 2 && colorChoice < 3)
+			return (this.getRandomColorRose());
+		else
+			return (this.getRandomColorBrown());
+	}
+
+	getRandomColorGreen()
+	{
+		const r = Math.floor(Math.random() * 23) + 49;
+		const g = Math.floor(Math.random() * 123) + 51;
+		const b = Math.floor(Math.random() * 19) + 39;
+
+		return (this.convertToHex(r, g, b));
+	}
+
+	getRandomColorBlue()
+	{
+		const r = Math.floor(Math.random() * 57) + 63;
+		const g = Math.floor(Math.random() * 48) + 121;
+		const b = Math.floor(Math.random() * 40) + 170;
+
+		return (this.convertToHex(r, g, b));
+	}
+
+	getRandomColorRose()
+	{
+		const r = Math.floor(Math.random() * 54) + 238;
+		const g = Math.floor(Math.random() * 87) + 161;
+		const b = Math.floor(Math.random() * 67) + 208;
+
+		return (this.convertToHex(r, g, b));
+	}
+
+	getRandomColorBrown()
+	{
+		const r = Math.floor(Math.random() * 36) + 133;
+		const g = Math.floor(Math.random() * 36) + 88;
+		const b = Math.floor(Math.random() * 51) + 68;
+
+		return (this.convertToHex(r, g, b));
+	}
+	
+	convertToHex(r, g, b)
+	{
+		const hexR = r.toString(16).padStart(2, '0');
+		const hexG = g.toString(16).padStart(2, '0');
+		const hexB = b.toString(16).padStart(2, '0');
+
+		const color = `#${hexR}${hexG}${hexB}`;
+		return (color);
 	}
 	
 	update()

@@ -52,8 +52,7 @@ export default class KeyboardHandler
 		// cooldown setter
 		this.moveCameraLeftCooldown = false;
 		this.moveCameraRightCooldown = false;
-		this.goUpCooldown = false;
-		this.goDownCooldown = false;
+		this.goUpDownCooldown = false;
 		this.dashCooldown = false;
 
 		// Object to track active keys
@@ -350,43 +349,47 @@ export default class KeyboardHandler
 
 	goUp()
 	{
-		if (this.goUpCooldown)
+		if (this.goUpDownCooldown)
 			return ;
 
-		if (this.planeBody.position.y <= 0.301 )
+		// if (this.planeBody.position.y <= 0.301 )
+		if (this.planeBody.position.y < 0.45 )
 		{
 			// animation for the player cube
 			gsap.to(this.planeBody.position,
 			{
 					duration : 1,
 					ease : "power4.out",
-					y : this.planeBody.position.y + 0.1,
+					// y : this.planeBody.position.y + 0.1,
+					y : this.planeBody.position.y + 0.05,
 					onUpdate : () => {
 						this.plane.position.copy(this.planeBody.position);
 					},
 			});
 		}
 
-		this.goUpCooldown = true;
+		this.goUpDownCooldown = true;
 
 		setTimeout( () => {
-			this.goUpCooldown = false;
+			this.goUpDownCooldown = false;
 		}, 2000);
 	}
 
 	goDown()
 	{
-		if (this.goDownCooldown)
+		if (this.goUpDownCooldown)
 			return ;
 
-		if (this.planeBody.position.y > -0.4)
+		// if (this.planeBody.position.y > -0.4)
+		if (this.planeBody.position.y > -0.45)
 		{
 			// animation for the player cube
 			gsap.to(this.cubeBody.position,
 			{
 					duration : 1,
 					ease : "sine.in",
-					y : this.cubeBody.position.y - 0.1,
+					// y : this.cubeBody.position.y - 0.1,
+					y : this.cubeBody.position.y - 0.05,
 			});
 
 			// animation for the ennemy cube
@@ -396,7 +399,8 @@ export default class KeyboardHandler
 				{
 						duration : 1,
 						ease : "sine.in",
-						y : ennemy.body.position.y - 0.1,
+						// y : ennemy.body.position.y - 0.1,
+						y : ennemy.body.position.y - 0.05,
 				});
 			}
 
@@ -406,17 +410,18 @@ export default class KeyboardHandler
 					duration : 1,
 					delay : 0.2,
 					ease : "power1.out",
-					y : this.planeBody.position.y - 0.1,
+					// y : this.planeBody.position.y - 0.1,
+					y : this.planeBody.position.y - 0.05,
 					onUpdate : () => {
 						this.plane.position.copy(this.planeBody.position);
 					},
 			});
 		}
 		
-		this.goDownCooldown = true;
+		this.goUpDownCooldown = true;
 
 		setTimeout( () => {
-			this.goDownCooldown = false;
+			this.goUpDownCooldown = false;
 		}, 2000);
 	}
 

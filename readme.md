@@ -13,8 +13,8 @@ npm run dev
 
 ```
 
-9 day left - 
-5 things to do - 
+0 day left - 
+0 things to do - 
 2 things to correct - 
 3 bonus to implement
 
@@ -44,14 +44,14 @@ npm run dev
 - [x] display the cube of 2x2x2 of the gbl model when the ennemy cube is fixed
   and at the position where the cube was fixed
 - [x] try with different 3d asset and try to generalize the slicing and all the rest
-- [ ] add an another page with a menu, it must have :
-  - [ ] a play button 
-  - [ ] a tuto / command button 
-  - [ ] a credit button
-- [ ] create the tuto / command page
-- [ ] create the credit page
-- [ ] implement them in the project
-- [ ] make a button that allow the player to check the progression by change there
+- [x] add an another page with a menu, it must have :
+  - [x] a play button 
+  - [x] a tuto / command button 
+  - [x] a credit button
+- [x] create the tuto / command page
+- [x] create the credit page
+- [x] implement them in the project
+- [x] make a button that allow the player to check the progression by change there
       perspective camera to an orbit control, and animate the changement if possible
 - [x] make it responsive, to do that :
   - [x] change the fov of the camera
@@ -76,11 +76,5 @@ to correct :
 
 bug :
 
-- movement doesn't stop sometimes and the cube continue to move , cause :
-    moving while using the gui to display and undisplay the 3d asset and click in the checkbox
-    doesn't reset your input and you keep going in a certain direction, bug might not be in prod
-    so no worries
 - ennemyCube animation when they have been hit block the animation of the cube rotation when
   he wants to move the camera to the left/right , maybe too much animation ?
-
-try to change the way to do the movement on mobile device by multiply vx and vz by the radian

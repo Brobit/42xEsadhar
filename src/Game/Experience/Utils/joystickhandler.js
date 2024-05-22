@@ -44,8 +44,7 @@ export default class JoystickHandler
 		// cooldown setter
 		this.moveCameraLeftCooldown = false;
 		this.moveCameraRightCooldown = false;
-		this.goUpCooldown = false;
-		this.goDownCooldown = false;
+		this.goUpDownCooldown = false;
 		this.dashCooldown = false;
 
 		// Object to track active keys
@@ -338,7 +337,7 @@ export default class JoystickHandler
 
 	moveCameraLeft()
 	{
-		if (this.moveCameraLeftCooldown)
+		if (this.moveCameraLeftCooldown || this.camera.controls)
 			return ;
 
 		gsap.to(this.cube.rotation,
@@ -381,7 +380,7 @@ export default class JoystickHandler
 
 	moveCameraRight()
 	{
-		if (this.moveCameraRightCooldown)
+		if (this.moveCameraRightCooldown || this.camera.controls)
 			return ;
 
 		gsap.to(this.cube.rotation,
@@ -425,7 +424,7 @@ export default class JoystickHandler
 
 	goUp()
 	{
-		if (this.goUpCooldown)
+		if (this.goUpDownCooldown || this.camera.controls)
 			return ;
 
 		if (this.planeBody.position.y <= 0.301 )
@@ -442,16 +441,16 @@ export default class JoystickHandler
 			});
 		}
 
-		this.goUpCooldown = true;
+		this.goUpDownCooldown = true;
 
 		setTimeout( () => {
-			this.goUpCooldown = false;
+			this.goUpDownCooldown = false;
 		}, 2000);
 	}
 
 	goDown()
 	{
-		if (this.goDownCooldown)
+		if (this.goUpDownCooldown || this.camera.controls)
 			return ;
 
 		if (this.planeBody.position.y > -0.4)
@@ -488,10 +487,10 @@ export default class JoystickHandler
 			});
 		}
 		
-		this.goDownCooldown = true;
+		this.goUpDownCooldown = true;
 
 		setTimeout( () => {
-			this.goDownCooldown = false;
+			this.goUpDownCooldown = false;
 		}, 2000);
 	}
 

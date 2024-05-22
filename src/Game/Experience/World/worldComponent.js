@@ -29,8 +29,8 @@ class MainCube
 		this.maxZ = null;
 
 		this.setMainCube();
-		this.playWithAsset();
-		// this.setMaskLayout();
+		// this.playWithAsset();
+		this.setMaskLayout();
 	}
 
 	setMainCube()
@@ -190,37 +190,47 @@ class MainCube
 		// }
 		//
 
-
-		// testglobal & test_centre_cube_global
 		const material = new THREE.MeshPhongMaterial();
 
-		const geometry = new THREE.BoxGeometry(0.1, 0.1, 0.1);
+		// const geometry = new THREE.BoxGeometry(0.1, 0.1, 0.1);
+		const geometry = new THREE.BoxGeometry(0.05, 0.05, 0.05);
 
 		const mesh = new THREE.Mesh(geometry, material.clone());
 		mesh.material.color.set(0xff0000);
 		// mesh.material.wireframe = true;
 
-		for (let y = -0.45; y < 0.5; y += 0.1)
+		// for (let y = -0.45; y < 0.5; y += 0.1)
+		for (let y = -0.475; y < 0.5; y += 0.05)
 		{
-			for (let x = -0.45; x < 0.5; x += 0.1)
+			// for (let x = -0.45; x < 0.5; x += 0.1)
+			for (let x = -0.475; x < 0.5; x += 0.05)
 			{
-				for (let z = -0.45; z < 0.5; z += 0.1)
+				// for (let z = -0.45; z < 0.5; z += 0.1)
+				for (let z = -0.475; z < 0.5; z += 0.05)
 				{
-					const maskingCube = mesh.clone();
+					const maskingCube = new THREE.Mesh(geometry.clone(), material.clone());
 					// uncomment to allow transparency
-					mesh.material.transparent = true;
-					mesh.material.colorWrite = false;
-					mesh.renderOrder = 1;
+					// maskingCube.material.transparent = true;
+					// maskingCube.material.colorWrite = false;
+					maskingCube.visible = false;
+					maskingCube.renderOrder = 1;
 					maskingCube.position.set(x, y, z);
+					maskingCube.material.color.set("rgb(102, 70, 22)");
 					
 					// create the perimeter of the masking cube
 					const maskingCubePerimeter = {
-						"xPos" : maskingCube.position.x + 0.05,
-						"xNeg" : maskingCube.position.x - 0.05,
-						"zNeg" : maskingCube.position.z - 0.05,
-						"zPos" : maskingCube.position.z + 0.05,
-						"yNeg" : maskingCube.position.y - 0.05,
-						"yPos" : maskingCube.position.y + 0.05
+						// "xPos" : maskingCube.position.x + 0.05,
+						// "xNeg" : maskingCube.position.x - 0.05,
+						// "zNeg" : maskingCube.position.z - 0.05,
+						// "zPos" : maskingCube.position.z + 0.05,
+						// "yNeg" : maskingCube.position.y - 0.05,
+						// "yPos" : maskingCube.position.y + 0.05
+						"xPos" : maskingCube.position.x + 0.025,
+						"xNeg" : maskingCube.position.x - 0.025,
+						"zNeg" : maskingCube.position.z - 0.025,
+						"zPos" : maskingCube.position.z + 0.025,
+						"yNeg" : maskingCube.position.y - 0.025,
+						"yPos" : maskingCube.position.y + 0.025
 					};
 					this.arrayOfMaskingCube.push({
 						"mesh" : maskingCube,

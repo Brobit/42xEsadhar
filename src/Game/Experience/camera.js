@@ -38,7 +38,7 @@ export default class Camera
 		}
 		else if (navigator.maxTouchPoints > 1)
 		{
-			this.controls.minDistance = 4.2;
+			this.controls.minDistance = 2.2;
 			this.controls.maxDistance = 5.2;
 		}
 		this.controls.maxPolarAngle = 1.8;
@@ -53,8 +53,6 @@ export default class Camera
 	{
 		this.controls.enabled = false;
 		this.controls = null;
-		// this.cameraPosition = (this.experience.keyboardHandler ? this.experience.keyboardHandler.cameraPosition : this.experience.joystickhandler.cameraPosition);
-		// this.instance.position.copy(this.experience.mainCube.finalCube.position).add(this.cameraPosition);
 	}
 
 	resize()

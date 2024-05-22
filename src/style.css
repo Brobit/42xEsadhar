@@ -230,6 +230,22 @@ body
 	z-index: 1;
 }
 
+.img_tutorial_desktop
+{
+	position: relative;
+	display: flex;
+	width: 100%;
+	flex: 1;
+	align-items: center;
+	justify-content: center;
+	border-radius: 3.8em 1.8em 3.8em 1.8em;
+	background-color: rgb(25, 25, 35);
+	background-size: contain;
+	background-image: url(/keys.png);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
 
 
 .close_mobile {
@@ -296,22 +312,6 @@ body
 	background-color: rgb(25, 25, 35);
 	background-size: cover;
 	background-image: url(/tuto3.png);
-	background-repeat: no-repeat;
-	background-position: center;
-}
-
-.img_tutorial_desktop
-{
-	position: relative;
-	display: flex;
-	width: 100%;
-	/* flex: 1; */
-	/* align-items: center; */
-	/* justify-content: center; */
-	/* border-radius: 3.8em 1.8em 3.8em 1.8em; */
-	/* background-color: rgb(25, 25, 35); */
-	background-size: contain;
-	background-image: url(/gif_tuto_vPc.gif);
 	background-repeat: no-repeat;
 	background-position: center;
 }
@@ -389,6 +389,21 @@ body
 	z-index: 2;
 	left: 84%;
 	top: 0%;
+	cursor: pointer;
+}
+
+.closev2_mobile
+{
+	position: absolute;
+	width: 7%;
+	height: 4%;
+	background-color: red;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: top left;
+	z-index: 2;
+	left: 93%;
+	top: 13%;
 	cursor: pointer;
 }
 
