@@ -109,9 +109,15 @@ export default class JoystickHandler
 			if (!this.isInOrbitControl && this.start != 0)
 			{
 				if (!this.camera.controls)
+				{
 					this.camera.setControls();
+					this.plane.material.opacity = 0.5;
+					this.cubeEnvironment.material.opacity = 0.1;
+				}
 				else if (this.camera.controls)
 				{
+					this.cubeEnvironment.material.opacity = 1;
+					this.plane.material.opacity = 1;
 					this.camera.removeControls();
 					this.camera.instance.position.copy(this.experience.mainCube.finalCube.position).add(this.cameraPosition);
 					this.camera.instance.lookAt(this.experience.mainCube.finalCube.position);

@@ -159,7 +159,6 @@ export default class KeyboardHandler
 					}
 					else if (!this.camera.controls)
 					{
-						console.log(this.cubeEnvironment)
 						this.camera.setControls();
 						this.plane.material.opacity = 0.5;
 						this.cubeEnvironment.material.opacity = 0.1;
