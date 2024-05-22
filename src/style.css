@@ -244,9 +244,8 @@ body
 	background-image: url(/keys.png);
 	background-repeat: no-repeat;
 	background-position: center;
+	z-index: 1;
 }
-
-
 
 .close_mobile {
   position: absolute;
@@ -255,6 +254,7 @@ body
   width: 3%;
   height: 10%;
   opacity: 0.5;
+  z-index: 1;
 }
 
 .close {
@@ -264,6 +264,8 @@ body
   width: 1%;
   height: 10%;
   opacity: 0.5;
+  z-index: 1;
+  cursor: pointer;
 }
 
 .close_mobile:before, .close_mobile:after {
