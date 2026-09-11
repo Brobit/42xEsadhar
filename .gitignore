@@ -1,6 +1,0 @@
-# dependency directory
-node_modules/
-dist/
-
-# json
-package-lock.json
